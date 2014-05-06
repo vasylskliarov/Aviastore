@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+	<!-- Persistence DB name -->	
+	<persistence-unit name="AviastoreDB" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>com.aviastore.entitys.FlightTimetable</class>
+		<class>com.aviastore.entitys.UserBooking</class>
+		<class>com.aviastore.entitys.Security</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver"
+				value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<!-- Database path -->
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:derby:..//AviastoreDB;create=true" />
+			<property name="eclipselink.ddl-generation.output-mode"	
+				value="database" />	
+			<!--Database tables auto generation (JPA function)-->
+			<!--Tables auto generation
+			<property name="eclipselink.ddl-generation" value="create-tables"/>-->
+		</properties>
+	</persistence-unit>
+</persistence> 
+                 
