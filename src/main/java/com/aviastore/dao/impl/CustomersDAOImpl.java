@@ -23,9 +23,4 @@ public class CustomersDAOImpl implements CustomersDAO {
 		List<Customers> resultList = query.getResultList();
 		return resultList;
 	}
-	@Override
-	public boolean checkEmail(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
