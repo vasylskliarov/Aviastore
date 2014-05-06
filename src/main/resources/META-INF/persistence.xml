@@ -5,9 +5,10 @@
 	<!-- Persistence DB name -->	
 	<persistence-unit name="AviastoreDB" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>com.aviastore.entitys.FlightTimetable</class>
-		<class>com.aviastore.entitys.UserBooking</class>
-		<class>com.aviastore.entitys.Security</class>
+		<class>com.aviastore.entitys.Flights</class>
+		<class>com.aviastore.entitys.Orders</class>
+		<class>com.aviastore.entitys.Costumer</class>
+		<class>com.aviastore.entitys.Users</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
 				value="org.apache.derby.jdbc.EmbeddedDriver" />
