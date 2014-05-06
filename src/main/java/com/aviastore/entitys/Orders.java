@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Orders {
 	public static final int BOOKED=0;
 	public static final int SOLD=1;
-	public static final int CANCELED=2;
+	public static final int CANCELED=2;	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

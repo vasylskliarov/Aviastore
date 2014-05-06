@@ -8,8 +8,8 @@ public interface OrdersDAO {
 	public boolean deleteOrder(Orders order);
 	public boolean changeOrderStatusToSold(Orders order);
 	public boolean changeOrderStatusToCanceled(Orders order);
-	public List<Orders> getOrders(Date start, Date end, int status);
-	public List<Orders> getOrders(Date start, Date end, String departure, String arrival, String cust, String email, int status);
-	public List<Report> getDQPResult(Date start, Date end);
-	public List<Report> getPQPResult(Date start, Date end);
+	public List<Orders> getOrders(Date startDate, Date endDate, int status);
+	public List<Orders> getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status);
+	public List<Report> getDQPResult(Date startDate, Date endDate);
+	public List<Report> getPQPResult(Date startDate, Date endDate);
 }

@@ -7,7 +7,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.aviastore.entitys.Flights</class>
 		<class>com.aviastore.entitys.Orders</class>
-		<class>com.aviastore.entitys.Costumer</class>
+		<class>com.aviastore.entitys.Customers</class>
 		<class>com.aviastore.entitys.Users</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver"
@@ -16,7 +16,8 @@
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:derby:..//AviastoreDB;create=true" />
 			<property name="eclipselink.ddl-generation.output-mode"	
-				value="database" />	
+				value="database" />
+			<property name="eclipselink.weaving" value="static"/>	
 			<!--Database tables auto generation (JPA function)-->
 			<!--Tables auto generation
 			<property name="eclipselink.ddl-generation" value="create-tables"/>-->
