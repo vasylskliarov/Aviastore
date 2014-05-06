@@ -32,7 +32,7 @@ public class Flights {
 	@JoinTable(name="orders",
 	joinColumns=@JoinColumn(name="flightId"),
 	inverseJoinColumns = @JoinColumn(name="customerId"))
-	private Collection<Customer> customers;
+	private Collection<Customers> customers;
 	
 	//TODO разобраться дя чего создал переменную
 	@Transient
@@ -161,10 +161,10 @@ public class Flights {
 	public void setOrders(Collection<Orders> orders) {
 		this.orders = orders;
 	}
-	public Collection<Customer> getCustomers() {
+	public Collection<Customers> getCustomers() {
 		return customers;
 	}
-	public void setCustomers(Collection<Customer> customers) {
+	public void setCustomers(Collection<Customers> customers) {
 		this.customers = customers;
 	}
 	

@@ -5,7 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 
 @Entity
-public class Customer {
+public class Customers {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -18,8 +18,8 @@ public class Customer {
 	Collection<Flights> flights;
 	@OneToMany(mappedBy = "customerId")
 	private Collection<Orders> orders;
-	public Customer() {}
-	public Customer(String firstName, String lastName, String email,
+	public Customers() {}
+	public Customers(String firstName, String lastName, String email,
 			String phoneNumber) {
 		super();
 		this.firstName = firstName;

@@ -14,7 +14,7 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	private Customer customerId;
+	private Customers customerId;
 	@ManyToOne
 	private Flights flightId;
 	private int amountTickets;
@@ -27,7 +27,7 @@ public class Orders {
 	private Date dateD;
 
 	public Orders() {}
-	public Orders(Customer customerId, Flights flightId, int amountTickets,
+	public Orders(Customers customerId, Flights flightId, int amountTickets,
 			double totalPrice, Date time) {
 		super();
 		this.customerId = customerId;
@@ -43,10 +43,10 @@ public class Orders {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Customer getCustomerId() {
+	public Customers getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(Customer customerId) {
+	public void setCustomerId(Customers customerId) {
 		this.customerId = customerId;
 	}
 	public Flights getFlightId() {
