@@ -32,14 +32,14 @@ public class FlightsDAOImpl implements FlightsDAO {
 			TypedQuery<Flights> query = entityManager.createQuery(
 							"SELECT f FROM Flights f WHERE f.departureTime "+
 							"BETWEEN :startDate AND :endDate" +
-							"AND (LOCATE(LOWER(:dep),LOWER(f.departureCity))<>0 "+
-							"OR LOCATE(LOWER(:ariv),LOWER(f.arrivalCity))<>0) "+
+							"AND (LOCATE(LOWER(:depCit),LOWER(f.departureCity))<>0 "+
+							"OR LOCATE(LOWER(:arivCit),LOWER(f.arrivalCity))<>0) "+
 							"AND f.availableCount > 0 "+
 							"ORDER BY f.departureTime", Flights.class);
 			query.setParameter("startDate",	new Timestamp(startDate.getTimeInMillis()), TemporalType.TIMESTAMP);
 			query.setParameter("endDate", new Timestamp(endDate.getTimeInMillis()), TemporalType.TIMESTAMP);
-			query.setParameter("dep", departure);
-			query.setParameter("ariv", arrival);
+			query.setParameter("depCit", departure);
+			query.setParameter("arivCit", arrival);
 			List<Flights> flights = query.getResultList();
 			return flights;
 	}

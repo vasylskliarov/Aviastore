@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 public class OrdersDAOImpl implements OrdersDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
-	//TODO try to use interface flightsDAO
+	//TODO try to use interface flightsDAO not implementation
 	@Autowired
 	private FlightsDAOImpl flightsDAO;
-	//TODO try to use interface customersDAO
+	//TODO try to use interface customersDAO not implementation 
 	@Autowired
 	private CustomersDAOImpl customersDAO;
 	
@@ -100,11 +100,11 @@ public class OrdersDAOImpl implements OrdersDAO {
 		TypedQuery<Orders> query = entityManager.createQuery(
 				"SELECT o FROM Orders o "+
 				"WHERE o.bookingDate BETWEEN :startDate AND :endDate "
-				+ "AND o.payStatus = :status  "
+				+ "AND o.payStatus = :STATUS  "
 				+ "ORDER BY o.bookingDate",Orders.class);
 		query.setParameter("startDate", new Timestamp(startDate.getTime()), TemporalType.TIMESTAMP);
 		query.setParameter("endDate", new Timestamp(endDate.getTime()),	TemporalType.TIMESTAMP);
-		query.setParameter("status", status);
+		query.setParameter("STATUS", status);
 		List<Orders> orders = null;
 		orders = query.getResultList();
 		return orders;
@@ -121,7 +121,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 				"AND LOCATE( lower(:lastNCust), lower(o.customers.lastName) )<>0 "+
 				"AND LOCATE( lower(:emailCust), lower(o.customers.email) )<>0 "+
 				"AND LOCATE( lower(:phoneCust), lower(o.customers.phoneNumber) )<>0 "+
-				"AND o.payStatus = :status "+
+				"AND o.payStatus = :STATUS "+
 				"ORDER BY o.bookingDate DESC",Orders.class);
 		query.setParameter("startDate",new Timestamp(startDate.getTime()),TemporalType.TIMESTAMP);
 		query.setParameter("endDate", new Timestamp(endDate.getTime()),TemporalType.TIMESTAMP);
@@ -131,7 +131,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		query.setParameter("lastNCust", lastName);
 		query.setParameter("emailCust", email);
 		query.setParameter("phoneCust", phoneNumber);
-		query.setParameter("status", status);
+		query.setParameter("STATUS", status);
 		List<Orders> orders = null;
 		orders = query.getResultList();
 		return orders;

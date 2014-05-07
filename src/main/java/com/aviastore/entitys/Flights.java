@@ -34,7 +34,7 @@ public class Flights {
 	inverseJoinColumns = @JoinColumn(name="customerId"))
 	private Collection<Customers> customers;
 	
-	//TODO разобраться дя чего создал переменную
+	//TODO разобраться дя чего создал переменную dtimeD
 	@Transient
 	private Date dtimeD;
 
