@@ -137,7 +137,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return orders;
 	}
 	@Override
-	public List<Report> getDQPResult(Date startDate, Date endDate) {
+	public List<Report> getStatByCitys(Date startDate, Date endDate) {
 		TypedQuery<Report> query = entityManager.createQuery(
 				"SELECT NEW com.aviastore.entitys.Report( FUNC('Date',o.flights.departureTime), SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
 				"FROM Orders o WHERE ( o.flights.departureTime BETWEEN :startDate AND :endDate AND o.payStatus = :STATUS ) "+
@@ -151,7 +151,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		return result;
 	}
 	@Override
-	public List<Report> getPQPResult(Date start, Date end) {
+	public List<Report> getStatByDates(Date start, Date end) {
 		TypedQuery<Report> query = entityManager.createQuery(
 				"SELECT NEW com.aviastore.entitys.Report(o.flights.departureCity, o.flights.arrivalCity, SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
 				"FROM Orders o WHERE ( o.flights.departureTime BETWEEN :startDate AND :endDate AND o.status = :STATUS ) "+

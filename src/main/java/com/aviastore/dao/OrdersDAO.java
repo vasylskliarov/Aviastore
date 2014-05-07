@@ -10,6 +10,6 @@ public interface OrdersDAO {
 	public boolean changeOrderStatusToCanceled(Orders order);
 	public List<Orders> getOrders(Date startDate, Date endDate, int status);
 	public List<Orders> getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status);
-	public List<Report> getDQPResult(Date startDate, Date endDate);
-	public List<Report> getPQPResult(Date startDate, Date endDate);
+	public List<Report> getStatByCitys(Date startDate, Date endDate);
+	public List<Report> getStatByDates(Date startDate, Date endDate);
 }
