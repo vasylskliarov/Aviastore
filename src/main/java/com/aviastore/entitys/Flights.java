@@ -20,7 +20,7 @@ public class Flights {
 	private String arrivalCity;
 	private String arrivalAirport;
 	private Timestamp arrivalTime;
-	private double TicketsPrice;
+	private double ticketsPrice;
 	private int availableCount;
 	private int bookedCount=0;
 	private int soldCount=0;
@@ -56,7 +56,7 @@ public class Flights {
 		this.arrivalCity = arrivalCity;
 		this.arrivalAirport = arrivalAirport;
 		this.arrivalTime = arrivalTime;
-		TicketsPrice = ticketsPrice;
+		this.ticketsPrice = ticketsPrice;
 		this.availableCount = availableCount;
 	}
 	public int getId() {
@@ -132,10 +132,10 @@ public class Flights {
 		this.arrivalTime = arrivalTime;
 	}
 	public double getTicketsPrice() {
-		return TicketsPrice;
+		return ticketsPrice;
 	}
 	public void setTicketsPrice(double ticketsPrice) {
-		TicketsPrice = ticketsPrice;
+		ticketsPrice = ticketsPrice;
 	}
 	public int getAvailableCount() {
 		return availableCount;

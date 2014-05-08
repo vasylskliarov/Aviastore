@@ -27,8 +27,7 @@ public class Orders {
 	private Date dateD;
 
 	public Orders() {}
-	public Orders(Customers customerId, Flights flightId, int amountTickets,
-			double totalPrice, Date time) {
+	public Orders(Customers customerId, Flights flightId, int amountTickets, Date time) {
 		super();
 		this.customerId = customerId;
 		this.flightId = flightId;
