@@ -11,7 +11,6 @@ public class Users {
 	public static final int ACCOUNTANT=2;
 	public static final int ANALYTIC=3;
 	public static final int BLOCKED=4;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

@@ -25,7 +25,7 @@
 				
 				
 				<p:calendar id="fromDate" value="#{adminMB.dateSince}" 
-				pattern="dd MMMM yyyy"  locale="en"
+				pattern="dd MMMM yyyy"  locale="ru"
 				required="true" readonlyInput="true"  navigator="true"> 
 				<p:ajax process="fromDate" update="toDate" partialSubmit="true" event="dateSelect" />
 				</p:calendar>
@@ -36,7 +36,7 @@
 				<p:outputLabel>To:</p:outputLabel>
 				
 				<p:calendar id="toDate" value="#{adminMB.dateTill}" 
-				pattern="dd MMMM yyyy"  readonlyInput="true" locale="en"
+				pattern="dd MMMM yyyy"  readonlyInput="true" locale="ru"
 				required="true" mindate="#{adminMB.dateSince}" navigator="true"/>
 				
 				

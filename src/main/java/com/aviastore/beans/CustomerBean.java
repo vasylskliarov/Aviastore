@@ -12,20 +12,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.aviastore.entitys.*;
-import com.aviastore.services.impl.*;
+import com.aviastore.services.*;
 
 @Named
 @Component
 @Scope("session")
 public class CustomerBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//TODO create CustomerBean
-	
-	//TODO in CustomerBean try to use interfaces FlightsServices and OrdersServices
 	@Autowired
-	private FlightsServicesImpl flightsServices;
+	private FlightsServices flightsServices;
 	@Autowired 
-	OrdersServicesImpl ordersServices;
+	OrdersServices ordersServices;
 
 	private String departureCity;
 	private String arrivalCity;
@@ -126,16 +123,16 @@ public class CustomerBean implements Serializable {
 		}
 		return 0;
 	}
-	public FlightsServicesImpl getFlightsServices() {
+	public FlightsServices getFlightsServices() {
 		return flightsServices;
 	}
-	public void setFlightsServices(FlightsServicesImpl flightsServices) {
+	public void setFlightsServices(FlightsServices flightsServices) {
 		this.flightsServices = flightsServices;
 	}
-	public OrdersServicesImpl getOrdersServices() {
+	public OrdersServices getOrdersServices() {
 		return ordersServices;
 	}
-	public void setOrdersServices(OrdersServicesImpl ordersServices) {
+	public void setOrdersServices(OrdersServices ordersServices) {
 		this.ordersServices = ordersServices;
 	}
 	public String getDepartureCity() {

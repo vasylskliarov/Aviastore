@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+
+
+	<h:head>
+		<title>Security officer</title>
+	</h:head>
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
+		<ui:define name="content">
+			<f:event listener="#{securityBean.initUsers()}" type="preRenderView" />
+			<h:form id="list">
+				<div align="center">
+					<p:panel>
+						<p:messages id="messages" showDetail="true" autoUpdate="true"
+							closable="true" />
+
+
+						<p:dataTable id="users" var="usr" value="#{securityBean.users}"
+							style="width:100%;" editable="true" paginator="true" rows="20">
+							<p:ajax event="rowEdit" update="@this"
+								listener="#{securityBean.onEdit}" />
+							<f:facet name="header">List of Users</f:facet>
+
+							<p:column width="20%" filterBy="firstName" headerText="Имя пользователя">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{usr.firstName}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:inputText value="#{usr.firstName}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column width="20%" filterBy="lastName" headerText="Фамилия пользователя">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{usr.lastName}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:inputText value="#{usr.lastName}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column width="20%"  sortBy="login" headerText="Логин">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{usr.login}" />
+									</f:facet>
+									<f:facet name="input" width="20%">
+										<h:inputText value="#{usr.login}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+						
+							<p:column width="15%" headerText="Пароль" >
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="•••••" />
+									</f:facet>
+									<f:facet name="input" width="20%">
+										<p:password value="#{usr.password}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column width="20%" headerText="Тип записи"  >
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{securityBean.permissionToString(usr)}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{usr.permission}" style="width:99%;">
+											<f:selectItem itemLabel="Security officer" itemValue="0" />
+											<f:selectItem itemLabel="Administrator" itemValue="1" />
+											<f:selectItem itemLabel="Accountant" itemValue="2" />
+											<f:selectItem itemLabel="Analytic" itemValue="3" />
+											<f:selectItem itemLabel="Blocked" itemValue="4" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column width="5%" headerText="Ред.">
+								<p:rowEditor />
+							</p:column>
+						</p:dataTable>
+
+						<h:panelGrid id="addnew" columns="10" style="width:100%">
+							<f:facet name="header">Добавление нового пользователя:</f:facet>
+
+							<p:inputText id="firstName" value="#{securityBean.firstName}"
+								required="true" label="firstName" style="width:80%;" />
+							<p:watermark for="firstName" value="User first name:" />
+
+							<p:inputText id="lastName" value="#{securityBean.lastName}"
+								required="true" label="lastName" style="width:80%;" />
+							<p:watermark for="lastName" value="User last name:" />
+
+							<p:inputText id="login" value="#{securityBean.login}"
+								required="true" label="login" style="width:80%" />
+							<p:watermark for="login" value="login:" />
+
+							<p:inputText id="password" value="#{securityBean.password}"
+								required="true" label="password" style="width:80%" />
+							<p:watermark for="password" value="password:" />
+
+							<p:selectOneMenu value="#{securityBean.permission}">
+								<f:selectItem itemLabel="Security officer" itemValue="0" />
+								<f:selectItem itemLabel="Administrator" itemValue="1" />
+								<f:selectItem itemLabel="Accountant" itemValue="2" />
+								<f:selectItem itemLabel="Analytic" itemValue="3" />
+								<f:selectItem itemLabel="Blocked" itemValue="4" />
+							</p:selectOneMenu>
+
+							<p:commandButton actionListener="#{securityBean.addUser()}"
+								icon="ui-icon-plusthick" style="margin:0" title="add new user"
+								process="@all" update="users,addnew" />
+						</h:panelGrid>
+
+					</p:panel>
+
+				</div>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+
+</f:view>
+</html>

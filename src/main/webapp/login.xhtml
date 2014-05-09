@@ -21,17 +21,15 @@
           <!-- enable focus component -->
 	  <p:focus context="panel-signup" />
  
-	  <p:inputText id="username" required="true" label="username"
-		size="40" 
-		value="#{loginBean.login}">
+	  <p:inputText id="username" required="true" label="username" size="40" value="#{loginBean.login}">
 	  </p:inputText>
-	  <p:watermark for="username" value="Username *" />
+	  <p:watermark for="username" value="Логин:" />
 	  <p:message rendered="false" for="username" />
  
 	  <p:password id="password" required="true" label="password" size="40"
 		requiredMessage="" value="#{loginBean.password}" maxlength="20">
 	  </p:password>
-		<p:watermark for="password" value="Password *" />
+		<p:watermark for="password" value="Пароль:" />
 		<p:message rendered="false"  for="password" />
  
  	

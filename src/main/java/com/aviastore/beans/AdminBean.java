@@ -12,20 +12,17 @@ import org.springframework.stereotype.Component;
 import org.primefaces.event.RowEditEvent;
 
 import com.aviastore.entitys.*;
-import com.aviastore.services.impl.*;
+import com.aviastore.services.*;
 
 @Named
 @Component
 @Scope("session")
 public class AdminBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//TODO create AdminBean
-	
-	//TODO in AdminBean try to use interfaces OrdersServices and FlightsServices
 	@Autowired 
-	OrdersServicesImpl ordersServices;
+	OrdersServices ordersServices;
 	@Autowired
-	FlightsServicesImpl flightsServices;
+	FlightsServices flightsServices;
 	private Date startDate;
 	private Date endDate;
 	
@@ -105,16 +102,16 @@ public class AdminBean implements Serializable {
 		Flights flight = (Flights)event.getObject();
 		flightsServices.update(flight);
 	}
-	public OrdersServicesImpl getOrdersServices() {
+	public OrdersServices getOrdersServices() {
 		return ordersServices;
 	}
-	public void setOrdersServices(OrdersServicesImpl ordersServices) {
+	public void setOrdersServices(OrdersServices ordersServices) {
 		this.ordersServices = ordersServices;
 	}
-	public FlightsServicesImpl getFlightsServices() {
+	public FlightsServices getFlightsServices() {
 		return flightsServices;
 	}
-	public void setFlightsServices(FlightsServicesImpl flightsServices) {
+	public void setFlightsServices(FlightsServices flightsServices) {
 		this.flightsServices = flightsServices;
 	}
 	public Date getStartDate() {

@@ -12,18 +12,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.aviastore.entitys.*;
-import com.aviastore.services.impl.*;
+import com.aviastore.services.*;
 
 @Named
 @Component
 @Scope("session")
 public class AnalystBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//TODO create AnalystBean
-	
-	//TODO in AnalystBean try to use interface OrdersServices
 	@Autowired 
-	OrdersServicesImpl ordersServices;
+	OrdersServices ordersServices;
 
 	private Date startDate;
 	private Date endDate;
@@ -97,11 +94,11 @@ public class AnalystBean implements Serializable {
 		this.repByPlaceList = ordersServices.getStatByCitys(startDate, endDate);
 	}
 
-	public OrdersServicesImpl getOrdersServices() {
+	public OrdersServices getOrdersServices() {
 		return ordersServices;
 	}
 
-	public void setOrdersServices(OrdersServicesImpl ordersServices) {
+	public void setOrdersServices(OrdersServices ordersServices) {
 		this.ordersServices = ordersServices;
 	}
 
@@ -172,10 +169,4 @@ public class AnalystBean implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
-	
-
 }

@@ -21,9 +21,6 @@ import com.aviastore.services.impl.*;
 @Scope("session")
 public class AccountantBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	
-	//TODO in AccountantBean try to use interface OrdersServices
 	@Autowired 
 	OrdersServices ordersServices;
 	
