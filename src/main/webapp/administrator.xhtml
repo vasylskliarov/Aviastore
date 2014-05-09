@@ -1,253 +1,371 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head> 
-<title>Administrator panel</title> 
+<h:head>
+	<title>Administrator panel</title>
 </h:head>
 
 <h:body>
-<ui:composition template="/WEB-INF/templates/layout.xhtml">
-	<ui:define name="content">
-	<h:outputStylesheet library="css" name="style.css" /> 
-		<!-- <h3 align ="left">Timetable management: </h3> -->
-		<h:form>
-		<p:panel>
-		<div align="center" >
-		
-			<h:panelGrid id ="components" columns="9" >
-				<p:outputLabel>From date:</p:outputLabel>
-				
-				
-				<p:calendar id="fromDate" value="#{adminMB.dateSince}" 
-				pattern="dd MMMM yyyy"  locale="ru"
-				required="true" readonlyInput="true"  navigator="true"> 
-				<p:ajax process="fromDate" update="toDate" partialSubmit="true" event="dateSelect" />
-				</p:calendar>
-				
-				
-				<p:spacer width="20" height="60"/>
-				
-				<p:outputLabel>To:</p:outputLabel>
-				
-				<p:calendar id="toDate" value="#{adminMB.dateTill}" 
-				pattern="dd MMMM yyyy"  readonlyInput="true" locale="ru"
-				required="true" mindate="#{adminMB.dateSince}" navigator="true"/>
-				
-				
-				<p:commandButton value="search" id="search"  
-				process="fromDate,toDate"  update = "flights"
-				action="#{adminMB.updateTable()}" ajax="false" >
-				</p:commandButton>
-				
-				<p:commandButton
-					icon="ui-icon-plusthick" 
-					style="margin:0" 
-					title="add new flight to timetable"
-					ajax="true"
-					onclick="newFlight.show();">
-					
-				</p:commandButton>
-				
-				<p:spacer width="20" height="60"/>
-				
-				<p:commandButton value="overdue orders" id="overO" immediate="true"
-					ajax="true" onclick="canceledO.show();" actionListener="#{adminMB.cancelAllOrders}" 
-					process = "@none" update="@none">
-                </p:commandButton>
-				
-			</h:panelGrid>
+	<ui:composition template="/WEB-INF/templates/layout.xhtml">
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="style.css" />
+			<!-- <h3 align ="left">Timetable management: </h3> -->
+			<h:form>
+				<p:panel>
+					<div align="center">
 
-		</div>	
-		</p:panel>
-		<p:panel>
-		
-		<p:dataTable id="flights" var="flight" value="#{adminMB.timeTable}" style="width:100%;" editable="true"  
-		rendered="#{adminMB.showTimeTable}" >
-		<p:ajax event="rowEdit" update="@this" listener="#{adminMB.onEdit}" />
-			 <f:facet name="header">Timetable</f:facet>
-			<p:ajax event="rowEdit" update="flights" />
-			 <p:column width="15%" headerText = "Date time">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                  			<h:outputText value="#{flight.dtimeD}" >
-                      			<f:convertDateTime pattern="HH:mm" /> 
-                      		</h:outputText>
-                      		<br/>
-                      		<h:outputText value="#{flight.dtimeD}" >
-                      			<f:convertDateTime pattern="dd MMMM yyyy" locale="en"/> 
-                      		</h:outputText>
-                  		</f:facet>
-                  		<f:facet name="input">
-                  			<p:calendar value="#{flight.dtimeD}" 
-								pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
-								locale="en"  mindate="#{flight.dtimeD}" > 
-							</p:calendar> 
-                  		</f:facet>
-              		</p:cellEditor>
-              	</p:column>
-              	
-              	<p:column width="20%" headerText = "Origin">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                      		<h:outputText value="#{flight.departure}" />
-                  		</f:facet>
-                  		<f:facet name="input">
-                      		<h:inputText value="#{flight.departure}"/>
-                  		</f:facet>
-              		</p:cellEditor>
-				 </p:column>
-				 
-				 <p:column width="20%" headerText = "Destination">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                      		<h:outputText value="#{flight.arrival}" />
-                  		</f:facet>
-                  		<f:facet name="input">
-                      		<h:inputText value="#{flight.arrival}"/>
-                  		</f:facet>
-              		</p:cellEditor>
-				 </p:column>
-				 
-				 <p:column width="5%" headerText = "Booked">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                      		<h:outputText value="#{flight.booked}" />
-                  		</f:facet>
-                  		<f:facet name="input">
-                  			<h:outputText value="#{flight.booked}" />
-                  		</f:facet>
-              		</p:cellEditor>
-				 </p:column>
-				 
-				 <p:column width="5%" headerText = "Sold">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                      		<h:outputText value="#{flight.sold}" />
-                  		</f:facet>
-                  		<f:facet name="input">
-                  			<h:outputText value="#{flight.sold}" />
-                  		</f:facet>
-              		</p:cellEditor>
-				 </p:column>
-				 
-				  <p:column width="10%" headerText = "Free">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                      		<h:outputText value="#{flight.free}" />
-                  		</f:facet>
-                  		<f:facet name="input">
-                  			<h:inputText value = "#{flight.free}" ></h:inputText>
-                  		</f:facet>
-              		</p:cellEditor>
-				 </p:column>
-				 
-				 <p:column width="10%" headerText = "Price per ticket">
-				 	 <p:cellEditor>
-                  		<f:facet name="output">
-                      		<h:outputText value="#{flight.price}" />
-                  		</f:facet>
-                  		<f:facet name="input">
-                  			<h:inputText value = "#{flight.price}" ></h:inputText>
-                  		</f:facet>
-              		</p:cellEditor>
-				 </p:column>
-				 
-				 <p:column width="5%">
-               		<p:rowEditor  />
-        		</p:column>
-			</p:dataTable>
-			
-		
-		</p:panel>
-	</h:form>
-	
-    <p:dialog widgetVar="canceledO" width="700" height="400" header="Canceled orders"
-                resizable="true" modal="true" appendTo="@(body)" 
-                showEffect="fade" hideEffect="fade" rendered="#{adminMB.showCanceledOrders}" visible="true">
-        <h:form>
-        <div align="center">
-	       <p:dataTable id="cO" var="order" value="#{adminMB.cancelOrders}" style="width:100%;" rendered="true">
-                <p:column headerText="Customer" >
-                    <h:outputText value="#{order.customer.fullname}"></h:outputText>
-                </p:column>
-                <p:column headerText="Flight" >
-                    <h:outputText value="#{order.flight.dtimeD} ">
-                        <f:convertDateTime pattern="dd MMMM yyyy HH:mm " locale="en"/>
-                    </h:outputText>
-                    
-                    <h:outputText value=" #{order.flight.departure} - #{order.flight.arrival}">
-                    </h:outputText>                
-                </p:column>
-                <p:column headerText="Number of tickets">
-                    <h:outputText value="#{order.quantity}"></h:outputText>
-                </p:column>
-                
-                <p:column headerText="Status">
-                    <h:outputText value="canceled"></h:outputText>
-                </p:column>
-                
-            </p:dataTable>
-            <p:commandButton value = "Ok" oncomplete="canceledO.hide()" update="cO">                               
-            </p:commandButton>
-	    </div>
-        </h:form>
-    </p:dialog>
-	
-	<p:dialog widgetVar="newFlight" width="300" height="500" header="New flight"
-	resizable="true" modal="true" appendTo="@(body)" 
-	showEffect="fade" hideEffect="fade"  focus="form:focus">
-		<h:form id = "form">
-		<div align="center">
-        		<h:panelGrid id="addnew" columns="1" > 
-         		<p:outputLabel id="focus" value="Date and time: " /> 
-   		        <p:calendar value="#{adminMB.newFDate}" 
-				pattern="dd MMMM yyyy HH:mm" pages = "1" showButtonPanel="true"
-				locale="en" required="true" 
-				readonlyInput="true"  navigator="true" maxlength="20"> 
-				</p:calendar>
-		        <p/>
-		        
-		        <p:outputLabel  value="Origin: " /> 
-		        <p:inputText value="#{adminMB.origin}" required="true"/>  
-		        
-  				<p/>
-  				<p:outputLabel value="Destination: " />
-  				<p:inputText value="#{adminMB.destination}" required="true"/>  
-		         
-		        <p/>
-		        <p:outputLabel value="Number of tickets " />
-		        <p:spinner value="#{adminMB.nmbOfTickets}" prefix="#" min="0" size="18"/>
-		        
-		        <p>
-		        <p:outputLabel value="Price per one ticket" />
-		        <p:spinner value="#{adminMB.price}" prefix="$" min="0" size="18"/>
-		        </p>
-		        <div align="center">
-		        <p>
-				<p:commandButton 
-								icon="ui-icon-plusthick" 
-								value = "add flight" 
-								process="@all"
-								actionListener="#{adminMB.addNewFlight()}"
-								oncomplete="newFlight.hide()"
-								>
-								
-				</p:commandButton>
-				</p> 
-				</div>
-   			</h:panelGrid>
-     		</div>
-     		</h:form>
-      </p:dialog>
-	
-	
-	</ui:define>
-</ui:composition>
+						<h:panelGrid id="components" columns="9">
+							<p:outputLabel>From date:</p:outputLabel>
+
+
+							<p:calendar id="fromDate" value="#{adminBean.startDate}"
+								pattern="dd MMMM yyyy" locale="en" required="true"
+								readonlyInput="true" navigator="true">
+								<p:ajax process="fromDate" update="toDate" partialSubmit="true"
+									event="dateSelect" />
+							</p:calendar>
+
+							<p:spacer width="20" height="60" />
+
+							<p:outputLabel>To:</p:outputLabel>
+
+							<p:calendar id="toDate" value="#{adminBean.endDate}"
+								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
+								required="true" mindate="#{adminBean.startDate}"
+								navigator="true" />
+
+
+							<p:commandButton value="search" id="search"
+								process="fromDate,toDate" update="flights"
+								action="#{adminBean.updateTimetable()}" ajax="false">
+							</p:commandButton>
+
+							<p:commandButton icon="ui-icon-plusthick" style="margin:0"
+								title="Добавить новый полет" ajax="true"
+								onclick="newFlight.show();">
+
+							</p:commandButton>
+
+							<p:spacer width="20" height="60" />
+
+							<p:commandButton value="overdue orders" id="overO"
+								immediate="true" ajax="true" onclick="canceledO.show();"
+								actionListener="#{adminBean.cancelAllOrders()}" process="@none"
+								update="@none">
+							</p:commandButton>
+
+						</h:panelGrid>
+
+					</div>
+				</p:panel>
+				<p:panel>
+
+					<p:dataTable id="flights" var="flight"
+						value="#{adminBean.flightsTimeTable}" style="width:100%;"
+						editable="true" rendered="#{adminBean.showTimeTable}">
+						<p:ajax event="rowEdit" update="@this"
+							listener="#{adminBean.onEdit}" />
+						<f:facet name="header">Timetable</f:facet>
+						<p:ajax event="rowEdit" update="flights" />
+
+
+
+
+						<p:column width="60px" headerText="flight">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.flight}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.flight}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="airCompany">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.airCompany}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.airCompany}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="plainModel">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.plainModel}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.plainModel}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="departureCountry">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.departureCountry}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.departureCountry}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="departureCity">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.departureCity}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.departureCity}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="departureAirport">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.departureAirport}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.departureAirport}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="departureTime">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.departureTime}">
+										<f:convertDateTime pattern="HH:mm" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{flights.departureTime}">
+										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar value="#{flights.departureTime}"
+										pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
+										locale="en" mindate="#{flights.departureTime}">
+									</p:calendar>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						
+						arrivalCountry
+						<p:column width="60px" headerText="arrivalCountry">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.arrivalCountry}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.arrivalCountry}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="arrivalCity">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.arrivalCity}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.arrivalCity}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="arrivalAirport">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.arrivalAirport}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.arrivalAirport}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column width="60px" headerText="arrivalTime">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.arrivalTime}">
+										<f:convertDateTime pattern="HH:mm" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{flights.arrivalTime}">
+										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input">
+									<p:calendar value="#{flights.arrivalTime}"
+										pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
+										locale="en" mindate="#{flights.arrivalTime}">
+									</p:calendar>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+
+
+
+						<p:column width="10%" headerText="Price per ticket">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.ticketsPrice}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.ticketsPrice}"></h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+
+
+
+						<p:column width="10%" headerText="available tickets">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.availableCount}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{flights.availableCount}"></h:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+
+
+
+
+
+						<p:column width="5%" headerText="Booked tickets">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.bookedCount}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:outputText value="#{flights.bookedCount}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+
+						<p:column width="5%" headerText="Sold tickets">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{flights.soldCount}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:outputText value="#{flights.soldCount}" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column width="2.5%">
+							<p:rowEditor />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+
+			<p:dialog widgetVar="canceledO" width="700" height="400"
+				header="Canceled orders" resizable="true" modal="true"
+				appendTo="@(body)" showEffect="fade" hideEffect="fade"
+				rendered="#{adminBean.showCanceledOrders}" visible="true">
+				<h:form>
+					<div align="center">
+						<p:dataTable id="cO" var="order"
+							value="#{adminBean.getCancelOrders()}" style="width:100%;"
+							rendered="true">
+							<p:column headerText="Customer firstName">
+								<h:outputText value="#{order.customerId.firstName}"></h:outputText>
+							</p:column>
+							<p:column headerText="Customer lastName">
+								<h:outputText value="#{order.customerId.lastName}"></h:outputText>
+							</p:column>
+							<p:column headerText="Customer email">
+								<h:outputText value="#{order.customerId.email}"></h:outputText>
+							</p:column>
+							<p:column headerText="Customer phoneNumber">
+								<h:outputText value="#{order.customerId.phoneNumber}"></h:outputText>
+							</p:column>
+							
+							<p:column headerText="Flight">
+								<h:outputText value="#{order.flightId.departureTime} ">
+									<f:convertDateTime pattern="dd MMMM yyyy HH:mm " locale="en" />
+								</h:outputText>
+
+								<h:outputText
+									value=" #{order.flightId.departureCity} - #{order.flight.arrivalCity}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Number of tickets">
+								<h:outputText value="#{order.amountTickets}"></h:outputText>
+							</p:column>
+
+							<p:column headerText="Status">
+								<h:outputText value="canceled"></h:outputText>
+							</p:column>
+
+						</p:dataTable>
+						<p:commandButton value="Ok" oncomplete="canceledO.hide()"
+							update="cO">
+						</p:commandButton>
+					</div>
+				</h:form>
+			</p:dialog>
+
+			<p:dialog widgetVar="newFlight" width="300" height="500"
+				header="New flight" resizable="true" modal="true" appendTo="@(body)"
+				showEffect="fade" hideEffect="fade" focus="form:focus">
+				<h:form id="form">
+					<div align="center">
+						<h:panelGrid id="addnew" columns="1">
+							<p:outputLabel id="focus" value="Date and time: " />
+							<p:calendar value="#{adminMB.newFDate}"
+								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
+								locale="en" required="true" readonlyInput="true"
+								navigator="true" maxlength="20">
+							</p:calendar>
+							<p />
+
+							<p:outputLabel value="Origin: " />
+							<p:inputText value="#{adminMB.origin}" required="true" />
+
+							<p />
+							<p:outputLabel value="Destination: " />
+							<p:inputText value="#{adminMB.destination}" required="true" />
+
+							<p />
+							<p:outputLabel value="Number of tickets " />
+							<p:spinner value="#{adminMB.nmbOfTickets}" prefix="#" min="0"
+								size="18" />
+
+							<p>
+								<p:outputLabel value="Price per one ticket" />
+								<p:spinner value="#{adminMB.price}" prefix="$" min="0" size="18" />
+							</p>
+							<div align="center">
+								<p>
+									<p:commandButton icon="ui-icon-plusthick" value="add flight"
+										process="@all" actionListener="#{adminMB.addNewFlight()}"
+										oncomplete="newFlight.hide()">
+
+									</p:commandButton>
+								</p>
+							</div>
+						</h:panelGrid>
+					</div>
+				</h:form>
+			</p:dialog>
+
+
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
