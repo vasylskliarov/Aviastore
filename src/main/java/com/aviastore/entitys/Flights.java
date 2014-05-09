@@ -1,9 +1,13 @@
 package com.aviastore.entitys;
 
 import java.sql.Timestamp;
+
+import javax.inject.Named;
 import javax.persistence.*;
+
 import java.util.*;
 
+@Named
 @Entity
 public class Flights {
 	@Id
@@ -135,7 +139,7 @@ public class Flights {
 		return ticketsPrice;
 	}
 	public void setTicketsPrice(double ticketsPrice) {
-		ticketsPrice = ticketsPrice;
+		this.ticketsPrice = ticketsPrice;
 	}
 	public int getAvailableCount() {
 		return availableCount;

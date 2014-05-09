@@ -1,0 +1,130 @@
+@CHARSET "UTF-8";
+.p{
+	padding-top:25px;
+	padding-bottom:25px;
+	padding-right:50px;
+	padding-left:50px;
+}
+
+/* .userTable{ 
+	border-collapse:collapse; 
+	border:1px solid #000000; 
+}
+
+.userTableHeader{ 
+	text-align:center; 
+	background:none repeat scroll 0 0 #B5B5B5; 
+	border-bottom:1px solid #000000; 
+	padding:16px; 
+}
+
+.userTableOddRow{ 
+	text-align:center; 
+	background:none repeat scroll 0 0 #FFFFFFF;
+	padding: 5px; 
+}
+
+.userTableEvenRow{ 
+	text-align:center; 
+	background:none repeat scroll 0 0 #D3D3D3;
+	padding: 5px;  
+} */
+
+/* 
+ input.text,input.password, input[type="text"], input[type="password"] {
+	border: 1px solid #EAEAEA;
+	background: #EAEAEA;
+	margin: 10px 0;
+	font-size: 0.5em;
+	color: #444;
+	padding: 15px;
+}  
+
+** override primefaces style **
+.ui-message-info,.ui-message-error,.ui-message-warn,.ui-message-fatal {
+	border: 0;
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+
+.ui-messages-error,.ui-message-error {
+	color: #A12A2A;
+	background-color: #fff;
+}
+
+.ui-message-error-icon {
+	height: 0;
+	width: 0;
+	background: none;
+	float: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.ui-state-error {
+	border-color: #A12A2A !important;
+	background-color: #F9E8E8 !important;
+}
+
+* html placeholder style *
+::-webkit-input-placeholder {
+	color: #9A9DA1 !important;
+	font-weight: normal !important;
+}
+
+:-moz-placeholder {
+	color: #9A9DA1 !important;
+	font-weight: normal !important;
+}
+
+.ui-watermark {
+	color: #9A9DA1 !important;
+	font-weight: normal !important;
+}
+
+.ui-button{
+	padding:5px;
+	font-size: 14px;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.depoTable{ 
+	border-collapse:collapse; 
+	border:1px solid #000000; 
+}
+
+ .depoTableHeader{ 
+	text-align:center; 
+	background:none repeat scroll 0 0 #B5B5B5; 
+	border-bottom:1px solid #000000; 
+	padding:2px; 
+}
+
+.depoTableOddRow{ 
+	text-align:center; 
+	background:none repeat scroll 0 0 #FFFFFFF; 
+}
+
+.depoTableEvenRow{ 
+	text-align:center; 
+	background:none repeat scroll 0 0 #D3D3D3; 
+}
+

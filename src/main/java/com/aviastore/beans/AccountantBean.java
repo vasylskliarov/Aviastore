@@ -13,6 +13,7 @@ import javax.inject.Named;
 import org.primefaces.event.RowEditEvent;
 
 import com.aviastore.entitys.*;
+import com.aviastore.services.OrdersServices;
 import com.aviastore.services.impl.*;
 
 @Named
@@ -24,7 +25,7 @@ public class AccountantBean implements Serializable {
 	
 	//TODO in AccountantBean try to use interface OrdersServices
 	@Autowired 
-	OrdersServicesImpl ordersServices;
+	OrdersServices ordersServices;
 	
 	private String firstNameBooked="";
 	private String lastNameBooked="";
@@ -85,10 +86,10 @@ public class AccountantBean implements Serializable {
         this.searchBookedDataTable();
         this.searchSoldDataTable();
     }
-	public OrdersServicesImpl getOrdersServices() {
+	public OrdersServices getOrdersServices() {
 		return ordersServices;
 	}
-	public void setOrdersServices(OrdersServicesImpl ordersServices) {
+	public void setOrdersServices(OrdersServices ordersServices) {
 		this.ordersServices = ordersServices;
 	}
 	public String getFirstNameBooked() {

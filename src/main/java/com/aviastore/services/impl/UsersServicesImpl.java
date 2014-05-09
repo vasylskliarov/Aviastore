@@ -3,16 +3,20 @@ package com.aviastore.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
+
+import com.aviastore.dao.UsersDAO;
 import com.aviastore.dao.impl.*;
 import com.aviastore.entitys.*;
 import com.aviastore.services.*;
 
 @Service
-public class UsersServicesImpl implements UsersServices {
+public class UsersServicesImpl implements UsersServices{
 	//TODO try to use from interface UsersDAO, not from class UsersDAOImpl
 	@Autowired
-	private UsersDAOImpl usersDAO;
+	private UsersDAO usersDAO;
+
 	@Override
 	@Transactional
 	public boolean add(Users user){

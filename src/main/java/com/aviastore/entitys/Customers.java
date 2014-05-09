@@ -2,8 +2,10 @@ package com.aviastore.entitys;
 
 import java.util.*;
 
+import javax.inject.Named;
 import javax.persistence.*;
 
+@Named
 @Entity
 public class Customers {
 	@Id

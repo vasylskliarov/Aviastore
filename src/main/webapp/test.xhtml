@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>addFlight</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+
+<h:body> 
+
+
+
+			<h:form id="form">
+			
+				<p:panel id="heder" style="width: 600px; ">			
+
+					<h1>Add new FLight</h1>
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />  
+					<h:panelGrid columns="4" styleClass="add" style="height: 218px; ">
+
+
+						<h:outputText value="Flight: "></h:outputText>
+						<p:inputText id="Flight"
+							value="#{customerBean.flightsServices flightBean.flight}" required="true">
+							<f:validateLength minimum="2" maximum="20" />
+						</p:inputText>
+						<p:message for="Flight" display="text" />
+						<h:outputText value=" " />
+
+						<h:outputText value="Air Company:"></h:outputText>
+						<p:inputText id="AirC"
+							value="#{flightBean.airCompany}" required="true">
+							<f:validateLength minimum="2" maximum="30" />
+						</p:inputText>
+						<p:message for="AirC" display="text" />
+						<h:outputText value=" " />
+
+
+
+
+					<p:commandButton ajax="false" value="Submit" action="#{flightBean.addFlight}"
+						style="width:100px;"/>
+						
+						
+						
+					</h:panelGrid>
+
+				</p:panel>
+			</h:form>
+
+</h:body>
+</html>

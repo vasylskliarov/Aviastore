@@ -2,8 +2,11 @@ package com.aviastore.entitys;
 
 import java.sql.Timestamp;
 import java.util.Date;
+
+import javax.inject.Named;
 import javax.persistence.*;
 
+@Named
 @Entity
 public class Orders {
 	public static final int BOOKED=0;

@@ -1,7 +1,9 @@
 package com.aviastore.entitys;
 
+import javax.inject.Named;
 import javax.persistence.*;
 
+@Named
 @Entity
 public class Users {
 	public static final int SECURITY_OFFICER=0;

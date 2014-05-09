@@ -2,6 +2,9 @@ package com.aviastore.entitys;
 
 import java.util.*;
 
+import javax.inject.Named;
+
+@Named
 public class Report {
 	private Date date;
 	private Long quantity;

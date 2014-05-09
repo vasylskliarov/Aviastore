@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:p="http://primefaces.org/ui" > 
+	 
+
+<ui:composition template="WEB-INF/templates/layout.xhtml">
+<ui:define name="content">
+
+	 <h:outputStylesheet library="css" name="login.css" /> 
+	<div align="center"> 
+	<div  style="width: 500px;" >
+	<h:form style="login" >
+	
+	  <p:panel id="panel-signup" >
+ 
+          <!-- enable focus component -->
+	  <p:focus context="panel-signup" />
+ 
+	  <p:inputText id="username" required="true" label="username"
+		size="40" 
+		value="#{loginBean.login}">
+	  </p:inputText>
+	  <p:watermark for="username" value="Username *" />
+	  <p:message rendered="false" for="username" />
+ 
+	  <p:password id="password" required="true" label="password" size="40"
+		requiredMessage="" value="#{loginBean.password}" maxlength="20">
+	  </p:password>
+		<p:watermark for="password" value="Password *" />
+		<p:message rendered="false"  for="password" />
+ 
+ 	
+	  <p:commandButton value="Login" style="margin:20px"
+		action="#{loginBean.getLink}" ajax="false" />
+ 
+	  </p:panel>
+ 
+	</h:form>
+	</div> 
+	 </div>
+	    
+</ui:define>
+</ui:composition>
+</html>

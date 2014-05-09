@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.aviastore.services.UsersServices;
 import com.aviastore.services.impl.*;
 import com.aviastore.entitys.*;
 
@@ -21,11 +22,11 @@ public class LoginBean implements Serializable {
 	
 	//TODO in LoginBean try to use interface usersServices
 	@Autowired
-	private UsersServicesImpl usersServices;
-	public UsersServicesImpl getUsersServices() {
+	private UsersServices usersServices;
+	public UsersServices getUsersServices() {
 		return usersServices;
 	}
-	public void setUsersServices(UsersServicesImpl usersServices) {
+	public void setUsersServices(UsersServices usersServices) {
 		this.usersServices = usersServices;
 	}
 	
