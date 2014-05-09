@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.aviastore.entitys.Users;
 import com.aviastore.services.impl.*;
 
+@Named
 @Component
 @Scope("session")
 public class SecurityBean implements Serializable {

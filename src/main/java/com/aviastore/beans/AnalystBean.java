@@ -3,6 +3,8 @@ package com.aviastore.beans;
 import java.io.Serializable;
 import java.util.*;
 
+import javax.inject.Named;
+
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.aviastore.entitys.*;
 import com.aviastore.services.impl.*;
 
+@Named
 @Component
 @Scope("session")
 public class AnalystBean implements Serializable {

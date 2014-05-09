@@ -3,9 +3,9 @@ package com.aviastore.beans;
 import java.io.Serializable;
 import java.util.*;
 
-
 import javax.faces.application.FacesMessage;
 import javax.faces.context.*;
+import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.aviastore.entitys.*;
 import com.aviastore.services.impl.*;
 
+@Named
 @Component
 @Scope("session")
 public class CustomerBean implements Serializable {

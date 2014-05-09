@@ -2,6 +2,8 @@ package com.aviastore.beans;
 
 import java.io.Serializable;
 
+import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import com.aviastore.services.impl.*;
 import com.aviastore.entitys.*;
 
 
+@Named
 @Component
 @Scope("session")
 public class LoginBean implements Serializable {

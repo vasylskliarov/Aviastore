@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 
+import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.primefaces.event.RowEditEvent;
+
 import com.aviastore.entitys.*;
 import com.aviastore.services.impl.*;
 
+@Named
 @Component
 @Scope("session")
 public class AdminBean implements Serializable {
