@@ -17,8 +17,10 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
+	@JoinColumn(name="customerId_id")
 	private Customers customerId;
 	@ManyToOne
+	@JoinColumn(name="flightId_id")
 	private Flights flightId;
 	private int amountTickets;
 	private double totalPrice;

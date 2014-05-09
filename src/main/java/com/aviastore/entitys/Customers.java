@@ -17,8 +17,12 @@ public class Customers {
 	private String phoneNumber;
 	
 	@ManyToMany
-	Collection<Flights> flights;
+//	@JoinColumn(name="flights_id")
+	private Collection<Flights> flights;
+	
+	
 	@OneToMany(mappedBy = "customerId")
+//	@JoinColumn(name="orders_id")
 	private Collection<Orders> orders;
 	public Customers() {}
 	public Customers(String firstName, String lastName, String email,

@@ -34,8 +34,8 @@ public class Flights {
 	
 	@ManyToMany
 	@JoinTable(name="orders",
-	joinColumns=@JoinColumn(name="flightId"),
-	inverseJoinColumns = @JoinColumn(name="customerId"))
+	joinColumns=@JoinColumn(name="flightId_id"),
+	inverseJoinColumns = @JoinColumn(name="customerId_id"))
 	private Collection<Customers> customers;
 	
 	//TODO разобраться дя чего создал переменную dtimeD
