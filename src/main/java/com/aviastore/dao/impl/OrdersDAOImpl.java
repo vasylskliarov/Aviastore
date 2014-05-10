@@ -1,23 +1,29 @@
 package com.aviastore.dao.impl;
 
 import java.util.*;
+
 import javax.persistence.*;
+
 import com.aviastore.entitys.*;
 import com.aviastore.dao.*;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OrdersDAOImpl implements OrdersDAO {
+public class OrdersDAOImpl implements OrdersDAO, Serializable {
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager entityManager;
 	//TODO try to use interface flightsDAO not implementation
 	@Autowired
-	private FlightsDAOImpl flightsDAO;
+	private FlightsDAO flightsDAO;
 	//TODO try to use interface customersDAO not implementation 
 	@Autowired
-	private CustomersDAOImpl customersDAO;
+	private CustomersDAO customersDAO;
 	
 	public OrdersDAOImpl() {}
 
@@ -94,13 +100,14 @@ public class OrdersDAOImpl implements OrdersDAO {
 			return true;
 		}
 	}
-
+//TODO НЕ РАБОТАЕТ ЗАПРОС !!!!
 	@Override
 	public List<Orders> getOrders(Date startDate, Date endDate, int status) {
+		System.out.println("\n\n\nНачало dao запроса getOrders(Date startDate, Date endDate, int status)\n\n\n");
 		TypedQuery<Orders> query = entityManager.createQuery(
 				"SELECT o FROM Orders o "+
 				"WHERE o.bookingDate BETWEEN :startDate AND :endDate "
-				+ "AND o.payStatus = :STATUS  "
+				+ "AND o.payStatus = :STATUS "
 				+ "ORDER BY o.bookingDate",Orders.class);
 		query.setParameter("startDate", new Timestamp(startDate.getTime()), TemporalType.TIMESTAMP);
 		query.setParameter("endDate", new Timestamp(endDate.getTime()),	TemporalType.TIMESTAMP);
@@ -112,11 +119,12 @@ public class OrdersDAOImpl implements OrdersDAO {
 
 	@Override
 	public List<Orders> getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status) {
+		System.out.println("\n\n\nНачало dao запроса getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status)\n\n\n");
 		TypedQuery<Orders> query = entityManager.createQuery(
 				"SELECT o FROM Orders o WHERE o.bookingDate BETWEEN :startDate AND :endDate "+ 
-				"AND o.flights.departureTime > CURRENT_TIMESTAMP "+
-				"AND LOCATE( lower(:depCity), lower(o.flights.departureCity) )<>0 "+
-				"AND LOCATE( lower(:arCity), lower(o.flights.arrivalCity) )<>0 "+
+				"AND o.flightId.departureTime > CURRENT_TIMESTAMP "+
+				"AND LOCATE( lower(:depCity), lower(o.flightId.departureCity) )<>0 "+
+				"AND LOCATE( lower(:arCity), lower(o.flightId.arrivalCity) )<>0 "+
 				"AND LOCATE( lower(:firstNCust), lower(o.customers.firstName) )<>0 "+
 				"AND LOCATE( lower(:lastNCust), lower(o.customers.lastName) )<>0 "+
 				"AND LOCATE( lower(:emailCust), lower(o.customers.email) )<>0 "+
@@ -139,9 +147,9 @@ public class OrdersDAOImpl implements OrdersDAO {
 	@Override
 	public List<Report> getStatByCitys(Date startDate, Date endDate) {
 		TypedQuery<Report> query = entityManager.createQuery(
-				"SELECT NEW com.aviastore.entitys.Report( FUNC('Date',o.flights.departureTime), SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
-				"FROM Orders o WHERE ( o.flights.departureTime BETWEEN :startDate AND :endDate AND o.payStatus = :STATUS ) "+
-				"GROUP BY FUNC('Date',o.flights.departureTime)",
+				"SELECT NEW com.aviastore.entitys.Report( FUNC('Date',o.flightId.departureTime), SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
+				"FROM Orders o WHERE ( o.flightId.departureTime BETWEEN :startDate AND :endDate AND o.payStatus = :STATUS ) "+
+				"GROUP BY FUNC('Date',o.flightId.departureTime)",
 				Report.class);
 		query.setParameter("startDate", new Timestamp(startDate.getTime()),TemporalType.TIMESTAMP);
 		query.setParameter("endDate", new Timestamp(endDate.getTime()),TemporalType.TIMESTAMP);
@@ -153,9 +161,9 @@ public class OrdersDAOImpl implements OrdersDAO {
 	@Override
 	public List<Report> getStatByDates(Date start, Date end) {
 		TypedQuery<Report> query = entityManager.createQuery(
-				"SELECT NEW com.aviastore.entitys.Report(o.flights.departureCity, o.flights.arrivalCity, SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
-				"FROM Orders o WHERE ( o.flights.departureTime BETWEEN :startDate AND :endDate AND o.status = :STATUS ) "+
-				"GROUP BY o.flights.departureCity, o.flights.arrivalCity", Report.class);
+				"SELECT NEW com.aviastore.entitys.Report(o.flightId.departureCity, o.flightId.arrivalCity, SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
+				"FROM Orders o WHERE ( o.flightId.departureTime BETWEEN :startDate AND :endDate AND o.status = :STATUS ) "+
+				"GROUP BY o.flightId.departureCity, o.flightId.arrivalCity", Report.class);
 		query.setParameter("startDate",new Timestamp(start.getTime()),TemporalType.TIMESTAMP);
 		query.setParameter("endDate", new Timestamp(end.getTime()),TemporalType.TIMESTAMP);
 		query.setParameter("STATUS", Orders.SOLD);
@@ -163,4 +171,33 @@ public class OrdersDAOImpl implements OrdersDAO {
 		result = query.getResultList();
 		return result;
 	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public FlightsDAO getFlightsDAO() {
+		return flightsDAO;
+	}
+
+	public void setFlightsDAO(FlightsDAO flightsDAO) {
+		this.flightsDAO = flightsDAO;
+	}
+
+	public CustomersDAO getCustomersDAO() {
+		return customersDAO;
+	}
+
+	public void setCustomersDAO(CustomersDAO customersDAO) {
+		this.customersDAO = customersDAO;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

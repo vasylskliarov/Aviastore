@@ -17,10 +17,10 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name="customerId_id")
+	@JoinColumn(name="customerid", referencedColumnName = "id")
 	private Customers customerId;
 	@ManyToOne
-	@JoinColumn(name="flightId_id")
+	@JoinColumn(name="flightid", referencedColumnName = "id")
 	private Flights flightId;
 	private int amountTickets;
 	private double totalPrice;
@@ -105,5 +105,13 @@ public class Orders {
 	
 	private double calculateTotal() {
 		return flightId.getTicketsPrice()*this.getAmountTickets();
+	}
+	
+	@Override
+	public String toString() {
+		return "Orders [id=" + id + ", customerId=" + customerId
+				+ ", flightId=" + flightId + ", amountTickets=" + amountTickets
+				+ ", totalPrice=" + totalPrice + ", bookingDate=" + bookingDate
+				+ ", payStatus=" + payStatus + ", dateD=" + dateD + "]";
 	}
 }

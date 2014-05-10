@@ -31,23 +31,44 @@ public class Flights {
 	
 	@OneToMany(mappedBy = "flightId")
 	private Collection<Orders> orders;
-	
+	//TODO разобраться с @ManyToMany
 	@ManyToMany
-	@JoinTable(name="orders",
-	joinColumns=@JoinColumn(name="flightId_id"),
-	inverseJoinColumns = @JoinColumn(name="customerId_id"))
+	@JoinTable(name="Customers_Flights", joinColumns=@JoinColumn(name="Flights_id"), inverseJoinColumns = @JoinColumn(name="Customers_id"))
 	private Collection<Customers> customers;
 	
 	//TODO разобраться дя чего создал переменную dtimeD
 	@Transient
-	private Date dtimeD;
+	private Date departureTimeDate;
+	@Transient
+	private Date arrivalTimeDate;
 
 	public Flights() {}
+	
+	@Transient
+	public Date getDepartureTimeDate() {
+		return new Date(this.departureTime.getTime());
+	}
+	@Transient
+	public void setDepartureTimeDate(Date departureTimeDate) {
+		this.departureTimeDate = departureTimeDate;
+		this.departureTime.setTime(departureTimeDate.getTime());
+	}
+	@Transient
+	public Date getArrivalTimeDate() {
+		return new Date(this.arrivalTime.getTime());
+	}
+	@Transient
+	public void setArrivalTimeDate(Date arrivalTimeDate) {
+		this.arrivalTimeDate = arrivalTimeDate;
+		this.arrivalTime.setTime(arrivalTimeDate.getTime());
+	}
+	
+	
 	public Flights(String flight, String airCompany, String plainModel,
 			String departureCountry, String departureCity,
-			String departureAirport, Timestamp departureTime,
+			String departureAirport, Date departureTimeDate,
 			String arrivalCountry, String arrivalCity, String arrivalAirport,
-			Timestamp arrivalTime, double ticketsPrice, int availableCount) {
+			Date arrivalTimeDate, double ticketsPrice, int availableCount) {
 		super();
 		this.flight = flight;
 		this.airCompany = airCompany;
@@ -55,11 +76,11 @@ public class Flights {
 		this.departureCountry = departureCountry;
 		this.departureCity = departureCity;
 		this.departureAirport = departureAirport;
-		this.departureTime = departureTime;
+		this.departureTime = new Timestamp(departureTimeDate.getTime());
 		this.arrivalCountry = arrivalCountry;
 		this.arrivalCity = arrivalCity;
 		this.arrivalAirport = arrivalAirport;
-		this.arrivalTime = arrivalTime;
+		this.arrivalTime = new Timestamp(arrivalTimeDate.getTime());
 		this.ticketsPrice = ticketsPrice;
 		this.availableCount = availableCount;
 	}
@@ -108,6 +129,15 @@ public class Flights {
 	public Timestamp getDepartureTime() {
 		return departureTime;
 	}
+	//TODO timestamp return date
+	//	public Date getStartDate() {
+	//		return new java.util.Date(startDate.getTime());
+	//	}
+	//
+	//	public void setStartDate(Date startDate) {
+	//		this.startDate = new Timestamp (startDate.getTime());
+	//	}
+	
 	public void setDepartureTime(Timestamp departureTime) {
 		this.departureTime = departureTime;
 	}
@@ -183,16 +213,28 @@ public class Flights {
 		return (GregorianCalendar)calendar;
 	}
 	
-	//TODO разобраться используется ли getDtimeD() и setDtimeD(Date dtimeD)
-	public Date getDtimeD() {
-		return dtimeD;
-	}
-	public void setDtimeD(Date dtimeD) {
-		this.dtimeD = dtimeD;
-	}
 	public static Timestamp convertTime( GregorianCalendar cal) {
 		return new Timestamp(cal.getTimeInMillis());	
 	}
+
+
+	@Override
+	public String toString() {
+		return "Flights [id=" + id + ", flight=" + flight + ", airCompany="
+				+ airCompany + ", plainModel=" + plainModel
+				+ ", departureCountry=" + departureCountry + ", departureCity="
+				+ departureCity + ", departureAirport=" + departureAirport
+				+ ", departureTime=" + departureTime + ", arrivalCountry="
+				+ arrivalCountry + ", arrivalCity=" + arrivalCity
+				+ ", arrivalAirport=" + arrivalAirport + ", arrivalTime="
+				+ arrivalTime + ", ticketsPrice=" + ticketsPrice
+				+ ", availableCount=" + availableCount + ", bookedCount="
+				+ bookedCount + ", soldCount=" + soldCount + ", orders="
+				+ orders + ", customers=" + customers + ", departureTimeDate="
+				+ departureTimeDate + ", arrivalTimeDate=" + arrivalTimeDate
+				+ "]";
+	}
+	
 	
 	
 	

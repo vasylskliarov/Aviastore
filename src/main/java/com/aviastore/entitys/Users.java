@@ -66,4 +66,12 @@ public class Users {
 	public void setPermission(int permission) {
 		this.permission = permission;
 	}
+	
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", login=" + login + ", password="
+				+ password + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", permission=" + permission + "]";
+	}
+	
 }

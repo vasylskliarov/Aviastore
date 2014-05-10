@@ -15,14 +15,13 @@ public class Customers {
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	
-	@ManyToMany
-//	@JoinColumn(name="flights_id")
+	//TODO разобраться с @ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "Customers_Flights")
 	private Collection<Flights> flights;
 	
 	
 	@OneToMany(mappedBy = "customerId")
-//	@JoinColumn(name="orders_id")
 	private Collection<Orders> orders;
 	public Customers() {}
 	public Customers(String firstName, String lastName, String email,
@@ -75,6 +74,15 @@ public class Customers {
 	public void setOrders(Collection<Orders> orders) {
 		this.orders = orders;
 	}
+	
+	@Override
+	public String toString() {
+		return "Customers [id=" + id + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email
+				+ ", phoneNumber=" + phoneNumber + ", flights=" + flights
+				+ ", orders=" + orders + "]";
+	}
+	
 	
 	
 	

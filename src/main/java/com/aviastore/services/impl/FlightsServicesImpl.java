@@ -4,17 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.*;
 
-import com.aviastore.dao.impl.*;
+import com.aviastore.dao.*;
 import com.aviastore.entitys.*;
 import com.aviastore.services.*;
 
 @Service
-public class FlightsServicesImpl implements FlightsServices {
+public class FlightsServicesImpl implements FlightsServices, Serializable {
+	private static final long serialVersionUID = 1L;
 	//TODO try to use from interface FlightsDAO, not from class FlightsDAOImpl
 	@Autowired
-	private FlightsDAOImpl flightsDAO;
+	private FlightsDAO flightsDAO;
 	@Override
 	@Transactional
 	public void addFlight(Flights flight){
@@ -58,4 +60,14 @@ public class FlightsServicesImpl implements FlightsServices {
 	public boolean deleteFlight(Flights flight){
 		return flightsDAO.deleteFlight(flight);
 	}
+	public FlightsDAO getFlightsDAO() {
+		return flightsDAO;
+	}
+	public void setFlightsDAO(FlightsDAO flightsDAO) {
+		this.flightsDAO = flightsDAO;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

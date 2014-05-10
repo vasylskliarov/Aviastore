@@ -1,13 +1,18 @@
 package com.aviastore.dao.impl;
 
+import java.io.Serializable;
 import java.util.*;
+
 import javax.persistence.*;
+
 import com.aviastore.dao.*;
 import com.aviastore.entitys.*;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UsersDAOImpl implements UsersDAO{
+public class UsersDAOImpl implements UsersDAO, Serializable{
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -57,5 +62,18 @@ public class UsersDAOImpl implements UsersDAO{
 			return -1;
 		}
 	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 	
 }

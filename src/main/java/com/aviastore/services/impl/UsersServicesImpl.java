@@ -4,15 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.*;
 
 import com.aviastore.dao.UsersDAO;
-import com.aviastore.dao.impl.*;
 import com.aviastore.entitys.*;
 import com.aviastore.services.*;
 
 @Service
-public class UsersServicesImpl implements UsersServices{
+public class UsersServicesImpl implements UsersServices, Serializable{
+	private static final long serialVersionUID = 1L;
 	//TODO try to use from interface UsersDAO, not from class UsersDAOImpl
 	@Autowired
 	private UsersDAO usersDAO;
@@ -37,4 +38,14 @@ public class UsersServicesImpl implements UsersServices{
 	public int isValid(String login, String password){
 		return usersDAO.isValid(login, password);
 	}
+	public UsersDAO getUsersDAO() {
+		return usersDAO;
+	}
+	public void setUsersDAO(UsersDAO usersDAO) {
+		this.usersDAO = usersDAO;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

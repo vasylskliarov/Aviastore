@@ -32,11 +32,11 @@ public class AdminBean implements Serializable {
 	private String departureCountry;
 	private String departureCity;
 	private String departureAirport;
-	private Timestamp departureTime;
+	private Date departureTime;
 	private String arrivalCountry;
 	private String arrivalCity;
 	private String arrivalAirport;
-	private Timestamp arrivalTime;
+	private Date arrivalTime;
 	private double ticketsPrice;
 	private int availableCount;
 	
@@ -52,12 +52,18 @@ public class AdminBean implements Serializable {
 	public List<Orders> getCancelOrders() {
 		//TODO change duplicated method date to normal using startPoint
 		//GregorianCalendar startPoint = new GregorianCalendar();
+		System.out.println("Зашел в метод получения отменненный заказов");
 		GregorianCalendar before3Days = new GregorianCalendar();
 		before3Days.add(GregorianCalendar.DAY_OF_YEAR, -3);
+		System.out.println("Начал ordersServices.getOrders");
 		List<Orders> orders = ordersServices.getOrders(new Date(70,1,1), new Date(before3Days.getTimeInMillis()),Orders.BOOKED );
+		System.out.println("закончил запрос ordersServices.getOrders");
 		for(Orders ord: orders){
+			System.out.println("меняю статус changeOrderStatusToCanceled(ord)");
 			ordersServices.changeOrderStatusToCanceled(ord);
+			System.out.println("поменял статус changeOrderStatusToCanceled(ord)");
 		}
+		System.out.println("закончил. Пытаюсь отобразить их");
 		showCanceledOrders = true;
 		return orders;
 	}
@@ -77,6 +83,7 @@ public class AdminBean implements Serializable {
 				arrivalTime, 
 				ticketsPrice, 
 				availableCount);
+
 		flightsServices.addFlight(newFlight);
 		flightsTimeTable = null;
 	}
@@ -84,19 +91,24 @@ public class AdminBean implements Serializable {
 		System.out.println("update Timetable");
 		if(startDate != null && endDate != null) {
 			flightsTimeTable = flightsServices.getTimetableByDates(startDate, endDate);
+			
 			this.showTimeTable = true;
 			this.showCanceledOrders = false;
 			
 		}
-		if(flightsTimeTable != null)
-		//TODO change duplicated method date to normal
-		for(Flights fl: flightsTimeTable){
-			System.out.println(
-					fl.getDepartureCity()+" "+
-					fl.getArrivalCity()+" "
-					+fl.getDtimeD().getHours()+":"+fl.getDtimeD().getMinutes());
+		if(flightsTimeTable != null){
+			
+			//TODO change duplicated method date to normal
+			System.out.println("!!!!!!!не пустая таблица поиска!!!!!!!!");
+			for(Flights fl: flightsTimeTable){
+				if(fl !=null)
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+
+						fl.getDepartureCity()+" "+
+						fl.getArrivalCity()+" "
+						+fl.getDepartureTimeDate().getHours()+":"+fl.getDepartureTimeDate().getMinutes());
+			}
 		}
-		else {System.out.println("Timetable empty");}	
+		else {System.out.println("###############################################Timetable empty");}	
 	}
 	public void onEdit(RowEditEvent event) {
 		Flights flight = (Flights)event.getObject();
@@ -162,10 +174,11 @@ public class AdminBean implements Serializable {
 	public void setDepartureAirport(String departureAirport) {
 		this.departureAirport = departureAirport;
 	}
-	public Timestamp getDepartureTime() {
+	
+	public Date getDepartureTime() {
 		return departureTime;
 	}
-	public void setDepartureTime(Timestamp departureTime) {
+	public void setDepartureTime(Date departureTime) {
 		this.departureTime = departureTime;
 	}
 	public String getArrivalCountry() {
@@ -186,10 +199,11 @@ public class AdminBean implements Serializable {
 	public void setArrivalAirport(String arrivalAirport) {
 		this.arrivalAirport = arrivalAirport;
 	}
-	public Timestamp getArrivalTime() {
+	
+	public Date getArrivalTime() {
 		return arrivalTime;
 	}
-	public void setArrivalTime(Timestamp arrivalTime) {
+	public void setArrivalTime(Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 	public double getTicketsPrice() {

@@ -4,17 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.*;
 
-import com.aviastore.dao.impl.*;
+import com.aviastore.dao.OrdersDAO;
 import com.aviastore.entitys.*;
 import com.aviastore.services.*;
 
 @Service
-public class OrdersServicesImpl implements OrdersServices {
+public class OrdersServicesImpl implements OrdersServices, Serializable {
+	private static final long serialVersionUID = 1L;
 	//TODO try to use from interface OrdersDAO, not from class OrdersDAOImpl
 	@Autowired
-	OrdersDAOImpl ordersDAO;
+	OrdersDAO ordersDAO;
 	
 	@Override
 	@Transactional
@@ -65,4 +67,14 @@ public class OrdersServicesImpl implements OrdersServices {
 	public List<Report> getStatByDates(Date startDate, Date endDate){
 		return ordersDAO.getStatByDates(startDate, endDate);
 	}
+	public OrdersDAO getOrdersDAO() {
+		return ordersDAO;
+	}
+	public void setOrdersDAO(OrdersDAO ordersDAO) {
+		this.ordersDAO = ordersDAO;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 }

@@ -56,4 +56,11 @@ public class Report {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
+	
+	@Override
+	public String toString() {
+		return "Report [date=" + date + ", quantity=" + quantity + ", total="
+				+ total + ", origin=" + origin + ", destination=" + destination
+				+ "]";
+	}
 }
