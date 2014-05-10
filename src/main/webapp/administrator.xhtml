@@ -21,247 +21,208 @@
 
 						<h:panelGrid id="components" columns="9">
 							<p:outputLabel>From date:</p:outputLabel>
-
-
 							<p:calendar id="fromDate" value="#{adminBean.startDate}"
 								pattern="dd MMMM yyyy" locale="en" required="true"
 								readonlyInput="true" navigator="true">
 								<p:ajax process="fromDate" update="toDate" partialSubmit="true"
 									event="dateSelect" />
 							</p:calendar>
-
 							<p:spacer width="20" height="60" />
-
 							<p:outputLabel>To:</p:outputLabel>
-
 							<p:calendar id="toDate" value="#{adminBean.endDate}"
 								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
 								required="true" mindate="#{adminBean.startDate}"
 								navigator="true" />
-
-
 							<p:commandButton value="search" id="search"
 								process="fromDate,toDate" update="flights"
 								action="#{adminBean.updateTimetable()}" ajax="false">
 							</p:commandButton>
-
 							<p:commandButton icon="ui-icon-plusthick" style="margin:0"
-								title="Добавить новый полет" ajax="true"
+								title="add new flight to timetabler" ajax="true"
 								onclick="newFlight.show();">
-
 							</p:commandButton>
-
 							<p:spacer width="20" height="60" />
-
 							<p:commandButton value="overdue orders" id="overO"
 								immediate="true" ajax="true" onclick="canceledO.show();"
 								actionListener="#{adminBean.cancelAllOrders()}" process="@none"
 								update="@none">
 							</p:commandButton>
-
 						</h:panelGrid>
-
 					</div>
 				</p:panel>
 				<p:panel>
-
-					<p:dataTable id="flights" var="flight"
+					<p:dataTable id="flights" var="flightTab"
 						value="#{adminBean.flightsTimeTable}" style="width:100%;"
 						editable="true" rendered="#{adminBean.showTimeTable}">
 						<p:ajax event="rowEdit" update="@this"
 							listener="#{adminBean.onEdit}" />
 						<f:facet name="header">Timetable</f:facet>
 						<p:ajax event="rowEdit" update="flights" />
-
-
-
-
 						<p:column width="60px" headerText="flight">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.flight}" />
+									<h:outputText value="#{flightTab.flight}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.flight}" />
+									<h:inputText value="#{flightTab.flight}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="airCompany">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.airCompany}" />
+									<h:outputText value="#{flightTab.airCompany}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.airCompany}" />
+									<h:inputText value="#{flightTab.airCompany}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="plainModel">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.plainModel}" />
+									<h:outputText value="#{flightTab.plainModel}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.plainModel}" />
+									<h:inputText value="#{flightTab.plainModel}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="departureCountry">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.departureCountry}" />
+									<h:outputText value="#{flightTab.departureCountry}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.departureCountry}" />
+									<h:inputText value="#{flightTab.departureCountry}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="departureCity">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.departureCity}" />
+									<h:outputText value="#{flightTab.departureCity}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.departureCity}" />
+									<h:inputText value="#{flightTab.departureCity}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="departureAirport">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.departureAirport}" />
+									<h:outputText value="#{flightTab.departureAirport}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.departureAirport}" />
+									<h:inputText value="#{flightTab.departureAirport}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="departureTime">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.departureTime}">
+									<h:outputText value="#{flightTab.departureTimeDate}">
 										<f:convertDateTime pattern="HH:mm" />
 									</h:outputText>
 									<br />
-									<h:outputText value="#{flights.departureTime}">
+									<h:outputText value="#{flightTab.departureTimeDate}">
 										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar value="#{flights.departureTime}"
+									<p:calendar value="#{flightTab.departureTimeDate}"
 										pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
-										locale="en" mindate="#{flights.departureTime}">
+										locale="en" mindate="#{flightTab.departureTimeDate}">
 									</p:calendar>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						
-						arrivalCountry
 						<p:column width="60px" headerText="arrivalCountry">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.arrivalCountry}" />
+									<h:outputText value="#{flightTab.arrivalCountry}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.arrivalCountry}" />
+									<h:inputText value="#{flightTab.arrivalCountry}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="arrivalCity">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.arrivalCity}" />
+									<h:outputText value="#{flightTab.arrivalCity}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.arrivalCity}" />
+									<h:inputText value="#{flightTab.arrivalCity}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="arrivalAirport">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.arrivalAirport}" />
+									<h:outputText value="#{flightTab.arrivalAirport}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.arrivalAirport}" />
+									<h:inputText value="#{flightTab.arrivalAirport}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" headerText="arrivalTime">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.arrivalTime}">
+									<h:outputText value="#{flightTab.arrivalTimeDate}">
 										<f:convertDateTime pattern="HH:mm" />
 									</h:outputText>
 									<br />
-									<h:outputText value="#{flights.arrivalTime}">
+									<h:outputText value="#{flightTab.arrivalTimeDate}">
 										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar value="#{flights.arrivalTime}"
+									<p:calendar value="#{flightTab.arrivalTimeDate}"
 										pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
-										locale="en" mindate="#{flights.arrivalTime}">
+										locale="en" mindate="#{flightTab.arrivalTimeDate}">
 									</p:calendar>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
-
-
-
-
 						<p:column width="10%" headerText="Price per ticket">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.ticketsPrice}" />
+									<h:outputText value="#{flightTab.ticketsPrice}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.ticketsPrice}"></h:inputText>
+									<h:inputText value="#{flightTab.ticketsPrice}"></h:inputText>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
-
-
-
-
 						<p:column width="10%" headerText="available tickets">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.availableCount}" />
+									<h:outputText value="#{flightTab.availableCount}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{flights.availableCount}"></h:inputText>
+									<h:inputText value="#{flightTab.availableCount}"></h:inputText>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
-
-
-
-
-
-
 						<p:column width="5%" headerText="Booked tickets">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.bookedCount}" />
+									<h:outputText value="#{flightTab.bookedCount}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:outputText value="#{flights.bookedCount}" />
+									<h:outputText value="#{flightTab.bookedCount}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
-
 						<p:column width="5%" headerText="Sold tickets">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{flights.soldCount}" />
+									<h:outputText value="#{flightTab.soldCount}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:outputText value="#{flights.soldCount}" />
+									<h:outputText value="#{flightTab.soldCount}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -272,16 +233,12 @@
 					</p:dataTable>
 				</p:panel>
 			</h:form>
-
-			<p:dialog widgetVar="canceledO" width="700" height="400"
-				header="Canceled orders" resizable="true" modal="true"
-				appendTo="@(body)" showEffect="fade" hideEffect="fade"
-				rendered="#{adminBean.showCanceledOrders}" visible="true">
+			 <p:dialog widgetVar="canceledO" width="700" height="400" header="Canceled orders"
+                resizable="true" modal="true" appendTo="@(body)" 
+                showEffect="fade" hideEffect="fade" rendered="#{adminBean.showCanceledOrders}" visible="true">
 				<h:form>
 					<div align="center">
-						<p:dataTable id="cO" var="order"
-							value="#{adminBean.getCancelOrders()}" style="width:100%;"
-							rendered="true">
+						<p:dataTable id="cO" var="order" value="#{adminBean.getCancelOrders()}" style="width:100%;" rendered="true">
 							<p:column headerText="Customer firstName">
 								<h:outputText value="#{order.customerId.firstName}"></h:outputText>
 							</p:column>
@@ -294,14 +251,17 @@
 							<p:column headerText="Customer phoneNumber">
 								<h:outputText value="#{order.customerId.phoneNumber}"></h:outputText>
 							</p:column>
-							
+
 							<p:column headerText="Flight">
-								<h:outputText value="#{order.flightId.departureTime} ">
+								<h:outputText value="#{order.flightId.departureTimeDate} ">
+									<f:convertDateTime pattern="dd MMMM yyyy HH:mm " locale="en" />
+								</h:outputText>
+								<h:outputText value="#{order.flightId.arrivalTimeDate} ">
 									<f:convertDateTime pattern="dd MMMM yyyy HH:mm " locale="en" />
 								</h:outputText>
 
 								<h:outputText
-									value=" #{order.flightId.departureCity} - #{order.flight.arrivalCity}">
+									value=" #{order.flightId.departureCity} - #{order.flightId.arrivalCity}">
 								</h:outputText>
 							</p:column>
 							<p:column headerText="Number of tickets">
@@ -311,7 +271,6 @@
 							<p:column headerText="Status">
 								<h:outputText value="canceled"></h:outputText>
 							</p:column>
-
 						</p:dataTable>
 						<p:commandButton value="Ok" oncomplete="canceledO.hide()"
 							update="cO">
@@ -319,43 +278,70 @@
 					</div>
 				</h:form>
 			</p:dialog>
-
 			<p:dialog widgetVar="newFlight" width="300" height="500"
 				header="New flight" resizable="true" modal="true" appendTo="@(body)"
 				showEffect="fade" hideEffect="fade" focus="form:focus">
 				<h:form id="form">
 					<div align="center">
 						<h:panelGrid id="addnew" columns="1">
-							<p:outputLabel id="focus" value="Date and time: " />
-							<p:calendar value="#{adminMB.newFDate}"
+							<p:outputLabel  value="flight: " />
+							<p:inputText id="focus" value="#{adminBean.flight}" required="true" />
+							<p />
+							<p:outputLabel value="airCompany: " />
+							<p:inputText value="#{adminBean.airCompany}" required="true" />
+							<p />
+							<p:outputLabel value="plainModel: " />
+							<p:inputText value="#{adminBean.plainModel}" required="true" />
+							<p />
+							<p:outputLabel value="departureCountry: " />
+							<p:inputText value="#{adminBean.departureCountry}"
+								required="true" />
+							<p />
+							<p:outputLabel value="departureCity: " />
+							<p:inputText value="#{adminBean.departureCity}" required="true" />
+							<p />
+							<p:outputLabel value="departureAirport: " />
+							<p:inputText value="#{adminBean.departureAirport}"
+								required="true" />
+							<p />
+							<p:outputLabel value="Date and time: " />
+							<p:calendar value="#{adminBean.departureTime}"
+								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
+								locale="en" required="true" readonlyInput="true"
+								navigator="true" maxlength="20">
+							</p:calendar>
+							<p />
+							<p:outputLabel value="arrivalCountry: " />
+							<p:inputText value="#{adminBean.arrivalCountry}" required="true" />
+							<p />
+							<p:outputLabel value="arrivalCity: " />
+							<p:inputText value="#{adminBean.arrivalCity}" required="true" />
+							<p />
+							<p:outputLabel value="arrivalAirport: " />
+							<p:inputText value="#{adminBean.arrivalAirport}" required="true" />
+							<p />
+							<p:outputLabel  value="Date and time: " />
+							<p:calendar value="#{adminBean.arrivalTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
 								navigator="true" maxlength="20">
 							</p:calendar>
 							<p />
 
-							<p:outputLabel value="Origin: " />
-							<p:inputText value="#{adminMB.origin}" required="true" />
-
-							<p />
-							<p:outputLabel value="Destination: " />
-							<p:inputText value="#{adminMB.destination}" required="true" />
-
-							<p />
-							<p:outputLabel value="Number of tickets " />
-							<p:spinner value="#{adminMB.nmbOfTickets}" prefix="#" min="0"
-								size="18" />
-
 							<p>
 								<p:outputLabel value="Price per one ticket" />
-								<p:spinner value="#{adminMB.price}" prefix="$" min="0" size="18" />
+								<p:spinner value="#{adminBean.ticketsPrice}" prefix="$" min="0"
+									size="18" />
 							</p>
+							<p:outputLabel value="Number of tickets " />
+							<p:spinner value="#{adminBean.availableCount}" prefix="#" min="0"
+								size="18" />
+							<p />
 							<div align="center">
 								<p>
 									<p:commandButton icon="ui-icon-plusthick" value="add flight"
-										process="@all" actionListener="#{adminMB.addNewFlight()}"
+										process="@all" actionListener="#{adminBean.addNewFlight()}"
 										oncomplete="newFlight.hide()">
-
 									</p:commandButton>
 								</p>
 							</div>
@@ -363,8 +349,6 @@
 					</div>
 				</h:form>
 			</p:dialog>
-
-
 		</ui:define>
 	</ui:composition>
 </h:body>
