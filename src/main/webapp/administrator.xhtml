@@ -40,9 +40,8 @@
 								process="fromDate,toDate" update="flights"
 								action="#{adminBean.updateTimetable()}" ajax="false">
 							</p:commandButton>
-							<p:commandButton icon="ui-icon-plusthick" style="margin:0"
-								title="add new flight to timetabler" ajax="true"
-								onclick="newFlight.show();">
+							<p:commandButton icon="ui-icon-plusthick" id="addNewFlightBtn" style="margin:0"
+								title="add new flight to timetabler" ajax="true" onclick="newFlight.show();">
 							</p:commandButton>
 							<p:spacer width="20" height="60" />
 							<p:commandButton value="Отменить старые заказы" id="overO"
@@ -58,9 +57,9 @@
 						editable="true" rendered="#{adminBean.showTimeTable}">
 						<p:ajax event="rowEdit" update="@this"
 							listener="#{adminBean.onEdit}" />
-						<f:facet name="header">Timetable</f:facet>
+						<f:facet name="header">Список выбранных рейсов:</f:facet>
 						<p:ajax event="rowEdit" update="flights" />
-						<p:column width="60px" headerText="flight">
+						<p:column width="60px" filterBy="flight" headerText="flight">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.flight}" />
@@ -70,7 +69,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="airCompany">
+						<p:column width="60px"  filterBy="airCompany" headerText="airCompany">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.airCompany}" />
@@ -80,7 +79,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="plainModel">
+						<p:column width="60px" filterBy="plainModel" headerText="plainModel">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.plainModel}" />
@@ -90,7 +89,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="departureCountry">
+						<p:column width="60px" filterBy="departureCountry" headerText="departureCountry">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureCountry}" />
@@ -100,7 +99,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="departureCity">
+						<p:column width="60px" filterBy="departureCity"  headerText="departureCity">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureCity}" />
@@ -110,7 +109,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="departureAirport">
+						<p:column width="60px" filterBy="departureAirport" headerText="departureAirport">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureAirport}" />
@@ -120,7 +119,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="departureTime">
+						<p:column width="60px" sortBy="departureTime" headerText="departureTime">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureTimeDate}">
@@ -139,7 +138,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="arrivalCountry">
+						<p:column width="60px" filterBy="arrivalCountry"  headerText="arrivalCountry">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalCountry}" />
@@ -149,7 +148,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="arrivalCity">
+						<p:column width="60px" filterBy="arrivalCity"  headerText="arrivalCity">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalCity}" />
@@ -159,7 +158,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="arrivalAirport">
+						<p:column width="60px" filterBy="arrivalAirport"  headerText="arrivalAirport">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalAirport}" />
@@ -169,7 +168,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="60px" headerText="arrivalTime">
+						<p:column width="60px" sortBy="arrivalTime"  headerText="arrivalTime">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalTimeDate}">
@@ -188,7 +187,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="10%" headerText="Price per ticket">
+						<p:column width="10%" filterBy="ticketsPrice"  headerText="Price per ticket">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.ticketsPrice}" />
@@ -198,7 +197,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="10%" headerText="available tickets">
+						<p:column width="2.5%" filterBy="availableCount" headerText="available tickets">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.availableCount}" />
@@ -208,7 +207,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="5%" headerText="Booked tickets">
+						<p:column width="2.5%" filterBy="bookedCount" headerText="Booked tickets">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.bookedCount}" />
@@ -218,7 +217,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="2.5%" headerText="Sold tickets">
+						<p:column width="2.5%" filterBy="soldCount" headerText="Sold tickets">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.soldCount}" />
@@ -229,13 +228,13 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column width="5%">
+						<p:column width="2.5%">
 							<p:rowEditor />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 			</h:form>
-			<p:dialog widgetVar="canceledO" width="800" height="600"
+			<p:dialog widgetVar="canceledO" width="80%" height="400"
 				header="Canceled orders" resizable="true" modal="true"
 				appendTo="@(body)" showEffect="fade" hideEffect="fade"
 				rendered="#{adminBean.showCanceledOrders}" visible="true">
@@ -283,9 +282,9 @@
 				</h:form>
 			</p:dialog>
 
-			<p:dialog widgetVar="newFlight" width="800" height="600"
+			<p:dialog widgetVar="newFlight" width="800" height="300"
 				header="New flight" resizable="true" modal="true" appendTo="@(body)"
-				showEffect="fade" hideEffect="fade" visible="true">
+				showEffect="fade" hideEffect="fade" visible="false" >
 				<h:form id="form">
 					<div align="center">
 						<h:panelGrid id="addnew" columns="4">
