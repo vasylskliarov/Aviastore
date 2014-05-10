@@ -23,7 +23,7 @@ public class FlightsDAOImpl implements FlightsDAO, Serializable {
 	@Override
 	public void addFlight(Flights flight) {
 		entityManager.persist(flight);	
-		entityManager.flush();
+//		entityManager.flush();
 	}
 	@Override
 	public List<Flights> getTimetableByPlaces(String departure, String arrival,	Date currDate) {

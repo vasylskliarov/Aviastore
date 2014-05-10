@@ -18,9 +18,12 @@
 			<h:form>
 				<p:panel>
 					<div align="center">
+<div align="center">
+<p:outputLabel>Поиск рейсов:</p:outputLabel>
 
+</div>
 						<h:panelGrid id="components" columns="9">
-							<p:outputLabel>From date:</p:outputLabel>
+							<p:outputLabel>С даты:</p:outputLabel>
 							<p:calendar id="fromDate" value="#{adminBean.startDate}"
 								pattern="dd MMMM yyyy" locale="en" required="true"
 								readonlyInput="true" navigator="true">
@@ -28,7 +31,7 @@
 									event="dateSelect" />
 							</p:calendar>
 							<p:spacer width="20" height="60" />
-							<p:outputLabel>To:</p:outputLabel>
+							<p:outputLabel>По дату:</p:outputLabel>
 							<p:calendar id="toDate" value="#{adminBean.endDate}"
 								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
 								required="true" mindate="#{adminBean.startDate}"
@@ -42,7 +45,7 @@
 								onclick="newFlight.show();">
 							</p:commandButton>
 							<p:spacer width="20" height="60" />
-							<p:commandButton value="overdue orders" id="overO"
+							<p:commandButton value="Отменить старые заказы" id="overO"
 								immediate="true" ajax="true" onclick="canceledO.show();"
 								actionListener="#{adminBean.cancelAllOrders()}" process="@none"
 								update="@none">
@@ -51,8 +54,7 @@
 					</div>
 				</p:panel>
 				<p:panel>
-					<p:dataTable id="flights" var="flightTab"
-						value="#{adminBean.flightsTimeTable}" style="width:100%;"
+					<p:dataTable id="flights" var="flightTab" value="#{adminBean.flightsTimeTable}" style="width:2000px;"
 						editable="true" rendered="#{adminBean.showTimeTable}">
 						<p:ajax event="rowEdit" update="@this"
 							listener="#{adminBean.onEdit}" />
@@ -216,7 +218,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="5%" headerText="Sold tickets">
+						<p:column width="2.5%" headerText="Sold tickets">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.soldCount}" />
@@ -227,18 +229,21 @@
 							</p:cellEditor>
 						</p:column>
 
-						<p:column width="2.5%">
+						<p:column width="5%">
 							<p:rowEditor />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 			</h:form>
-			 <p:dialog widgetVar="canceledO" width="700" height="400" header="Canceled orders"
-                resizable="true" modal="true" appendTo="@(body)" 
-                showEffect="fade" hideEffect="fade" rendered="#{adminBean.showCanceledOrders}" visible="true">
+			<p:dialog widgetVar="canceledO" width="800" height="600"
+				header="Canceled orders" resizable="true" modal="true"
+				appendTo="@(body)" showEffect="fade" hideEffect="fade"
+				rendered="#{adminBean.showCanceledOrders}" visible="true">
 				<h:form>
 					<div align="center">
-						<p:dataTable id="cO" var="order" value="#{adminBean.getCancelOrders()}" style="width:100%;" rendered="true">
+						<p:dataTable id="cO"  var="order"
+							value="#{adminBean.getCancelOrders()}" style="width:100%;"
+							rendered="true">
 							<p:column headerText="Customer firstName">
 								<h:outputText value="#{order.customerId.firstName}"></h:outputText>
 							</p:column>
@@ -251,7 +256,6 @@
 							<p:column headerText="Customer phoneNumber">
 								<h:outputText value="#{order.customerId.phoneNumber}"></h:outputText>
 							</p:column>
-
 							<p:column headerText="Flight">
 								<h:outputText value="#{order.flightId.departureTimeDate} ">
 									<f:convertDateTime pattern="dd MMMM yyyy HH:mm " locale="en" />
@@ -278,65 +282,65 @@
 					</div>
 				</h:form>
 			</p:dialog>
-			<p:dialog widgetVar="newFlight" width="300" height="500"
+
+			<p:dialog widgetVar="newFlight" width="800" height="600"
 				header="New flight" resizable="true" modal="true" appendTo="@(body)"
-				showEffect="fade" hideEffect="fade" focus="form:focus">
+				showEffect="fade" hideEffect="fade" visible="true">
 				<h:form id="form">
 					<div align="center">
-						<h:panelGrid id="addnew" columns="1">
-							<p:outputLabel  value="flight: " />
-							<p:inputText id="focus" value="#{adminBean.flight}" required="true" />
-							<p />
+						<h:panelGrid id="addnew" columns="4">
+							<p:outputLabel value="flight: " />
+							<p:inputText value="#{adminBean.flight}" required="true" />
+							<p:outputLabel />
+							<p:outputLabel />
+							<p:outputLabel value=" " />
+							<p:outputLabel value=" " />
+							<p:outputLabel value=" " />
+							<p:outputLabel value=" " />
 							<p:outputLabel value="airCompany: " />
 							<p:inputText value="#{adminBean.airCompany}" required="true" />
-							<p />
+					
 							<p:outputLabel value="plainModel: " />
 							<p:inputText value="#{adminBean.plainModel}" required="true" />
-							<p />
+							
 							<p:outputLabel value="departureCountry: " />
 							<p:inputText value="#{adminBean.departureCountry}"
 								required="true" />
-							<p />
+							<p:outputLabel value="arrivalCountry: " />
+							<p:inputText value="#{adminBean.arrivalCountry}" required="true" />
+
 							<p:outputLabel value="departureCity: " />
 							<p:inputText value="#{adminBean.departureCity}" required="true" />
-							<p />
+							<p:outputLabel value="arrivalCity: " />
+							<p:inputText value="#{adminBean.arrivalCity}" required="true" />
+
 							<p:outputLabel value="departureAirport: " />
 							<p:inputText value="#{adminBean.departureAirport}"
 								required="true" />
-							<p />
+							<p:outputLabel value="arrivalAirport: " />
+							<p:inputText value="#{adminBean.arrivalAirport}" required="true" />
+
 							<p:outputLabel value="Date and time: " />
 							<p:calendar value="#{adminBean.departureTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
 								navigator="true" maxlength="20">
 							</p:calendar>
-							<p />
-							<p:outputLabel value="arrivalCountry: " />
-							<p:inputText value="#{adminBean.arrivalCountry}" required="true" />
-							<p />
-							<p:outputLabel value="arrivalCity: " />
-							<p:inputText value="#{adminBean.arrivalCity}" required="true" />
-							<p />
-							<p:outputLabel value="arrivalAirport: " />
-							<p:inputText value="#{adminBean.arrivalAirport}" required="true" />
-							<p />
-							<p:outputLabel  value="Date and time: " />
+							<p:outputLabel value="Date and time: " />
 							<p:calendar value="#{adminBean.arrivalTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
 								navigator="true" maxlength="20">
 							</p:calendar>
-							<p />
 
-							<p>
-								<p:outputLabel value="Price per one ticket" />
-								<p:spinner value="#{adminBean.ticketsPrice}" prefix="$" min="0"
-									size="18" />
-							</p>
+							<p:outputLabel value="Price per one ticket" />
+							<p:spinner value="#{adminBean.ticketsPrice}" prefix="$" min="0"
+								size="18" />
 							<p:outputLabel value="Number of tickets " />
 							<p:spinner value="#{adminBean.availableCount}" prefix="#" min="0"
 								size="18" />
-							<p />
+							<p:outputLabel value=" " />
+							<p:outputLabel value=" " />
 							<div align="center">
 								<p>
 									<p:commandButton icon="ui-icon-plusthick" value="add flight"

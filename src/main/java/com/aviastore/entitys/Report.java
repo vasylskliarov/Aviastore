@@ -1,11 +1,15 @@
 package com.aviastore.entitys;
 
+import java.io.Serializable;
 import java.util.*;
 
 import javax.inject.Named;
+import javax.persistence.Transient;
 
 @Named
-public class Report {
+public class Report implements Serializable{
+	@Transient
+	private static final long serialVersionUID = 1L;
 	private Date date;
 	private Long quantity;
 	private double total;
@@ -57,6 +61,9 @@ public class Report {
 		this.destination = destination;
 	}
 	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		return "Report [date=" + date + ", quantity=" + quantity + ", total="

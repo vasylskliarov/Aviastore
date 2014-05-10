@@ -54,6 +54,7 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 			customersDAO.addCustomer(order.getCustomerId());
 		}	
 		entityManager.persist(order);
+//		entityManager.flush();
 		flightsDAO.updateBookedTickets(flight, flight.getBookedCount() + order.getAmountTickets());
 		flightsDAO.updateFreeTickets(flight, flight.getAvailableCount() - order.getAmountTickets());
 		return true;
@@ -93,17 +94,16 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 			return false;
 		}else if (order.getPayStatus() == Orders.CANCELED) {
 			return false;
-		}else{
+		}
 			order.setPayStatus(Orders.CANCELED);
 			flightsDAO.updateBookedTickets( order.getFlightId(), order.getFlightId().getBookedCount() - order.getAmountTickets());
 			flightsDAO.updateFreeTickets( order.getFlightId(), order.getFlightId().getAvailableCount() + order.getAmountTickets());
 			return true;
-		}
+		
 	}
-//TODO НЕ РАБОТАЕТ ЗАПРОС !!!!
+
 	@Override
 	public List<Orders> getOrders(Date startDate, Date endDate, int status) {
-		System.out.println("\n\n\nНачало dao запроса getOrders(Date startDate, Date endDate, int status)\n\n\n");
 		TypedQuery<Orders> query = entityManager.createQuery(
 				"SELECT o FROM Orders o "+
 				"WHERE o.bookingDate BETWEEN :startDate AND :endDate "

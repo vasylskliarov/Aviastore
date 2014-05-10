@@ -1,5 +1,6 @@
 package com.aviastore.entitys;
 
+import java.io.Serializable;
 import java.util.*;
 
 import javax.inject.Named;
@@ -7,7 +8,9 @@ import javax.persistence.*;
 
 @Named
 @Entity
-public class Customers {
+public class Customers implements Serializable{
+	@Transient
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -75,6 +78,10 @@ public class Customers {
 		this.orders = orders;
 	}
 	
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		return "Customers [id=" + id + ", firstName=" + firstName

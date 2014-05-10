@@ -1,5 +1,6 @@
 package com.aviastore.entitys;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.inject.Named;
@@ -9,7 +10,9 @@ import java.util.*;
 
 @Named
 @Entity
-public class Flights {
+public class Flights implements Serializable{
+	@Transient
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -216,7 +219,12 @@ public class Flights {
 	public static Timestamp convertTime( GregorianCalendar cal) {
 		return new Timestamp(cal.getTimeInMillis());	
 	}
+	
 
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public String toString() {

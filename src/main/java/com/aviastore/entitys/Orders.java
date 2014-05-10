@@ -1,5 +1,6 @@
 package com.aviastore.entitys;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -8,7 +9,9 @@ import javax.persistence.*;
 
 @Named
 @Entity
-public class Orders {
+public class Orders implements Serializable{
+	@Transient
+	private static final long serialVersionUID = 1L;
 	public static final int BOOKED=0;
 	public static final int SOLD=1;
 	public static final int CANCELED=2;	
@@ -107,6 +110,9 @@ public class Orders {
 		return flightId.getTicketsPrice()*this.getAmountTickets();
 	}
 	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		return "Orders [id=" + id + ", customerId=" + customerId

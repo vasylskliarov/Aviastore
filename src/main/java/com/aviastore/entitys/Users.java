@@ -1,11 +1,15 @@
 package com.aviastore.entitys;
 
+import java.io.Serializable;
+
 import javax.inject.Named;
 import javax.persistence.*;
 
 @Named
 @Entity
-public class Users {
+public class Users implements Serializable{
+	@Transient
+	private static final long serialVersionUID = 1L;
 	public static final int SECURITY_OFFICER=0;
 	public static final int ADMINISTRATOR=1;
 	public static final int ACCOUNTANT=2;
@@ -67,6 +71,24 @@ public class Users {
 		this.permission = permission;
 	}
 	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public static int getSecurityOfficer() {
+		return SECURITY_OFFICER;
+	}
+	public static int getAdministrator() {
+		return ADMINISTRATOR;
+	}
+	public static int getAccountant() {
+		return ACCOUNTANT;
+	}
+	public static int getAnalytic() {
+		return ANALYTIC;
+	}
+	public static int getBlocked() {
+		return BLOCKED;
+	}
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", login=" + login + ", password="

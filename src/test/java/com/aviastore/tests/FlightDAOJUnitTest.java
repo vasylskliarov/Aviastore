@@ -15,13 +15,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aviastore.dao.FlightsDAO;
-import com.aviastore.entitys.Flights;
+import com.aviastore.dao.*;
+import com.aviastore.entitys.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/resources/spring/application-config.xml"})
 @Transactional
-//@TransactionConfiguration(defaultRollback = true)
+@TransactionConfiguration(defaultRollback = true)
 public class FlightDAOJUnitTest {
  
     @Autowired

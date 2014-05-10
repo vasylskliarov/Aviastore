@@ -22,6 +22,7 @@ public class CustomersDAOImpl implements CustomersDAO, Serializable {
 		if (customer == null)
 			return;
 		entityManager.persist(customer);
+//		entityManager.flush();
 	}
 	@Override
 	public List<Customers> getCustomers() {

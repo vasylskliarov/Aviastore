@@ -45,25 +45,22 @@ public class AdminBean implements Serializable {
 	//TODO try to use non static method flightsTimeTable
 	private List<Flights> flightsTimeTable = null;
 	
-	public AdminBean() {}
+	public AdminBean() {
+		showTimeTable = false;
+		showCanceledOrders = false;
+	}
 	public void cancelAllOrders(){
 		showCanceledOrders = true;
 	}
 	public List<Orders> getCancelOrders() {
 		//TODO change duplicated method date to normal using startPoint
 		//GregorianCalendar startPoint = new GregorianCalendar();
-		System.out.println("Зашел в метод получения отменненный заказов");
 		GregorianCalendar before3Days = new GregorianCalendar();
 		before3Days.add(GregorianCalendar.DAY_OF_YEAR, -3);
-		System.out.println("Начал ordersServices.getOrders");
 		List<Orders> orders = ordersServices.getOrders(new Date(70,1,1), new Date(before3Days.getTimeInMillis()),Orders.BOOKED );
-		System.out.println("закончил запрос ordersServices.getOrders");
 		for(Orders ord: orders){
-			System.out.println("меняю статус changeOrderStatusToCanceled(ord)");
 			ordersServices.changeOrderStatusToCanceled(ord);
-			System.out.println("поменял статус changeOrderStatusToCanceled(ord)");
 		}
-		System.out.println("закончил. Пытаюсь отобразить их");
 		showCanceledOrders = true;
 		return orders;
 	}
