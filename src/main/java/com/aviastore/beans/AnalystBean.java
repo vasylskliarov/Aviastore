@@ -5,8 +5,7 @@ import java.util.*;
 
 import javax.inject.Named;
 
-import org.primefaces.model.chart.CartesianChartModel;
-import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -30,10 +29,12 @@ public class AnalystBean implements Serializable {
 
 	private boolean showByDate = false;
 	private boolean showByPlace = false;
-
-	private CartesianChartModel modelByDate = new CartesianChartModel();
-	private CartesianChartModel modelByPlace;
 	
+
+	private CartesianChartModel chartModelByDate;
+	private PieChartModel chartModelByPlace;
+
+
 	public AnalystBean() {}
 	
 	public void generateReports() {
@@ -41,51 +42,98 @@ public class AnalystBean implements Serializable {
 		this.generateReportByPlace();
 		if (repByDateList.size() > 0){
 			this.showByDate = true;
-			this.createModelByDate();
-			this.createModelByPlace();
+			this.createChartModelByDate();
+			this.createChartModelByPlace();
+
+			
+			
+			
 		}
 	}
 
-	private void createModelByPlace() {
-		System.out.println("!!!modelPlaceCreating!!!");
-		modelByPlace = new CartesianChartModel();
-		ChartSeries quantitySeries = new ChartSeries();
-		quantitySeries.setLabel("Quantities");
-		for (Report rp :repByPlaceList) {
-			quantitySeries.set(rp.getOrigin()+"-"+rp.getDestination(), rp.getQuantity());
-		}
-		ChartSeries priceSeries = new ChartSeries();
-		priceSeries.setLabel("Price");
+//	private void createModelByPlace() {
+//		modelByPlace = new CartesianChartModel();
+//		ChartSeries quantitySeries = new ChartSeries();
+//		quantitySeries.setLabel("Quantities");
+//		for (Report rp :repByPlaceList) {
+//			quantitySeries.set(rp.getOrigin()+"-"+rp.getDestination(), rp.getQuantity());
+//		}
+//		ChartSeries priceSeries = new ChartSeries();
+//		priceSeries.setLabel("Price");
+//		for (Report rp : repByPlaceList) {
+//			priceSeries.set(rp.getOrigin()+"-"+rp.getDestination(), rp.getTotal());
+//		}
+//		modelByPlace.addSeries(priceSeries);
+//		modelByPlace.addSeries(quantitySeries);	
+//	}
+
+//	Андрея
+	/* private void createChartByPlace() {
+
+		  if (this.listDestFromPeriod != null) {
+		   chartByPlace = new PieChartModel();
+
+		   for (HDateDestTicketSumDao element : ReportByPlace) {
+		    chartByPlace.set(element.getDestPlace() + " " + element.getTotalSum(), element.getAmountOfTickets());
+		   }
+		  }
+		 }*/
+	
+	
+	
+	
+	public void createChartModelByPlace(){
+		chartModelByPlace = new PieChartModel();
 		for (Report rp : repByPlaceList) {
-			priceSeries.set(rp.getOrigin()+"-"+rp.getDestination(), rp.getTotal());
-		}
-		modelByPlace.addSeries(priceSeries);
-		modelByPlace.addSeries(quantitySeries);	
-	}
-
-	private void createModelByDate() {
-		System.out.println("~~modelCreating~~");
-		modelByDate = new CartesianChartModel();
-		ChartSeries quantitySeries = new ChartSeries();
-		quantitySeries.setLabel("Quantities");
-		for (Report rp : repByDateList) {
-			quantitySeries.set(rp.getDate(), rp.getQuantity());
-		}
-		ChartSeries priceSeries = new ChartSeries();
-		priceSeries.setLabel("Price");
-		for (Report rp : repByDateList) {
-			priceSeries.set(rp.getDate(), rp.getTotal());
-		}
-		modelByDate.addSeries(priceSeries);
-		modelByDate.addSeries(quantitySeries);
+			System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n\n"+rp );
+			chartModelByPlace.set(rp.getOrigin()+"-"+rp.getDestination(), rp.getTotal());
+		   }
+		
 	}
 	
+
+
+	
+	
+	public void createChartModelByDate(){
+		chartModelByDate = new CartesianChartModel();
+		 LineChartSeries sum = new LineChartSeries();
+		 sum.setLabel("Sum");
+		 for (Report rp : repByDateList) {
+				System.out.println("____________________________________________________________________\n\n\n"+rp );
+			    sum.set(rp.getDate(), rp.getTotal());
+			   }
+		 chartModelByDate.addSeries(sum);
+		
+		
+	}
+	
+	
+	
+	public CartesianChartModel getChartModelByDate() {
+		return chartModelByDate;
+	}
+
+	public void setChartModelByDate(CartesianChartModel chartModelByDate) {
+		this.chartModelByDate = chartModelByDate;
+	}
+	
+	public PieChartModel getChartModelByPlace() {
+		return chartModelByPlace;
+	}
+
+	public void setChartModelByPlace(PieChartModel chartModelByPlace) {
+		this.chartModelByPlace = chartModelByPlace;
+	}
+
 	public void generateReportByDate() {
 		if (startDate == null || endDate == null) {
 			return;
 		}
-		this.repByDateList = ordersServices.getStatByDates(startDate, endDate);
+		this.repByDateList = ordersServices.getStatByDates(startDate, endDate);	
 	}
+
+
 
 	public void generateReportByPlace() {
 		if (startDate == null || endDate == null) {
@@ -149,23 +197,6 @@ public class AnalystBean implements Serializable {
 	public void setShowByPlace(boolean showByPlace) {
 		this.showByPlace = showByPlace;
 	}
-
-	public CartesianChartModel getModelByDate() {
-		return modelByDate;
-	}
-
-	public void setModelByDate(CartesianChartModel modelByDate) {
-		this.modelByDate = modelByDate;
-	}
-
-	public CartesianChartModel getModelByPlace() {
-		return modelByPlace;
-	}
-
-	public void setModelByPlace(CartesianChartModel modelByPlace) {
-		this.modelByPlace = modelByPlace;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

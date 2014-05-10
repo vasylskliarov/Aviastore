@@ -23,13 +23,15 @@ public class Report implements Serializable{
 		this.quantity = quantity;
 		this.total = total;
 	}
-	public Report(Long quantity, double total, String origin, String destination) {
-		super();
-		this.quantity = quantity;
-		this.total = total;
+	
+	public Report(String origin, String destination, Long quantity, Double total){
 		this.origin = origin;
 		this.destination = destination;
+		this.quantity = quantity;
+		this.total = total;
 	}
+	
+	
 	public Date getDate() {
 		return date;
 	}

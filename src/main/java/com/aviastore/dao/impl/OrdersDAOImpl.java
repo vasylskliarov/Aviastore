@@ -119,7 +119,6 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 
 	@Override
 	public List<Orders> getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status) {
-		System.out.println("\n\n\nНачало dao запроса getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status)\n\n\n");
 		TypedQuery<Orders> query = entityManager.createQuery(
 				"SELECT o FROM Orders o WHERE o.bookingDate BETWEEN :startDate AND :endDate "+ 
 				"AND o.flightId.departureTime > CURRENT_TIMESTAMP "+
@@ -145,9 +144,9 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 		return orders;
 	}
 	@Override
-	public List<Report> getStatByCitys(Date startDate, Date endDate) {
+	public List<Report> getStatByDates(Date startDate, Date endDate) {
 		TypedQuery<Report> query = entityManager.createQuery(
-				"SELECT NEW com.aviastore.entitys.Report( FUNC('Date',o.flightId.departureTime), SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
+				"SELECT NEW com.aviastore.entitys.Report( FUNC('Date',o.flightId.departureTime), SUM(o.amountTickets),SUM(o.totalPrice)) "+
 				"FROM Orders o WHERE ( o.flightId.departureTime BETWEEN :startDate AND :endDate AND o.payStatus = :STATUS ) "+
 				"GROUP BY FUNC('Date',o.flightId.departureTime)",
 				Report.class);
@@ -159,13 +158,13 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 		return result;
 	}
 	@Override
-	public List<Report> getStatByDates(Date start, Date end) {
+	public List<Report> getStatByCitys(Date startDate, Date endDate) {
 		TypedQuery<Report> query = entityManager.createQuery(
-				"SELECT NEW com.aviastore.entitys.Report(o.flightId.departureCity, o.flightId.arrivalCity, SUM(o.amountTickets),SUM(o.TicketsPrice)) "+
-				"FROM Orders o WHERE ( o.flightId.departureTime BETWEEN :startDate AND :endDate AND o.status = :STATUS ) "+
+				"SELECT NEW com.aviastore.entitys.Report(o.flightId.departureCity, o.flightId.arrivalCity, SUM(o.amountTickets),SUM(o.totalPrice)) "+
+				"FROM Orders o WHERE ( o.flightId.departureTime BETWEEN :startDate AND :endDate AND o.payStatus = :STATUS ) "+
 				"GROUP BY o.flightId.departureCity, o.flightId.arrivalCity", Report.class);
-		query.setParameter("startDate",new Timestamp(start.getTime()),TemporalType.TIMESTAMP);
-		query.setParameter("endDate", new Timestamp(end.getTime()),TemporalType.TIMESTAMP);
+		query.setParameter("startDate",new Timestamp(startDate.getTime()),TemporalType.TIMESTAMP);
+		query.setParameter("endDate", new Timestamp(endDate.getTime()),TemporalType.TIMESTAMP);
 		query.setParameter("STATUS", Orders.SOLD);
 		List<Report> result = null;
 		result = query.getResultList();

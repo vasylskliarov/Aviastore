@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Analitic</title>
+</h:head>
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="style.css" />
+			<h:form>
+
+
+				<div align="center">
+					<p:panel>
+
+						<h:panelGrid id="components" columns="9"
+							style="font:16px/30px helvetica, serif;">
+							<p:outputLabel>From date:</p:outputLabel>
+
+
+							<p:calendar id="fromDate" value="#{analystBean.startDate}"
+								pattern="dd MMMM yyyy" locale="en" required="true"
+								readonlyInput="true" navigator="true">
+								<p:ajax process="fromDate" update="toDate" partialSubmit="true"
+									event="dateSelect" />
+							</p:calendar>
+
+
+							<p:spacer width="20" height="60" />
+
+							<p:outputLabel>To:</p:outputLabel>
+
+							<p:calendar id="toDate" value="#{analystBean.endDate}"
+								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
+								required="true" mindate="#{analystBean.startDate}"
+								navigator="true" />
+
+
+							<p:commandButton value="Generate reports" id="reports"
+								process="@this" update="@form"
+								actionListener="#{analystBean.generateReports()}" ajax="false"
+								onclick="reports.select(0);">
+							</p:commandButton>
+
+						</h:panelGrid>
+
+					</p:panel>
+				</div>
+
+				<p:accordionPanel id="reportsID" widgetVar="reports"
+					activeIndex="-1"
+					style="font:16px/30px helvetica, serif;text-align:left;"
+					rendered="#{analystBean.showByDate}">
+					<p:tab title="Report by date">
+						<h:panelGrid columns="1" cellspacing="20"
+							style="width:100%;height:500px">
+
+							<!--  <p:lineChart id="chartDateID" value="#{analystBean.repByDateList}" legendPosition="ne"  
+                            title="Date - Quantity chart"  style="height:450px;" orientation="horizontal" 
+                            zoom="true" animate="true"/>  -->
+
+
+							<p:panel header="Chart by Date" rendered="#{true}">
+								<p:lineChart id="linear" value="#{analystBean.chartModelByDate}"
+									legendPosition="e" fill="true" title="Chart by Date" minY="0"
+									style="height:300px" />
+							</p:panel>
+
+
+
+
+
+
+
+
+							<p:dataTable var="report1" value="#{analystBean.repByDateList}"
+								scrollable="true" scrollHeight="240">
+								<p:columnGroup type="header">
+									<p:row>
+										<p:column headerText="Date"></p:column>
+										<p:column headerText="QTY"></p:column>
+										<p:column headerText="Price"></p:column>
+									</p:row>
+								</p:columnGroup>
+
+								<p:column>
+									<h:outputText value="#{report1.date}">
+										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+									</h:outputText>
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report1.quantity}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report1.total}" />
+								</p:column>
+							</p:dataTable>
+
+						</h:panelGrid>
+
+
+					</p:tab>
+
+					<p:tab title="Report by flights">
+						<h:panelGrid columns="1" cellpadding="10" style="width:100%;">
+							
+							
+							<p:pieChart id="pie" value="#{analystBean.chartModelByPlace}"
+								legendPosition="e" title="Chart by Place" style="height:300px" />
+								
+								
+							<!--  <p:barChart id="chartPlaceID" value="#{analystBean.repByPlaceList}" legendPosition="ne"  
+                            title="Flight - Quantity chart"  style="height:450px;" orientation="horizontal" 
+                            zoom="true" animate="true"/> -->
+
+							<p:dataTable var="report2" value="#{analystBean.repByPlaceList}">
+								<p:columnGroup type="header">
+									<p:row>
+										<p:column headerText="Origin"></p:column>
+										<p:column headerText="Destination"></p:column>
+										<p:column headerText="QTY"></p:column>
+										<p:column headerText="Price"></p:column>
+									</p:row>
+								</p:columnGroup>
+
+								<p:column>
+									<h:outputText value="#{report2.origin}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report2.destination}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report2.quantity}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{report2.total}" />
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
