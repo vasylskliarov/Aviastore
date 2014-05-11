@@ -7,34 +7,22 @@
      xmlns:p="http://primefaces.org/ui"
 >
     <h:head>
-        <title>Booking system</title>
+        <title>Aviastor</title>
     </h:head>
     <h:body>
         <p:layout fullPage="true" >
-            <p:layoutUnit position="north" size="20%" header="Top" >
-                <h:outputText value="Top unit content." />
+            <p:layoutUnit position="north" size="20%" header="Лого" >
+                <h:outputText value="Здесь должна быть ваша реклама" />
             </p:layoutUnit>
-
-            <p:layoutUnit position="south" size="10%" header="Bottom" >
-                <h:outputText value="South unit content." />
+            
+            
+            <p:layoutUnit position="center" style="text-align:center; min-width:800px; min-height:600px;">
+                <ui:insert name="content">основная часть</ui:insert>
             </p:layoutUnit>
+            
 
-<!--             <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="true" collapsible="true">
-                <h:form>
-                    <ui:include src="../templates/themeMenu.xhtml" />
-                </h:form>
-            </p:layoutUnit> -->
-			
-<!-- 			<p:layoutUnit position="west" size="15%" resizable="true" >
-
-            </p:layoutUnit>
-			
-            <p:layoutUnit position="east" size="15%" resizable="true">
-                
-            </p:layoutUnit> -->
-
-            <p:layoutUnit position="center" style="text-align:center; min-width:600px; min-height:200px;">
-                <ui:insert name="content">Put default content here, if any.</ui:insert>
+            <p:layoutUnit position="south" size="10%" header="@BionicUniversity" >
+                <h:outputText value="made by Vasyl Skliarov" />
             </p:layoutUnit>
         </p:layout>
     </h:body>

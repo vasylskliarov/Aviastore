@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>AviaStor</title>
+</h:head>
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
+		<ui:define name="content">
+
+			<p:layout>
+
+				<p:layoutUnit position="east" size="30%" header="Cart"
+					resizable="true" visible="#{customerBean.showCart}" effectSpeed="2">
+					<h:form id="cartFID">
+						<p:panel id="cartPID"
+							style="width:100%;font:12px/30px helvetica, serif;text-align:center;">
+
+
+							<p:messages id="messages" autoUpdate="true" closable="true" />
+
+							<p:inputText id="firstNameID"
+								value="#{customerBean.firstName}" required="true"
+								validatorMessage="Please use only letters(a-z,A-Z and space)"
+								requiredMessage="firstName required!" size="30">
+								<f:validateRegex pattern="[a-zA-Z\s]* [a-zA-Z\s]*" />
+							</p:inputText>
+							<p:watermark for="firstNameID" value="firstName*"></p:watermark>
+							<br />
+							<br />
+
+
+							<p:inputText id="lastNameID"
+								value="#{customerBean.lastName}" required="true"
+								validatorMessage="Please use only letters(a-z,A-Z and space)"
+								requiredMessage="lastName required!" size="45">
+								<f:validateRegex pattern="[a-zA-Z\s]* [a-zA-Z\s]*" />
+							</p:inputText>
+
+							<p:watermark for="lastNameID" value="lastName*"></p:watermark>
+							<br />
+							<br />
+
+							<p:inputText id="emailID" value="#{customerBean.email}"
+								required="true"
+								validatorMessage="Please enter a correct email adress"
+								requiredMessage="email*" size="45">
+								<f:validateRegex
+									pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+							</p:inputText>
+							<p:watermark for="emailID" value="Email*"></p:watermark>
+							<br />
+							<br />
+
+							<p:inputText id="phoneNumberID" value="#{customerBean.phoneNumber}"
+								required="true"
+								validatorMessage="Please enter a correct phoneNumber"
+								requiredMessage="phoneNumber required" size="45">
+								<f:validateRegex
+									pattern="[0-9]" />
+							</p:inputText>
+							<p:watermark for="phoneNumberID" value="phone Number*"></p:watermark>
+							<br />
+							<br />
+							<p:commandButton value="Submit order" process="@form"
+								update="@all firstNameID lastNameID emailID phoneNumberID"
+								actionListener="#{customerBean.saveCartToDB()}"
+								action="orderComplete.xhtml">
+								<p:confirm header="Confirmation"
+									message="Пожалуйста подтвердите свое желание забронировать билеты"
+									icon="ui-icon-alert" />
+							</p:commandButton>
+
+							<p:confirmDialog widgetVar="confirmDlg" global="true"
+								showEffect="fade" hideEffect="fade" appendTo="@(body)">
+								<p:commandButton value="Confirm" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
+									update="@all" />
+								<p:commandButton value="Continue booking" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close"
+									update="@all" />
+							</p:confirmDialog>
+						</p:panel>
+						<br />
+
+					</h:form>
+
+					<h:form>
+						<p:panel>
+							<p:dataTable id="cartTID" var="order" value="#{customerBean.cartOrders}"
+								style="width:100%;font:10px/30px helvetica, serif;text-align:center;">
+								<p:column width="15%" headerText="Departing ">
+									<h:outputText value="#{order.flightId.departureTimeDate}">
+										<f:convertDateTime pattern="HH:mm" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{order.flightId.departureTimeDate}">
+										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+									</h:outputText>
+								</p:column>
+
+								<p:column width="20%" headerText="Departure">
+									<h:outputText
+										value="#{order.flightId.departureCity}  &#8594;  #{order.flightId.arrivalCity}" />
+								</p:column>
+
+
+								<p:column width="1%" headerText="QTY">
+									<h:outputText value="#{order.amountTickets}" />
+								</p:column>
+
+								<p:column width="10%" headerText="Price($)">
+									<h:outputText value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+								</p:column>
+
+								<p:column width="3%">
+									<p:commandButton icon="ui-icon-closethick" style="margin:0"
+										update="cartTID" ajax="false"
+										actionListener="#{customerBean.removeOrderFromCart(order)}">
+
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+
+							<div align="right">
+								<br />
+								<h:outputText value="TOTAL: #{customerBean.total}$"></h:outputText>
+							</div>
+
+						</p:panel>
+
+					</h:form>
+				</p:layoutUnit>
+
+				<p:layoutUnit position="center"
+					style="text-align:center; min-width:600px; min-height:200px;">
+
+					<h:outputStylesheet library="css" name="style.css" />
+					<div align="center">
+						<div style="width: 600px;">
+							<h:form id="mainfID">
+
+								<p:panel id="search_flightsID">
+									<h:panelGrid columns="3" style="margin-left:30px;">
+
+										<p:outputLabel value="Из города"
+											style="margin-left:0px; font:15px/30px helvetica, serif;" />
+										<p:spacer width="50" height="10" />
+										<p:outputLabel value="В город"
+											style="margin-left:0px; font:15px/30px helvetica, serif;" />
+
+										<p:inputText id="orig" value="#{customerBean.arrivalCity}"
+											required="true" />
+										<p:spacer width="10" height="10" />
+										<p:inputText id="dest" value="#{customerBean.departureCity}"
+											required="true" />
+
+										<p:spacer width="0" height="0" />
+										<p:spacer width="0" height="0" />
+										<p:spacer width="0" height="0" />
+
+
+										<p:outputLabel value="Departure date"
+											style="margin-left:0px; margin-bottom:10px; font:15px/30px helvetica, serif;" />
+										<p:spacer width="50" height="0" />
+										<p:spacer width="50" height="0" />
+
+										<p:calendar id="date" value="#{customerBean.departureDate}"
+											widgetVar="dWidget" pattern="dd MMMM yyyy"
+											readonlyInput="true" locale="en" required="true"
+											navigator="true" mindate="dWidget.today();"
+											style="font:18px/30px helvetica, serif;" />
+										<p:spacer width="10" height="40" />
+										<p:commandButton value="Find tickets &#9992;" id="search"
+											process="orig, date, dest" update="flights"
+											actionListener="#{customerBean.loadTimeTable()}" ajax="false"
+											style="width:187px;">
+										</p:commandButton>
+									</h:panelGrid>
+
+									<p:spacer width="0" height="40" />
+
+									<p:dataTable id="flightsID" var="flight"
+										value="#{customerBean.timeTableList}"
+										style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
+										rendered="#{customerBean.showTimeTable}">
+										<p:column width="15%" headerText="Departing ">
+											<h:outputText value="#{flight.departureTimeDate}">
+												<f:convertDateTime pattern="HH:mm" />
+											</h:outputText>
+											<br />
+											<h:outputText value="#{flight.departureTimeDate}">
+												<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+											</h:outputText>
+										</p:column>
+
+										<p:column width="20%" headerText="Departure">
+											<h:outputText
+												value="#{flight.departureCity}  &#8594;  #{flight.arrivalCity}" />
+										</p:column>
+
+
+										<p:column width="10%" headerText="Free">
+											<h:outputText
+												value="#{flight.availableCount - customerBean.ticketsInCartOnFlight(flight.id)}" />
+										</p:column>
+
+										<p:column width="10%" headerText="Price ($)">
+											<h:outputText value="#{flight.ticketsPrice}" />
+										</p:column>
+										<p:column width="3%">
+											<p:commandButton icon="ui-icon-plusthick" style="margin:0"
+												title="booked tickets" update=":newOrderID" ajax="true"
+												oncomplete="newOrder.show();"
+												disabled="#{(flight.availableCount - customerBean.ticketsInCartOnFlight(flight.id) le 0)?true:false}">
+												<f:setPropertyActionListener value="#{flight}"
+													target="#{customerBean.selectedFlight}" />
+											</p:commandButton>
+										</p:column>
+									</p:dataTable>
+
+								</p:panel>
+
+							</h:form>
+						</div>
+					</div>
+
+
+					<p:dialog id="newOrderID" widgetVar="newOrder" width="635"
+						height="140" header="Ticket booking" resizable="false"
+						modal="true" appendTo="@(body)" showEffect="fade"
+						hideEffect="fade">
+						<h:form id="form" style="padding-top:12px;">
+							<div
+								style="background-color: rgba(255, 183, 0, 0.3); display: block; height: 120px; width: 600px; font: 16px/30px helvetica, serif; padding-left: 0px; border-radius: 15px;">
+								<div align="center" style="padding-top: 15px;">
+									<h:panelGrid columns="6">
+
+										<h:outputText value="" />
+										<h:outputText value="Departing"
+											style="padding-left:50px;font:13px/30px helvetica, serif;color:#646464;" />
+										<h:outputText value="Departure"
+											style="padding-left:40px;font:13px/30px helvetica, serif;color:#646464;" />
+										<h:outputText
+											value="Tickets (max:#{customerBean.selectedFlight.availableCount - customerBean.ticketsInCartOnFlight(customerBean.selectedFlight.id)})"
+											style="padding-left:20px; font:13px/30px helvetica, serif;color:#646464;" />
+										<h:outputText value="" />
+										<h:outputText value="" />
+
+										<h:outputText value="&#9992;"
+											style="font:25px/30px helvetica, serif;" />
+
+										<h:outputText value="#{customerBean.selectedFlight.departureTimeDate}"
+											style="padding-left:20px;">
+											<f:convertDateTime pattern="HH:mm dd/MMMM/yyyy " />
+										</h:outputText>
+
+										<h:outputText
+											value="#{customerBean.selectedFlight.departureCity}  &#8594;  
+			                                     #{customerBean.selectedFlight.arrivalCity}"
+											style="padding-left:20px;" />
+
+										<p:spinner value="#{customerBean.amountTickets}" min="1" size="6"
+											max="#{customerBean.selectedFlight.availableCount - customerBean.ticketsInCartOnFlight(customerBean.selectedFlight.id)}"
+											style="padding-left:30px; font:14px/30px helvetica, serif;" />
+										<h:outputText value="" style="padding-left:10px;" />
+										<p:commandButton value="add to cart"
+											style="font:14px/30px helvetica, serif;" ajax="false"
+											update=":mainfID:flightsID"
+											action="#{customerBean.addOrderToCart(customerBean.selectedFlight, customerBean.amountTickets)}"
+											onclick="cartWidgt.toggle('east')" />
+
+									</h:panelGrid>
+								</div>
+							</div>
+						</h:form>
+					</p:dialog>
+				</p:layoutUnit>
+
+			</p:layout>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

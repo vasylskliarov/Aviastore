@@ -54,7 +54,7 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 			customersDAO.addCustomer(order.getCustomerId());
 		}	
 		entityManager.persist(order);
-//		entityManager.flush();
+		entityManager.flush();
 		flightsDAO.updateBookedTickets(flight, flight.getBookedCount() + order.getAmountTickets());
 		flightsDAO.updateFreeTickets(flight, flight.getAvailableCount() - order.getAmountTickets());
 		return true;

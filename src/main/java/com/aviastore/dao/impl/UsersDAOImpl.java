@@ -28,7 +28,7 @@ public class UsersDAOImpl implements UsersDAO, Serializable{
 			return false;
 		}
 		entityManager.persist(user);
-//		entityManager.flush();
+		entityManager.flush();
 		return true;
 	}
 

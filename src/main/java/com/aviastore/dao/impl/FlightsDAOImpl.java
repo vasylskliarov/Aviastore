@@ -23,7 +23,7 @@ public class FlightsDAOImpl implements FlightsDAO, Serializable {
 	@Override
 	public void addFlight(Flights flight) {
 		entityManager.persist(flight);	
-//		entityManager.flush();
+		entityManager.flush();
 	}
 	@Override
 	public List<Flights> getTimetableByPlaces(String departure, String arrival,	Date currDate) {
@@ -38,14 +38,14 @@ public class FlightsDAOImpl implements FlightsDAO, Serializable {
 					date.get(Calendar.MONTH),
 					date.get(Calendar.DAY_OF_MONTH) + 2);
 			TypedQuery<Flights> query = entityManager.createQuery(
-					/*		"SELECT f FROM Flights f WHERE f.departureTime "+
-							"BETWEEN :startDate AND :endDate" +
+							"SELECT f FROM Flights f WHERE f.departureTime "+
+							"BETWEEN :startDate AND :endDate " +
 							"AND (LOCATE(LOWER(:depCit),LOWER(f.departureCity))<>0 "+
 							"OR LOCATE(LOWER(:arivCit),LOWER(f.arrivalCity))<>0) "+
 							"AND f.availableCount > 0 "+
-							"ORDER BY f.departureTime", */
-							
-							"SELECT f FROM Flights f ORDER BY f.departureTime", 
+							"ORDER BY f.departureTime", 
+							/*
+							"SELECT f FROM Flights f ORDER BY f.departureTime"    , */
 							
 							Flights.class);
 			query.setParameter("startDate",	new Timestamp(startDate.getTimeInMillis()), TemporalType.TIMESTAMP);
