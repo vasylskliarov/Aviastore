@@ -21,7 +21,7 @@
 						<p:accordionPanel
 							style="width:100%;font:14px/30px helvetica, serif;text-align:left;"
 							activeIndex="-1">
-							<p:tab title="Search"
+							<p:tab title="Поиск"
 								style="width:100%;font:14px/30px helvetica, serif;text-align:center;">
 								<div align="center">
 									<h:panelGrid columns="13">
@@ -45,7 +45,7 @@
 										<p:watermark for="deID" value="departureCityBooked:"></p:watermark>
 										<p:inputText id="arID"
 											value="#{accountantBean.arrivalCityBooked}"></p:inputText>
-										<p:watermark for="deID" value="arrivalCityBooked:"></p:watermark>
+										<p:watermark for="arID" value="arrivalCityBooked:"></p:watermark>
 										<p:commandButton value="go"
 											actionListener="#{accountantBean.searchBookedDataTable()}"
 											update=":formID:tabViewID:ordersID" />
@@ -272,7 +272,7 @@
 						<p:accordionPanel
 							style="width:100%;font:14px/30px helvetica, serif;text-align:left;"
 							activeIndex="-1">
-							<p:tab title="Search"
+							<p:tab title="Поиск"
 								style="width:100%;font:14px/30px helvetica, serif;text-align:center;">
 								<div align="center">
 									<h:panelGrid columns="13">
