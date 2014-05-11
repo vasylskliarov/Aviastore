@@ -124,10 +124,10 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 				"AND o.flightId.departureTime > CURRENT_TIMESTAMP "+
 				"AND LOCATE( lower(:depCity), lower(o.flightId.departureCity) )<>0 "+
 				"AND LOCATE( lower(:arCity), lower(o.flightId.arrivalCity) )<>0 "+
-				"AND LOCATE( lower(:firstNCust), lower(o.customers.firstName) )<>0 "+
-				"AND LOCATE( lower(:lastNCust), lower(o.customers.lastName) )<>0 "+
-				"AND LOCATE( lower(:emailCust), lower(o.customers.email) )<>0 "+
-				"AND LOCATE( lower(:phoneCust), lower(o.customers.phoneNumber) )<>0 "+
+				"AND LOCATE( lower(:firstNCust), lower(o.customerId.firstName) )<>0 "+
+				"AND LOCATE( lower(:lastNCust), lower(o.customerId.lastName) )<>0 "+
+				"AND LOCATE( lower(:emailCust), lower(o.customerId.email) )<>0 "+
+				"AND LOCATE( lower(:phoneCust), lower(o.customerId.phoneNumber) )<>0 "+
 				"AND o.payStatus = :STATUS "+
 				"ORDER BY o.bookingDate DESC",Orders.class);
 		query.setParameter("startDate",new Timestamp(startDate.getTime()),TemporalType.TIMESTAMP);

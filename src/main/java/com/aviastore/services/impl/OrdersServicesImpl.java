@@ -52,6 +52,8 @@ public class OrdersServicesImpl implements OrdersServices, Serializable {
 		Date endDate = new Date();
 		return ordersDAO.getOrders(startDate, endDate, departureCity, arrivalCity, firstName, lastName, email, phoneNumber, status);
 	}
+	
+	
 	@Override
 	@Transactional
 	public List<Orders> getOrders(Date startDate, Date endDate, String departureCity, String arrivalCity, String firstName, String lastName, String email, String phoneNumber, int status){
@@ -76,5 +78,6 @@ public class OrdersServicesImpl implements OrdersServices, Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	
 }
