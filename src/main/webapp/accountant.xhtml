@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Accountant</title>
+</h:head>
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="style.css" />
+			<h:form id="formID">
+				<p:tabView id="tabViewID"
+					style="width:100%;font:14px/30px helvetica, serif;text-align:left;">
+					<p:tab id="bookedTabID" title="Booked orders">
+						<p:accordionPanel
+							style="width:100%;font:14px/30px helvetica, serif;text-align:left;"
+							activeIndex="-1">
+							<p:tab title="Search"
+								style="width:100%;font:14px/30px helvetica, serif;text-align:center;">
+								<div align="center">
+									<h:panelGrid columns="9">
+										<p:inputText id="fiID"
+											value="#{accountantBean.firstNameBooked}"></p:inputText>
+										<p:watermark for="fiID" value="firstNameBooked:"></p:watermark>
+
+										<p:inputText id="laID"
+											value="#{accountantBean.lastNameBooked}"></p:inputText>
+										<p:watermark for="laID" value="lastNameBooked:"></p:watermark>
+
+										<p:inputText id="emID" value="#{accountantBean.emailBooked}"></p:inputText>
+										<p:watermark for="emID" value="emailBooked:"></p:watermark>
+
+										<p:inputText id="phID"
+											value="#{accountantBean.phoneNumberBooked}"></p:inputText>
+										<p:watermark for="phID" value="phoneNumberBooked:"></p:watermark>
+
+										<p:inputText id="deID"
+											value="#{accountantBean.departureCityBooked}"></p:inputText>
+										<p:watermark for="deID" value="departureCityBooked:"></p:watermark>
+										<p:inputText id="arID"
+											value="#{accountantBean.arrivalCityBooked}"></p:inputText>
+										<p:watermark for="deID" value="arrivalCityBooked:"></p:watermark>
+
+
+
+										<p:commandButton value="go"
+											actionListener="#{accountantBean.searchBookedDataTable()}"
+											update=":formID:tabViewID:ordersID" />
+									</h:panelGrid>
+								</div>
+							</p:tab>
+						</p:accordionPanel>
+
+						<p:dataTable id="ordersID" var="order"
+							value="#{accountantBean.bookedOrders}"
+							style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
+							editable="true" scrollable="true" scrollHeight="300">
+							<!-- проверить -->
+							<p:ajax event="rowEdit"
+								update=":formID:tabViewID:ordersID, :formID:tabViewID:soldOrdersID"
+								listener="#{accountantBean.onEditBooked}" />
+
+							<!-- <f:facet name="header" >Orders for last 3 days:</f:facet> -->
+
+							<p:columnGroup type="header">
+
+								<!-- 									<p:row>
+                                        <p:column colspan="2" headerText="Customer info" width="28.4%"/>
+                                        <p:column colspan="3" headerText="Flight info" width="28.1%"/>
+                                        <p:column colspan="4" headerText="Order info" width="40.3%"/>
+                                        <p:column rowspan="2" headerText="Edit" width="4.1%"/>
+                                        
+                                        <p:column colspan="2" headerText="Customer info" />
+                                        <p:column colspan="3" headerText="Flight info" />
+                                        <p:column colspan="4" headerText="Order info" />
+                                        <p:column rowspan="2" headerText="Edit" width="30"/>
+									</p:row>  -->
+
+								<p:row>
+									<p:column headerText="firstNameBooked" />
+									<p:column headerText="lastNameBooked" />
+									<p:column headerText="emailBooked" />
+									<p:column headerText="phoneNumberBooked" />
+
+									<p:column headerText="Departure date" width="10%" />
+									<p:column headerText="departureCityBooked" />
+									<p:column headerText="arrivalCityBooked" />
+									<p:column headerText="Arrival date" width="10%" />
+
+									<p:column headerText="Order date" width="10%" />
+									<p:column headerText="Tickets QTY" width="5%" />
+									<p:column headerText="Price" width="6%" />
+									<p:column headerText="Status" width="6%" />
+									<p:column headerText="Edit" width="3%" />
+								</p:row>
+
+							</p:columnGroup>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.firstName}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.firstName}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.lastName}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.lastName}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.email}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.email}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.phoneNumber}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.phoneNumber}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+
+
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.departureCity}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.departureCity}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.arrivalCity}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.arrivalCity}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.amountTickets}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.amountTickets}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText
+											value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText
+											value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.payStatus == 0?'BOOKED':'SOLD'}"></h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{order.payStatus}" style="width:3cm;">
+											<f:selectItem itemLabel="BOOKED" itemValue="0" />
+											<f:selectItem itemLabel="SOLD" itemValue="1" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:rowEditor rendered="#{order.payStatus == 0?true:false}" />
+							</p:column>
+						</p:dataTable>
+
+					</p:tab>
+
+					<p:tab id="soldTabID" title="Sold orders">
+
+						<p:accordionPanel
+							style="width:100%;font:14px/30px helvetica, serif;text-align:left;"
+							activeIndex="-1">
+							<p:tab title="Search"
+								style="width:100%;font:14px/30px helvetica, serif;text-align:center;">
+								<div align="center">
+									<h:panelGrid columns="9">
+
+
+
+										<p:inputText id="fiID" value="#{accountantBean.firstNameSold}"></p:inputText>
+										<p:watermark for="fiID" value="firstNameSold:"></p:watermark>
+
+										<p:inputText id="laID" value="#{accountantBean.lastNameSold}"></p:inputText>
+										<p:watermark for="laID" value="lastNameSold:"></p:watermark>
+
+										<p:inputText id="emID" value="#{accountantBean.emailSold}"></p:inputText>
+										<p:watermark for="emID" value="emailSold:"></p:watermark>
+
+										<p:inputText id="phID"
+											value="#{accountantBean.phoneNumberSold}"></p:inputText>
+										<p:watermark for="phID" value="phoneNumberSold:"></p:watermark>
+										<p:inputText id="deID"
+											value="#{accountantBean.departureCitySold}"></p:inputText>
+										<p:watermark for="deID" value="departureCitySold:"></p:watermark>
+										<p:inputText id="arID"
+											value="#{accountantBean.arrivalCitySold}"></p:inputText>
+										<p:watermark for="arID" value="arrivalCitySold:"></p:watermark>
+
+										<p:commandButton value="go"
+											actionListener="#{accountantBean.searchSoldDataTable()}"
+											update=":formID:tabViewID:soldOrdersID" />
+									</h:panelGrid>
+								</div>
+							</p:tab>
+						</p:accordionPanel>
+
+						<p:dataTable id="soldOrdersID" var="order"
+							value="#{accountantBean.soldOrders}"
+							style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
+							editable="true" scrollable="true" scrollHeight="300">
+							<p:ajax event="rowEdit" update="@this"
+								listener="#{accountantMB.onEditSold}" />
+
+							<!--  <f:facet name="header" >Orders for last 3 days:</f:facet> -->
+
+							<p:columnGroup type="header">
+
+								<!--    <p:row>
+                                        <p:column colspan="2" headerText="Customer info" width="28.4%"/>
+                                        <p:column colspan="3" headerText="Flight info" width="28.1%"/>
+                                        <p:column colspan="4" headerText="Order info" width="40.3%"/>
+                                        <p:column rowspan="2" headerText="Edit" width="4.1%"/>
+                                    </p:row>  -->
+								<p:row>
+									<p:column headerText="firstNameBooked" />
+									<p:column headerText="lastNameBooked" />
+									<p:column headerText="emailBooked" />
+									<p:column headerText="phoneNumberBooked" />
+
+									<p:column headerText="Departure date" width="10%" />
+									<p:column headerText="departureCityBooked" />
+									<p:column headerText="arrivalCityBooked" />
+									<p:column headerText="Arrival date" width="10%" />
+
+									<p:column headerText="Order date" width="10%" />
+									<p:column headerText="Tickets QTY" width="5%" />
+									<p:column headerText="Price" width="6%" />
+									<p:column headerText="Status" width="6%" />
+									<p:column headerText="Edit" width="3%" />
+								</p:row>
+							</p:columnGroup>
+
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.firstName}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.firstName}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.lastName}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.lastName}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.email}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.email}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.customerId.phoneNumber}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.customerId.phoneNumber}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.departureTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.departureCity}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.departureCity}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.arrivalCity}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.arrivalCity}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.flightId.arrivalTimeDate}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="HH:mm" />
+										</h:outputText>
+										<br />
+										<h:outputText value="#{order.dateD}">
+											<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+										</h:outputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.amountTickets}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText value="#{order.amountTickets}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column>
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText
+											value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+									</f:facet>
+									<f:facet name="input">
+										<h:outputText
+											value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column width="10%">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{order.payStatus == 1?'SOLD':'CANCELED'}"></h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:selectOneMenu value="#{order.payStatus}" style="width:3cm;">
+											<f:selectItem itemLabel="SOLD" itemValue="1" />
+											<f:selectItem itemLabel="CANCELED" itemValue="2" />
+										</p:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column width="1%">
+								<p:rowEditor />
+							</p:column>
+						</p:dataTable>
+
+					</p:tab>
+				</p:tabView>
+
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

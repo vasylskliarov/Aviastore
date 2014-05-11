@@ -89,12 +89,13 @@ public class Orders implements Serializable{
 	
 	//TODO разобраться используется ли getDtimeD() и setDtimeD(Date dtimeD)
 	@Transient
-	public Date getDateD() {
-		return dateD;
+	public Date getDateD() {		
+		return new Date( this.bookingDate.getTime());
 	}
 	@Transient
 	public void setDateD(Date dateD) {
 		this.dateD = dateD;
+		this.setBookingDate(new Timestamp(dateD.getTime()));
 	}
 	public static int getBooked() {
 		return BOOKED;
