@@ -42,10 +42,10 @@
 
 										<p:inputText id="deID"
 											value="#{accountantBean.departureCityBooked}"></p:inputText>
-										<p:watermark for="deID" value="departureCity:"></p:watermark>
+										<p:watermark for="deID" value="departureCityBooked:"></p:watermark>
 										<p:inputText id="arID"
 											value="#{accountantBean.arrivalCityBooked}"></p:inputText>
-										<p:watermark for="arID" value="arrivalCityBooked:"></p:watermark>
+										<p:watermark for="deID" value="arrivalCityBooked:"></p:watermark>
 										<p:commandButton value="go"
 											actionListener="#{accountantBean.searchBookedDataTable()}"
 											update=":formID:tabViewID:ordersID" />
