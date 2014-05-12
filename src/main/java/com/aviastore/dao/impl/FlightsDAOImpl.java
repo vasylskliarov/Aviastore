@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class FlightsDAOImpl implements FlightsDAO, Serializable {

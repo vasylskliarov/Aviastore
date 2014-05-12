@@ -18,10 +18,8 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	private EntityManager entityManager;
-	//TODO try to use interface flightsDAO not implementation
 	@Autowired
 	private FlightsDAO flightsDAO;
-	//TODO try to use interface customersDAO not implementation 
 	@Autowired
 	private CustomersDAO customersDAO;
 	

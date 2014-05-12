@@ -1,7 +1,6 @@
 package com.aviastore.beans;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.*;
 
 import javax.inject.Named;
@@ -42,7 +41,6 @@ public class AdminBean implements Serializable {
 	
 	boolean showTimeTable = false;
 	boolean showCanceledOrders = false;
-	//TODO try to use non static method flightsTimeTable
 	private List<Flights> flightsTimeTable = null;
 	
 	public AdminBean() {
@@ -53,11 +51,10 @@ public class AdminBean implements Serializable {
 		showCanceledOrders = true;
 	}
 	public List<Orders> getCancelOrders() {
-		//TODO change duplicated method date to normal using startPoint
-		//GregorianCalendar startPoint = new GregorianCalendar();
 		GregorianCalendar before3Days = new GregorianCalendar();
 		before3Days.add(GregorianCalendar.DAY_OF_YEAR, -3);
-		List<Orders> orders = ordersServices.getOrders(new Date(70,1,1), new Date(before3Days.getTimeInMillis()),Orders.BOOKED );
+		GregorianCalendar startDate = new GregorianCalendar(2000, 1, 1);
+		List<Orders> orders = ordersServices.getOrders(startDate.getTime(), new Date(before3Days.getTimeInMillis()),Orders.BOOKED );
 		for(Orders ord: orders){
 			ordersServices.changeOrderStatusToCanceled(ord);
 		}
@@ -93,19 +90,6 @@ public class AdminBean implements Serializable {
 			this.showCanceledOrders = false;
 			
 		}
-		if(flightsTimeTable != null){
-			
-			//TODO change duplicated method date to normal
-			System.out.println("!!!!!!!не пустая таблица поиска!!!!!!!!");
-			for(Flights fl: flightsTimeTable){
-				if(fl !=null)
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+
-						fl.getDepartureCity()+" "+
-						fl.getArrivalCity()+" "
-						+fl.getDepartureTimeDate().getHours()+":"+fl.getDepartureTimeDate().getMinutes());
-			}
-		}
-		else {System.out.println("###############################################Timetable empty");}	
 	}
 	public void onEdit(RowEditEvent event) {
 		Flights flight = (Flights)event.getObject();

@@ -32,18 +32,20 @@ public class Flights implements Serializable{
 	private int bookedCount=0;
 	private int soldCount=0;
 	
-	@OneToMany(mappedBy = "flightId")
-	private Collection<Orders> orders;
-	//TODO разобраться с @ManyToMany
-	@ManyToMany
-	@JoinTable(name="Customers_Flights", joinColumns=@JoinColumn(name="Flights_id"), inverseJoinColumns = @JoinColumn(name="Customers_id"))
-	private Collection<Customers> customers;
-	
-	//TODO разобраться дя чего создал переменную dtimeD
 	@Transient
 	private Date departureTimeDate;
 	@Transient
 	private Date arrivalTimeDate;
+	
+	@OneToMany(mappedBy = "flightId")
+	private Collection<Orders> orders;
+
+	@ManyToMany
+	@JoinTable(name="Customers_Flights", joinColumns=@JoinColumn(name="Flights_id"), inverseJoinColumns = @JoinColumn(name="Customers_id"))
+	private Collection<Customers> customers;
+	
+
+
 
 	public Flights() {}
 	
@@ -131,16 +133,7 @@ public class Flights implements Serializable{
 	}
 	public Timestamp getDepartureTime() {
 		return departureTime;
-	}
-	//TODO timestamp return date
-	//	public Date getStartDate() {
-	//		return new java.util.Date(startDate.getTime());
-	//	}
-	//
-	//	public void setStartDate(Date startDate) {
-	//		this.startDate = new Timestamp (startDate.getTime());
-	//	}
-	
+	}	
 	public void setDepartureTime(Timestamp departureTime) {
 		this.departureTime = departureTime;
 	}
@@ -219,13 +212,9 @@ public class Flights implements Serializable{
 	public static Timestamp convertTime( GregorianCalendar cal) {
 		return new Timestamp(cal.getTimeInMillis());	
 	}
-	
-
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	@Override
 	public String toString() {
 		return "Flights [id=" + id + ", flight=" + flight + ", airCompany="

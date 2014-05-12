@@ -29,11 +29,8 @@ public class Orders implements Serializable{
 	private double totalPrice;
 	private Timestamp bookingDate;
 	private int payStatus=BOOKED;
-	
-	//TODO разобраться для чего использую dateD
 	@Transient
 	private Date dateD;
-
 	public Orders() {}
 	public Orders(Customers customerId, Flights flightId, int amountTickets, Date time) {
 		super();
@@ -86,8 +83,6 @@ public class Orders implements Serializable{
 	public void setPayStatus(int payStatus) {
 		this.payStatus = payStatus;
 	}
-	
-	//TODO разобраться используется ли getDtimeD() и setDtimeD(Date dtimeD)
 	@Transient
 	public Date getDateD() {		
 		return new Date( this.bookingDate.getTime());

@@ -14,7 +14,6 @@ import com.aviastore.services.*;
 @Service
 public class OrdersServicesImpl implements OrdersServices, Serializable {
 	private static final long serialVersionUID = 1L;
-	//TODO try to use from interface OrdersDAO, not from class OrdersDAOImpl
 	@Autowired
 	OrdersDAO ordersDAO;
 	

@@ -18,17 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aviastore.dao.*;
 import com.aviastore.entitys.*;
 
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"file:src/main/resources/spring/application-config.xml"})
+@ContextConfiguration({"/src/main/resources/spring/application-config.xml"})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class FlightDAOJUnitTest {
- 
     @Autowired
-    FlightsDAO flightsDAO;
- 
-    
-    
+    FlightsDAO flightsDAO; 
     @Test
     public void testCreateUser() {
         Flights flights1 = new Flights();
@@ -75,5 +73,18 @@ public class FlightDAOJUnitTest {
         flightsDAO.addFlight(flights2);
         assertNotNull(flights2);
         assertTrue(flights2.getId() >= 0);
+        
+        
+        System.out.println("Тестовый метод закончен!!");
     }
+	public FlightsDAO getFlightsDAO() {
+		return flightsDAO;
+	}
+	public void setFlightsDAO(FlightsDAO flightsDAO) {
+		this.flightsDAO = flightsDAO;
+	}
+    
+    
+    
+    	
 }

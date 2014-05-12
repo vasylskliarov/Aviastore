@@ -14,7 +14,6 @@ import com.aviastore.services.*;
 @Service
 public class CustomersServicesImpl implements CustomersServices, Serializable {
 	private static final long serialVersionUID = 1L;
-	//TODO try to use from interface CustomersDAO, not from class CustomersDAOImpl
 	@Autowired
 	private CustomersDAO customersDAO;
 	
@@ -28,9 +27,11 @@ public class CustomersServicesImpl implements CustomersServices, Serializable {
 	public List<Customers> getCustomers(){
 		return customersDAO.getCustomers();	
 	}
+	@Transactional
 	public CustomersDAO getCustomersDAO() {
 		return customersDAO;
 	}
+	@Transactional
 	public void setCustomersDAO(CustomersDAO customersDAO) {
 		this.customersDAO = customersDAO;
 	}

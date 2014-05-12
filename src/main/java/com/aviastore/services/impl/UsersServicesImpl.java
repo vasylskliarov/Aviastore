@@ -14,7 +14,6 @@ import com.aviastore.services.*;
 @Service
 public class UsersServicesImpl implements UsersServices, Serializable{
 	private static final long serialVersionUID = 1L;
-	//TODO try to use from interface UsersDAO, not from class UsersDAOImpl
 	@Autowired
 	private UsersDAO usersDAO;
 

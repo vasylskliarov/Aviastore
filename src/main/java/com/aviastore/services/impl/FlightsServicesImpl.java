@@ -6,7 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.util.*;
+
+import javax.annotation.PostConstruct;
 import javax.xml.bind.*;
+
 import com.aviastore.dao.*;
 import com.aviastore.entitys.*;
 import com.aviastore.services.*;
@@ -20,14 +23,21 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 	@Autowired
 	private AirportsDAO airportsDAO;
 
-	public FlightsServicesImpl() {
+	public FlightsServicesImpl() {}
+	public void init(){
+		if(airportsList != null){
+			return;
+		}
 		try {
-			airportsList = airportsDAO.unmarshalAirports(new File(
-					"airports.xml"));
+			airportsList = airportsDAO.unmarshalAirports(
+					new File("C:/airports.xml")
+							
+							);
 		} catch (JAXBException e) {
 			System.out.println("Unmurshuling problems. Check file");
 			e.printStackTrace();
 		}
+		System.out.println(airportsList);
 	}
 
 	@Override
@@ -79,22 +89,11 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 		return flightsDAO.deleteFlight(flight);
 	}
 
-	public FlightsDAO getFlightsDAO() {
-		return flightsDAO;
-	}
-
-	public void setFlightsDAO(FlightsDAO flightsDAO) {
-		this.flightsDAO = flightsDAO;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	@Transactional
 	public Set<String> airportNames() {
 		Set<String> rezult = new HashSet<String>();
+		this.init();
 		if (airportsList != null) {
 			for (Airport airport : airportsList) {
 				rezult.add(airport.getName_rus());
@@ -107,6 +106,7 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 	@Transactional
 	public Set<String> cityNames() {
 		Set<String> rezult = new HashSet<String>();
+		this.init();
 		if (airportsList != null) {
 			for (Airport airport : airportsList) {
 				rezult.add(airport.getCity_rus());
@@ -119,6 +119,7 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 	@Transactional
 	public Set<String> countryNames() {
 		Set<String> rezult = new HashSet<String>();
+		this.init();
 		if (airportsList != null) {
 			for (Airport airport : airportsList) {
 				rezult.add(airport.getCountry_rus());
@@ -126,4 +127,34 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 		}
 		return rezult;
 	}
+
+	public FlightsDAO getFlightsDAO() {
+		return flightsDAO;
+	}
+
+	public void setFlightsDAO(FlightsDAO flightsDAO) {
+		this.flightsDAO = flightsDAO;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public List<Airport> getAirportsList() {
+		return airportsList;
+	}
+
+	public void setAirportsList(List<Airport> airportsList) {
+		this.airportsList = airportsList;
+	}
+
+	public AirportsDAO getAirportsDAO() {
+		return airportsDAO;
+	}
+
+	public void setAirportsDAO(AirportsDAO airportsDAO) {
+		this.airportsDAO = airportsDAO;
+	}
+	
+	
 }

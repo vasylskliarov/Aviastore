@@ -18,7 +18,6 @@ public class Customers implements Serializable{
 	private String lastName;
 	private String email;
 	private String phoneNumber;
-	//TODO разобраться с @ManyToMany
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Customers_Flights")
 	private Collection<Flights> flights;

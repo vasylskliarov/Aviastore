@@ -1,9 +1,13 @@
 package com.aviastore.entitys;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Airport {
+public class Airport implements Serializable{
+	@XmlTransient
+	private static final long serialVersionUID = 1L;
 	@XmlTransient
 	private int id;
 	private String name_rus;
@@ -85,16 +89,19 @@ public class Airport {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-//	public static long getSerialversionuid() {
-//		return serialVersionUID;
-//	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
-		return "Airports [id=" + id + ", name_rus=" + name_rus + ", name_eng="
+		return "Airport [id=" + id + ", name_rus=" + name_rus + ", name_eng="
 				+ name_eng + ", city_rus=" + city_rus + ", city_eng="
 				+ city_eng + ", country_rus=" + country_rus + ", country_eng="
 				+ country_eng + ", latitude=" + latitude + ", longitude="
 				+ longitude + "]";
 	}
+
 	
 }
