@@ -9,5 +9,7 @@ public interface FlightsServices {
 	public List<Flights> getTimetableByDates(Date start, Date end);
 	public void update(Flights flight);
 	public boolean deleteFlight(Flights flight);
-
+	public Set <String> airportNames();
+	public Set <String> cityNames();
+	public Set <String> countryNames();
 }

@@ -80,7 +80,7 @@
 
 
 
-							<p:dataTable var="report1" value="#{analystBean.repByDateList}"
+							<p:dataTable id="repByDateTable" var="report1" value="#{analystBean.repByDateList}"
 								scrollable="true" scrollHeight="240">
 								<p:columnGroup type="header">
 									<p:row>
@@ -120,7 +120,7 @@
                             title="Flight - Quantity chart"  style="height:450px;" orientation="horizontal" 
                             zoom="true" animate="true"/> -->
 
-							<p:dataTable var="report2" value="#{analystBean.repByPlaceList}">
+							<p:dataTable id="repByPlaceTable" var="report2" value="#{analystBean.repByPlaceList}">
 								<p:columnGroup type="header">
 									<p:row>
 										<p:column headerText="Origin"></p:column>

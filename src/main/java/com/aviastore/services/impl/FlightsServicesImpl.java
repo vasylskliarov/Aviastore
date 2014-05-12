@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
-
+import javax.xml.bind.*;
 import com.aviastore.dao.*;
 import com.aviastore.entitys.*;
 import com.aviastore.services.*;
@@ -14,17 +14,32 @@ import com.aviastore.services.*;
 @Service
 public class FlightsServicesImpl implements FlightsServices, Serializable {
 	private static final long serialVersionUID = 1L;
-	//TODO try to use from interface FlightsDAO, not from class FlightsDAOImpl
+	List<Airport> airportsList;
 	@Autowired
 	private FlightsDAO flightsDAO;
+	@Autowired
+	private AirportsDAO airportsDAO;
+
+	public FlightsServicesImpl() {
+		try {
+			airportsList = airportsDAO.unmarshalAirports(new File(
+					"airports.xml"));
+		} catch (JAXBException e) {
+			System.out.println("Unmurshuling problems. Check file");
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	@Transactional
-	public void addFlight(Flights flight){
+	public void addFlight(Flights flight) {
 		flightsDAO.addFlight(flight);
 	}
+
 	@Override
 	@Transactional
-	public List<Flights> getTimetableByPlaces(String departure, String arrival, Date currDate){
+	public List<Flights> getTimetableByPlaces(String departure, String arrival,
+			Date currDate) {
 		Date fromDate = (Date) currDate.clone();
 		Calendar now = Calendar.getInstance();
 		now.clear(Calendar.HOUR_OF_DAY);
@@ -40,34 +55,75 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 		curr.clear(Calendar.MINUTE);
 		curr.clear(Calendar.SECOND);
 		curr.clear(Calendar.MILLISECOND);
-		if ( curr.before(now) ) {
+		if (curr.before(now)) {
 			fromDate.setTime(now.getTimeInMillis());
 		}
 		return flightsDAO.getTimetableByPlaces(departure, arrival, fromDate);
 	}
+
 	@Override
 	@Transactional
-	public List<Flights> getTimetableByDates(Date start, Date end){
+	public List<Flights> getTimetableByDates(Date start, Date end) {
 		return flightsDAO.getTimetableByDates(start, end);
 	}
+
 	@Override
 	@Transactional
-	public void update(Flights flight){
+	public void update(Flights flight) {
 		flightsDAO.update(flight);
 	}
+
 	@Override
 	@Transactional
-	public boolean deleteFlight(Flights flight){
+	public boolean deleteFlight(Flights flight) {
 		return flightsDAO.deleteFlight(flight);
 	}
+
 	public FlightsDAO getFlightsDAO() {
 		return flightsDAO;
 	}
+
 	public void setFlightsDAO(FlightsDAO flightsDAO) {
 		this.flightsDAO = flightsDAO;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
+	@Override
+	@Transactional
+	public Set<String> airportNames() {
+		Set<String> rezult = new HashSet<String>();
+		if (airportsList != null) {
+			for (Airport airport : airportsList) {
+				rezult.add(airport.getName_rus());
+			}
+		}
+		return rezult;
+	}
+
+	@Override
+	@Transactional
+	public Set<String> cityNames() {
+		Set<String> rezult = new HashSet<String>();
+		if (airportsList != null) {
+			for (Airport airport : airportsList) {
+				rezult.add(airport.getCity_rus());
+			}
+		}
+		return rezult;
+	}
+
+	@Override
+	@Transactional
+	public Set<String> countryNames() {
+		Set<String> rezult = new HashSet<String>();
+		if (airportsList != null) {
+			for (Airport airport : airportsList) {
+				rezult.add(airport.getCountry_rus());
+			}
+		}
+		return rezult;
+	}
 }
