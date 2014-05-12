@@ -21,7 +21,7 @@ import com.aviastore.entitys.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"/src/main/resources/spring/application-config.xml"})
+@ContextConfiguration({"file:src/main/resources/spring/application-config.xml"})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class FlightDAOJUnitTest {

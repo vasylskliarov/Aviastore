@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aviastore.services.FlightsServices;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:/src/main/resources/spring/application-config.xml")
+@ContextConfiguration({"file:src/main/resources/spring/application-config.xml"})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class UnmarshalAirportsTest {
