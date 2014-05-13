@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
  input.text,input.password, input[type="text"], input[type="password"] {
-	border: 1px solid #EAEAEA;
+	border: 0px solid #EAEAEA;
 	background: #EAEAEA;
 	margin: 10px 0;
 	font-size: 0.5em;

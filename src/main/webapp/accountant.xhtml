@@ -18,47 +18,55 @@
 			<h:form id="formID">
 				<p:tabView id="tabViewID"
 					style="width:100%;font:14px/30px helvetica, serif;text-align:left;">
-					<p:tab id="bookedTabID" title="Booked orders">
+					<p:tab id="bookedTabID" title="Забронированные билеты">
 						<p:accordionPanel
 							style="width:100%;font:14px/30px helvetica, serif;text-align:left;"
 							activeIndex="-1">
+							
 							<p:tab title="Поиск"
 								style="width:100%;font:14px/30px helvetica, serif;text-align:center;">
 								<div align="center">
 									<h:panelGrid columns="13">
 										<p:inputText id="fiID"
 											value="#{accountantBean.firstNameBooked}"></p:inputText>
-										<p:watermark for="fiID" value="firstNameBooked:"></p:watermark>
+										<p:watermark for="fiID" value="Имя:"></p:watermark>
 
 										<p:inputText id="laID"
 											value="#{accountantBean.lastNameBooked}"></p:inputText>
-										<p:watermark for="laID" value="lastNameBooked:"></p:watermark>
+										<p:watermark for="laID" value="Фамилия:"></p:watermark>
 
 										<p:inputText id="emID" value="#{accountantBean.emailBooked}"></p:inputText>
-										<p:watermark for="emID" value="emailBooked:"></p:watermark>
+										<p:watermark for="emID" value="e-mail:"></p:watermark>
 
 										<p:inputText id="phID"
 											value="#{accountantBean.phoneNumberBooked}"></p:inputText>
-										<p:watermark for="phID" value="phoneNumberBooked:"></p:watermark>
+										<p:watermark for="phID" value="Телефонный номер:"></p:watermark>
 
-										<p:inputText id="deID"
-											value="#{accountantBean.departureCityBooked}"></p:inputText>
-										<p:watermark for="deID" value="departureCityBooked:"></p:watermark>
+							
+											
+												<p:autoComplete id="deID" value="#{accountantBean.departureCityBooked}"
+										completeMethod="#{informationBean.completeCityNames}"
+										required="true" />
+											
+											
+										<p:watermark for="deID" value="Город отправления:"></p:watermark>
 										<p:inputText id="arID"
 											value="#{accountantBean.arrivalCityBooked}"></p:inputText>
-										<p:watermark for="arID" value="arrivalCityBooked:"></p:watermark>
-										<p:commandButton value="go"
+										<p:watermark for="arID" value="Город прибытия:"></p:watermark>
+										<p:commandButton value="поиск"
 											actionListener="#{accountantBean.searchBookedDataTable()}"
 											update=":formID:tabViewID:ordersID" />
 									</h:panelGrid>
 								</div>
 							</p:tab>
+						
+						
 						</p:accordionPanel>
 
 						<p:dataTable id="ordersID" var="order"
 							value="#{accountantBean.bookedOrders}"
 							style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
-							editable="true" scrollable="true" scrollHeight="300">
+							editable="true" scrollable="true" scrollHeight="300"  paginator="true" rows="20">
 							<!-- проверить -->
 							<p:ajax event="rowEdit"
 								update=":formID:tabViewID:ordersID, :formID:tabViewID:soldOrdersID"
@@ -70,21 +78,19 @@
 
 
 								<p:row>
-									<p:column headerText="firstNameBooked" />
-									<p:column headerText="lastNameBooked" />
-									<p:column headerText="emailBooked" />
-									<p:column headerText="phoneNumberBooked" />
-
-									<p:column headerText="Departure date" width="10%" />
-									<p:column headerText="departureCityBooked" />
-									<p:column headerText="arrivalCityBooked" />
-									<p:column headerText="Arrival date" width="10%" />
-
-									<p:column headerText="Order date" width="10%" />
-									<p:column headerText="Tickets QTY" width="5%" />
-									<p:column headerText="Price" width="6%" />
-									<p:column headerText="Status" width="6%" />
-									<p:column headerText="Edit" width="3%" />
+									<p:column filterBy="#{order.customerId.firstName}" headerText="имя" />
+									<p:column filterBy="#{order.customerId.lastName}" headerText="фамилия" />
+									<p:column filterBy="#{order.customerId.email}"  headerText="e-mail" />
+									<p:column filterBy="#{order.customerId.phoneNumber}" headerText="телефонный номер" />
+									<p:column sortBy="#{order.flightId.departureTimeDate}" headerText="Дата отправления" width="10%" />
+									<p:column filterBy="#{order.flightId.departureCity}" headerText="Город отправления" />
+									<p:column filterBy="#{order.flightId.arrivalCity}" headerText="Город прибытия" />
+									<p:column sortBy="#{order.flightId.arrivalTimeDate}" headerText="Дата прибытия" width="10%" />
+									<p:column sortBy="#{order.dateD}" headerText="Дата бронирования" width="10%" />
+									<p:column sortBy="#{order.amountTickets}" headerText="Количество билетов" width="5%" />
+									<p:column headerText="Стоимость билетов" width="6%" />
+									<p:column headerText="Статус заказа" width="6%" />
+									<p:column headerText="Редактировать" width="3%" />
 								</p:row>
 
 							</p:columnGroup>
@@ -268,7 +274,7 @@
 
 					</p:tab>
 
-					<p:tab id="soldTabID" title="Sold orders">
+					<p:tab id="soldTabID" title="Купленные билеты">
 
 						<p:accordionPanel
 							style="width:100%;font:14px/30px helvetica, serif;text-align:left;"
@@ -281,25 +287,25 @@
 
 
 										<p:inputText id="fiID" value="#{accountantBean.firstNameSold}"></p:inputText>
-										<p:watermark for="fiID" value="firstNameSold:"></p:watermark>
+										<p:watermark for="fiID" value="имя"></p:watermark>
 
 										<p:inputText id="laID" value="#{accountantBean.lastNameSold}"></p:inputText>
-										<p:watermark for="laID" value="lastNameSold:"></p:watermark>
+										<p:watermark for="laID" value="фамилия"></p:watermark>
 
 										<p:inputText id="emID" value="#{accountantBean.emailSold}"></p:inputText>
-										<p:watermark for="emID" value="emailSold:"></p:watermark>
+										<p:watermark for="emID" value="e-mail"></p:watermark>
 
 										<p:inputText id="phID"
 											value="#{accountantBean.phoneNumberSold}"></p:inputText>
-										<p:watermark for="phID" value="phoneNumberSold:"></p:watermark>
+										<p:watermark for="phID" value="телефонный номер"></p:watermark>
 										<p:inputText id="deID"
 											value="#{accountantBean.departureCitySold}"></p:inputText>
-										<p:watermark for="deID" value="departureCitySold:"></p:watermark>
+										<p:watermark for="deID" value="Город отправления"></p:watermark>
 										<p:inputText id="arID"
 											value="#{accountantBean.arrivalCitySold}"></p:inputText>
-										<p:watermark for="arID" value="arrivalCitySold:"></p:watermark>
+										<p:watermark for="arID" value="Город прибытия"></p:watermark>
 
-										<p:commandButton value="go"
+										<p:commandButton value="поиск"
 											actionListener="#{accountantBean.searchSoldDataTable()}"
 											update=":formID:tabViewID:soldOrdersID" />
 									</h:panelGrid>
@@ -310,7 +316,7 @@
 						<p:dataTable id="soldOrdersID" var="order"
 							value="#{accountantBean.soldOrders}"
 							style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
-							editable="true" scrollable="true" scrollHeight="300">
+							editable="true" scrollable="true" scrollHeight="300"  paginator="true" rows="20">
 							<p:ajax event="rowEdit" update="@this"
 								listener="#{accountantBean.onEditSold}" />
 
@@ -320,21 +326,21 @@
 
 		
 								<p:row>
-									<p:column headerText="firstNameBooked" />
-									<p:column headerText="lastNameBooked" />
-									<p:column headerText="emailBooked" />
-									<p:column headerText="phoneNumberBooked" />
+									<p:column filterBy="#{order.customerId.firstName}" headerText="имя" />
+									<p:column filterBy="#{order.customerId.lastName}" headerText="фамилия" />
+									<p:column filterBy="#{order.customerId.email}" headerText="e-mail" />
+									<p:column filterBy="#{order.customerId.phoneNumber}" headerText="телефонный номер" />
 
-									<p:column headerText="Departure date" />
-									<p:column headerText="departureCityBooked" />
-									<p:column headerText="arrivalCityBooked" />
-									<p:column headerText="Arrival date" />
+									<p:column sortBy="#{order.flightId.departureTimeDate}" headerText="Дата отправления" />
+									<p:column filterBy="#{order.flightId.departureCity}" headerText="Город отправления" />
+									<p:column filterBy="#{order.flightId.arrivalCity}" headerText="Город прибытия" />
+									<p:column sortBy="#{order.flightId.arrivalTimeDate}" headerText="Дата прибытия" />
 
-									<p:column headerText="Order date"  />
-									<p:column headerText="Tickets QTY"  />
-									<p:column headerText="Price" />
-									<p:column headerText="Status"  />
-									<p:column headerText="Edit"  />
+									<p:column sortBy="#{order.dateD}" headerText="Дата бронирования"  />
+									<p:column sortBy="#{order.amountTickets}" headerText="Количество билетов"  />
+									<p:column headerText="Стоимость билетов" />
+									<p:column headerText="Статус заказа"  />
+									<p:column headerText="Редактировать"  />
 								</p:row>
 							</p:columnGroup>
 

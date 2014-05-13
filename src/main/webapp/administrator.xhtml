@@ -11,7 +11,7 @@
 </h:head>
 
 <h:body>
-	<ui:composition template="/WEB-INF/templates/layout.xhtml">
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
 		<ui:define name="content">
 			<h:outputStylesheet library="css" name="style.css" />
 			<!-- <h3 align ="left">Timetable management: </h3> -->
@@ -20,23 +20,26 @@
 					<div align="center">
 						<div align="center">
 							<p:outputLabel>Поиск рейсов:</p:outputLabel>
-
+				
 						</div>
 						<h:panelGrid id="components" columns="9">
 							<p:outputLabel>С даты:</p:outputLabel>
 							<p:calendar id="fromDate" value="#{adminBean.startDate}"
-								pattern="dd MMMM yyyy" locale="en" required="true"
+								pattern="dd MMMM yyyy" maxdate="#{adminBean.endDate}" locale="en" required="true"
 								readonlyInput="true" navigator="true">
 								<p:ajax process="fromDate" update="toDate" partialSubmit="true"
 									event="dateSelect" />
 							</p:calendar>
 							<p:spacer width="20" height="60" />
-							<p:outputLabel>По дату:</p:outputLabel>
+							<p:outputLabel>по дату:</p:outputLabel>
 							<p:calendar id="toDate" value="#{adminBean.endDate}"
 								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
 								required="true" mindate="#{adminBean.startDate}"
-								navigator="true" />
-							<p:commandButton value="search" id="search"
+								navigator="true">
+								<p:ajax process="toDate" update="fromDate" partialSubmit="true"
+									event="dateSelect" />
+								</p:calendar>
+							<p:commandButton value="поиск" id="search"
 								process="fromDate,toDate" update="flights"
 								action="#{adminBean.updateTimetable()}" ajax="false">
 							</p:commandButton>
@@ -54,14 +57,19 @@
 					</div>
 				</p:panel>
 				<p:panel>
+				<h:form rendered="#{adminBean.showTimeTable}">
+				<div><h3>Список выбранных рейсов:</h3></div>
+				</h:form>
+				
+				
 					<p:dataTable id="flights" var="flightTab"
-						value="#{adminBean.flightsTimeTable}" style="width:2000px;"
-						editable="true" rendered="#{adminBean.showTimeTable}" paginator="true" rows="20">
+						value="#{adminBean.flightsTimeTable}"
+						editable="true" rendered="#{adminBean.showTimeTable}"
+						paginator="true" rows="15" style="width:2000px;" >
 						<p:ajax event="rowEdit" update="@this"
 							listener="#{adminBean.onEdit}" />
-						<f:facet name="header">Список выбранных рейсов:</f:facet>
 						<p:ajax event="rowEdit" update="flights" />
-						<p:column width="60px" filterBy="flight" headerText="flight">
+						<p:column width="60px" filterBy="flight" headerText="Рейс">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.flight}" />
@@ -72,7 +80,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="airCompany"
-							headerText="airCompany">
+							headerText="Авиакомпания">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.airCompany}" />
@@ -83,7 +91,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="plainModel"
-							headerText="plainModel">
+							headerText="Модель самолета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.plainModel}" />
@@ -94,7 +102,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="departureCountry"
-							headerText="departureCountry">
+							headerText="Страна вылета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureCountry}" />
@@ -107,7 +115,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="departureCity"
-							headerText="departureCity">
+							headerText="Город вылета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureCity}" />
@@ -123,7 +131,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="departureAirport"
-							headerText="departureAirport">
+							headerText="Аэропорт вылета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureAirport}" />
@@ -136,7 +144,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" sortBy="departureTime"
-							headerText="departureTime">
+							headerText="Время вылета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.departureTimeDate}">
@@ -148,29 +156,40 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar value="#{flightTab.departureTimeDate}"
+
+
+									<!---Закончил здесь!!!!!!!!!!!!!!!!!-->
+
+
+									<p:calendar id="fromDateTabl"
+										value="#{flightTab.departureTimeDate}"
 										pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
-										locale="en" mindate="#{flightTab.departureTimeDate}">
+										locale="en" maxdate="#{flightTab.arrivalTimeDate}">
+
+										<p:ajax process="fromDateTabl" update="toDateTabl"
+											partialSubmit="true" event="dateSelect" />
+
+
 									</p:calendar>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="arrivalCountry"
-							headerText="arrivalCountry">
+							headerText="Страна прилета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalCountry}" />
 								</f:facet>
 								<f:facet name="input">
 
-									<!---Закончил здесь!!!!!!!!!!!!!!!!!-->
+
 									<p:autoComplete value="#{flightTab.arrivalCountry}"
 										completeMethod="#{informationBean.completeCityNames}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="arrivalCity"
-							headerText="arrivalCity">
+							headerText="Город прилета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalCity}" />
@@ -190,7 +209,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" filterBy="arrivalAirport"
-							headerText="arrivalAirport">
+							headerText="Аэропорт прилета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalAirport}" />
@@ -205,7 +224,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="60px" sortBy="arrivalTime"
-							headerText="arrivalTime">
+							headerText="Время прилета">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.arrivalTimeDate}">
@@ -217,15 +236,18 @@
 									</h:outputText>
 								</f:facet>
 								<f:facet name="input">
-									<p:calendar value="#{flightTab.arrivalTimeDate}"
+									<p:calendar id="toDateTabl"
+										value="#{flightTab.arrivalTimeDate}"
 										pattern="dd MMMM yyyy HH:mm" showButtonPanel="true"
-										locale="en" mindate="#{flightTab.arrivalTimeDate}">
+										locale="en" mindate="#{flightTab.departureTimeDate}">
+										<p:ajax process="toDateTabl" update="fromDateTabl"
+											partialSubmit="true" event="dateSelect" />
 									</p:calendar>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column width="10%" filterBy="ticketsPrice"
-							headerText="Price per ticket">
+							headerText="Стоимость за билет">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.ticketsPrice}" />
@@ -236,7 +258,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="2.5%" filterBy="availableCount"
-							headerText="available tickets">
+							headerText="Доступно билетов">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.availableCount}" />
@@ -247,7 +269,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="2.5%" filterBy="bookedCount"
-							headerText="Booked tickets">
+							headerText="Забронировано билетов">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.bookedCount}" />
@@ -258,7 +280,7 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column width="2.5%" filterBy="soldCount"
-							headerText="Sold tickets">
+							headerText="Продано билетов">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText value="#{flightTab.soldCount}" />
@@ -276,7 +298,7 @@
 				</p:panel>
 			</h:form>
 			<p:dialog widgetVar="canceledO" width="80%" height="400"
-				header="Canceled orders" resizable="true" modal="true"
+				header="Отмененные заказы" resizable="true" modal="true"
 				appendTo="@(body)" showEffect="fade" hideEffect="fade"
 				rendered="#{adminBean.showCanceledOrders}" visible="true">
 				<h:form>
@@ -284,19 +306,19 @@
 						<p:dataTable id="cO" var="order"
 							value="#{adminBean.getCancelOrders()}" style="width:100%;"
 							rendered="true">
-							<p:column headerText="Customer firstName">
+							<p:column headerText="Имя">
 								<h:outputText value="#{order.customerId.firstName}"></h:outputText>
 							</p:column>
-							<p:column headerText="Customer lastName">
+							<p:column headerText="Фамилия">
 								<h:outputText value="#{order.customerId.lastName}"></h:outputText>
 							</p:column>
-							<p:column headerText="Customer email">
+							<p:column headerText="e-mail">
 								<h:outputText value="#{order.customerId.email}"></h:outputText>
 							</p:column>
-							<p:column headerText="Customer phoneNumber">
+							<p:column headerText="Телефонный номер">
 								<h:outputText value="#{order.customerId.phoneNumber}"></h:outputText>
 							</p:column>
-							<p:column headerText="Flight">
+							<p:column headerText="Время отправления - время прибытия">
 								<h:outputText value="#{order.flightId.departureTimeDate} ">
 									<f:convertDateTime pattern="dd MMMM yyyy HH:mm " locale="en" />
 								</h:outputText>
@@ -308,17 +330,22 @@
 									value=" #{order.flightId.departureCity} - #{order.flightId.arrivalCity}">
 								</h:outputText>
 							</p:column>
-							<p:column headerText="Number of tickets">
+							<p:column headerText="Количество билетов">
 								<h:outputText value="#{order.amountTickets}"></h:outputText>
 							</p:column>
 
-							<p:column headerText="Status">
+							<p:column headerText="Статус">
 								<h:outputText value="canceled"></h:outputText>
 							</p:column>
 						</p:dataTable>
-						<p:commandButton value="Ok" oncomplete="canceledO.hide()" action="#{adminBean.hideCanceledOrders()}"
+
+
+
+
+						<p:commandButton value="Готово" oncomplete="canceledO.hide()" action="#{adminBean.hideCanceledOrders()}"
 							update="cO">
-						</p:commandButton>
+								</p:commandButton>
+						
 					</div>
 				</h:form>
 			</p:dialog>
@@ -383,25 +410,30 @@
 							<p:outputLabel value="arrivalAirport: " />
 
 
-<p:autoComplete value="#{adminBean.arrivalAirport}"
+							<p:autoComplete value="#{adminBean.arrivalAirport}"
 								completeMethod="#{informationBean.completeAirportNames}"
 								required="true" />
 
-							<p:outputLabel value="Date and time: " />
-							<p:calendar value="#{adminBean.departureTime}"
+							<p:outputLabel  value="Date and time: " />
+							<p:calendar id="fromDateAddFl" value="#{adminBean.departureTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
-								navigator="true" maxlength="20">
+								navigator="true" maxlength="20" maxdate="#{adminBean.arrivalTime}">
+								<p:ajax process="fromDateAddFl" update="toDateAddFl" partialSubmit="true"
+	event="dateSelect" />
+								
 							</p:calendar>
 							<p:outputLabel value="Date and time: " />
-							<p:calendar value="#{adminBean.arrivalTime}"
+							<p:calendar id="toDateAddFl" value="#{adminBean.arrivalTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
-								navigator="true" maxlength="20">
+								navigator="true" maxlength="20" mindate="#{adminBean.departureTime}">
+								<p:ajax process="toDateAddFl" update="fromDateAddFl" partialSubmit="true"
+	event="dateSelect" />
 							</p:calendar>
 
 							<p:outputLabel value="Price per one ticket" />
-							<p:spinner value="#{adminBean.ticketsPrice}" prefix="$" min="0"
+							<p:spinner value="#{adminBean.ticketsPrice}" prefix="₴" min="0"
 								size="18" />
 							<p:outputLabel value="Number of tickets " />
 							<p:spinner value="#{adminBean.availableCount}" prefix="#" min="0"
@@ -411,8 +443,14 @@
 							<div align="center">
 								<p>
 									<p:commandButton icon="ui-icon-plusthick" value="add flight"
-										process="@all" actionListener="#{adminBean.addNewFlight()}"
-										oncomplete="newFlight.hide()">
+										process="@all" update="flights" actionListener="#{adminBean.addNewFlight()}"
+										oncomplete="newFlight.hide()"
+										
+										
+										
+								action="#{adminBean.updateTimetable()}" ajax="false"
+										
+										>
 									</p:commandButton>
 								</p>
 							</div>

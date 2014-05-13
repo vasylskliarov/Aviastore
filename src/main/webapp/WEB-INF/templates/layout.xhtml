@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru"
-     xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:p="http://primefaces.org/ui"
->
-    <h:head>
-        <title>Aviastor</title>
-    </h:head>
-    <h:body>
-        <p:layout fullPage="true" >
-            <p:layoutUnit position="north" size="20%" header="Лого" >
-                <h:outputText value="Здесь должна быть ваша реклама" />
-            </p:layoutUnit>
-            
-            
-       
-            
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Aviasotre</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+	
+	<ui:insert name="header">
+    	<ui:include src="header.xhtml"/>
+    </ui:insert>
+	
+<!-- 		<p:layoutUnit position="north">
+			
+		</p:layoutUnit> -->
 
-            <!-- <p:layoutUnit position="south" size="10%" header="@BionicUniversity" >
-                <h:outputText value="made by Vasyl Skliarov" />
-            </p:layoutUnit> -->
-                 <p:layoutUnit position="center" style="text-align:center; min-width:800px; min-height:600px;">
-                <ui:insert name="content">основная часть</ui:insert>
-            </p:layoutUnit>
-        </p:layout>
-    </h:body>
+		<p:layoutUnit position="center" style="text-align:center;">
+			<ui:insert name="content">основная часть</ui:insert>
+		</p:layoutUnit>
+		
+	</p:layout>
+</h:body>
 </html>

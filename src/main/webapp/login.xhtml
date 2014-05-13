@@ -10,31 +10,30 @@
 
 <ui:composition template="WEB-INF/templates/layout.xhtml">
 <ui:define name="content">
-
+<div  style="height: 15%;" ></div>
 	 <h:outputStylesheet library="css" name="login.css" /> 
-	<div align="center"> 
+	<div align="center" > 
+	
 	<div  style="width: 500px;" >
+	<p>Вход в администраторскую панель</p>
 	<h:form style="login" >
 	
-	  <p:panel id="panel-signup" >
- 
-          <!-- enable focus component -->
-	  <p:focus context="panel-signup" />
+<p:panel id="panel-signup" >
  
 	  <p:inputText id="username" required="true" label="username" size="40" value="#{loginBean.login}">
 	  </p:inputText>
-	  <p:watermark for="username" value="Логин:" />
-	  <p:message rendered="false" for="username" />
+	  <p:watermark requiredMessage="Введите имя пользователя"  for="username" value="Логин:" />
+	  <p:message rendered="true" for="username" />
  
 	  <p:password id="password" required="true" label="password" size="40"
-		requiredMessage="" value="#{loginBean.password}" maxlength="20">
+		requiredMessage="Введите пароль" value="#{loginBean.password}" maxlength="20">
 	  </p:password>
 		<p:watermark for="password" value="Пароль:" />
-		<p:message rendered="false"  for="password" />
+		<p:message rendered="true"  for="password" />
  
  	
-	  <p:commandButton value="Login" style="margin:20px"
-		action="#{loginBean.getLink}" ajax="false" />
+	  <p:commandButton value="Войти" style="margin:15px" 
+		action="#{loginBean.getLink}" ajax="true"  update="panel-signup"/>
  
 	  </p:panel>
  

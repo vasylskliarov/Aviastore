@@ -26,7 +26,7 @@
 							style="width:100%;" editable="true" paginator="true" rows="20">
 							<p:ajax event="rowEdit" update="@this"
 								listener="#{securityBean.onEdit}" />
-							<f:facet name="header">List of Users</f:facet>
+							<f:facet name="header">Список пользователей</f:facet>
 
 							<p:column width="20%" filterBy="firstName" headerText="Имя пользователя">
 								<p:cellEditor>
@@ -78,11 +78,11 @@
 									</f:facet>
 									<f:facet name="input">
 										<p:selectOneMenu value="#{usr.permission}" style="width:99%;">
-											<f:selectItem itemLabel="Security officer" itemValue="0" />
-											<f:selectItem itemLabel="Administrator" itemValue="1" />
-											<f:selectItem itemLabel="Accountant" itemValue="2" />
-											<f:selectItem itemLabel="Analytic" itemValue="3" />
-											<f:selectItem itemLabel="Blocked" itemValue="4" />
+											<f:selectItem itemLabel="Безопастость" itemValue="0" />
+											<f:selectItem itemLabel="Полеты" itemValue="1" />
+											<f:selectItem itemLabel="Бухгалтерия" itemValue="2" />
+											<f:selectItem itemLabel="Аналитик" itemValue="3" />
+											<f:selectItem itemLabel="Заблокированный" itemValue="4" />
 										</p:selectOneMenu>
 									</f:facet>
 								</p:cellEditor>
@@ -98,31 +98,31 @@
 
 							<p:inputText id="firstName" value="#{securityBean.firstName}"
 								required="true" label="firstName" style="width:80%;" />
-							<p:watermark for="firstName" value="User first name:" />
+							<p:watermark for="firstName" value="Имя пользователя:" />
 
 							<p:inputText id="lastName" value="#{securityBean.lastName}"
 								required="true" label="lastName" style="width:80%;" />
-							<p:watermark for="lastName" value="User last name:" />
+							<p:watermark for="lastName" value="Фамилия пользователя:" />
 
 							<p:inputText id="login" value="#{securityBean.login}"
 								required="true" label="login" style="width:80%" />
-							<p:watermark for="login" value="login:" />
+							<p:watermark for="login" value="Логин:" />
 
 							<p:inputText id="password" value="#{securityBean.password}"
 								required="true" label="password" style="width:80%" />
-							<p:watermark for="password" value="password:" />
+							<p:watermark for="password" value="Праоль:" />
 
 							<p:selectOneMenu value="#{securityBean.permission}">
-								<f:selectItem itemLabel="Security officer" itemValue="0" />
-								<f:selectItem itemLabel="Administrator" itemValue="1" />
-								<f:selectItem itemLabel="Accountant" itemValue="2" />
-								<f:selectItem itemLabel="Analytic" itemValue="3" />
-								<f:selectItem itemLabel="Blocked" itemValue="4" />
+								<f:selectItem itemLabel="Безопастость" itemValue="0" />
+								<f:selectItem itemLabel="Полеты" itemValue="1" />
+								<f:selectItem itemLabel="Бухгалтерия" itemValue="2" />
+								<f:selectItem itemLabel="Аналитик" itemValue="3" />
+								<f:selectItem itemLabel="Заблокированный" itemValue="4" />
 							</p:selectOneMenu>
 
 							<p:commandButton actionListener="#{securityBean.addUser()}"
-								icon="ui-icon-plusthick" style="margin:0" title="add new user"
-								process="@all" update="users,addnew" />
+								icon="ui-icon-plusthick" style="margin:0" title="Добавить пользователя"
+								process="@all" update="users, addnew" />
 						</h:panelGrid>
 
 					</p:panel>

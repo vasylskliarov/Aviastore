@@ -108,14 +108,14 @@
 
 .depoTable{ 
 	border-collapse:collapse; 
-	border:1px solid #000000; 
+	border:0px solid #000000; 
 }
 
  .depoTableHeader{ 
 	text-align:center; 
 	background:none repeat scroll 0 0 #B5B5B5; 
 	border-bottom:1px solid #000000; 
-	padding:2px; 
+	padding:0px; 
 }
 
 .depoTableOddRow{ 

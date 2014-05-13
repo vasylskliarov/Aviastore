@@ -68,15 +68,15 @@ public class SecurityBean implements Serializable {
 	public String permissionToString(Users userRole) {
 		switch (userRole.getPermission()) {
 		case Users.ACCOUNTANT:
-			return "Accountant";
+			return "Бухгалтерия";
 		case Users.ADMINISTRATOR:
-			return "Administrator";
+			return "Полеты";
 		case Users.ANALYTIC:
-			return "Analyst";
+			return "Аналитик";
 		case Users.BLOCKED:
-			return "Blocked user";
+			return "Заблокированный";
 		case Users.SECURITY_OFFICER:
-			return "Security officer";
+			return "Безопастость";
 		}
 		return "Without role";
 	}

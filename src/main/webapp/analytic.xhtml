@@ -27,7 +27,7 @@
 
 							<p:calendar id="fromDate" value="#{analystBean.startDate}"
 								pattern="dd MMMM yyyy" locale="en" required="true"
-								readonlyInput="true" navigator="true">
+								readonlyInput="true" navigator="true" maxdate="#{analystBean.endDate}">
 								<p:ajax process="fromDate" update="toDate" partialSubmit="true"
 									event="dateSelect" />
 							</p:calendar>
@@ -40,7 +40,10 @@
 							<p:calendar id="toDate" value="#{analystBean.endDate}"
 								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
 								required="true" mindate="#{analystBean.startDate}"
-								navigator="true" />
+								navigator="true" >
+								<p:ajax process="toDate" update="fromDate" partialSubmit="true"
+									event="dateSelect" />
+								</p:calendar>
 
 
 							<p:commandButton value="Generate reports" id="reports"

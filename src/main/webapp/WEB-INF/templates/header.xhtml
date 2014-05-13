@@ -3,17 +3,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"  
-    xmlns:p="http://primefaces.org/ui"
-      >
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <body>
 	<ui:composition>
 		<p:layout fullPage="true">
-        <p:layoutUnit position="north" size="50">
-               <h:outputText value="Booking system 0.0.1" />
-        </p:layoutUnit>
-        </p:layout>
-		<!-- <h1 align="center">Booking system 0.0.1</h1> -->
+			<p:layoutUnit position="north" size="50">
+
+				<div style="width: 900;">
+					<div align="left" style="display: inline-block;">
+						<a href="BookingSystem.xhtml"><h:graphicImage
+								value="/resources/img/logo.png" height="100" /> </a>
+					</div>
+					<div align="right" style="display: inline-block;">
+						<h:graphicImage value="/resources/img/shopping-bag.png"
+							height="100" />
+					</div>
+					<div align="right" style="display: inline-block;">
+						<h:graphicImage value="/resources/img/system-logout.png"
+							height="100" />
+					</div>
+					
+				</div>
+
+
+				<h:form style=" position:absolute;bottom:0;right:0;">
+					<div align="right">
+						<p:commandLink style="color:#ffffff;" value="log out" ajax="false"
+							process="@none" immediate="true"
+							actionListener="#{loginBean.logOut}" rendered="#{loginMB.loggedIn}" />
+					</div>
+				</h:form>
+
+
+
+			</p:layoutUnit>
+		</p:layout>
 	</ui:composition>
 </body>
 </html>

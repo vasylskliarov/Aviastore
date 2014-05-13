@@ -1,34 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head> 
-    <title>AviaStore. Успешная покупка</title> 
+<h:head>
+	<title>Успешная покупка</title>
 </h:head>
 
 <h:body>
-<ui:composition template="WEB-INF/templates/layout.xhtml">
-    <ui:define name="content">
-                 
-	        <h:outputStylesheet library="css" name="style.css" /> 
-	            <div  align="center">
-	            <div  style="width: 600px;" >
-	            <h:form>
-	               <h3 style="font:20px/30px helvetica, serif;text-align:center;">Билеты были успешно забранированы<br/> 
-	               Наши консультанты свяжутся с вам через 5 минут</h3>
-	               <p:commandLink action="BookingSystem?faces-redirect=true" ajax="false">
-	                    <h:outputText value="На главную" /> 
-	               </p:commandLink>
-	            </h:form>
-	            </div>
-	            </div>
-    </ui:define>
-</ui:composition>
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
+		<ui:define name="content">
+
+			<h:outputStylesheet library="css" name="style.css" />
+			<div align="center">
+				<div>
+					<h:form>
+						<h3 style="font: 20px/30px helvetica, serif; text-align: center;">
+							Билеты были успешно забранированы<br />
+							Наши консультанты свяжутся с вам через 5 минут<br />
+							Спасибо за покупку и хорошего вам дня<br />
+							<a href="BookingSystem.xhtml">На главную </a>
+							
+						</h3>
+						<p:commandLink action="BookingSystem?faces-redirect=true"
+							ajax="false">
+							<a href="BookingSystem.xhtml"><h:graphicImage
+									value="/resources/img/thank-you-page.png" /> </a>
+							
+						</p:commandLink>
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
 
 </h:body>
 </html>
