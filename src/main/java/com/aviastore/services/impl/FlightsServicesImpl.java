@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.util.*;
-
-import javax.annotation.PostConstruct;
 import javax.xml.bind.*;
 
 import com.aviastore.dao.*;
@@ -29,6 +27,7 @@ public class FlightsServicesImpl implements FlightsServices, Serializable {
 			return;
 		}
 		try {
+			//TODO try to use claspath from the project
 			airportsList = airportsDAO.unmarshalAirports(
 					new File("C:/airports.xml")
 							

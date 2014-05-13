@@ -25,8 +25,8 @@
 
 							<p:messages id="messages" autoUpdate="true" closable="true" />
 
-							<p:inputText id="firstNameID"
-								value="#{customerBean.firstName}" required="true"
+							<p:inputText id="firstNameID" value="#{customerBean.firstName}"
+								required="true"
 								validatorMessage="Please use only letters(a-z,A-Z and space)"
 								requiredMessage="firstName required!" size="30">
 								<f:validateRegex pattern="[a-zA-Z\s]* [a-zA-Z\s]*" />
@@ -36,8 +36,8 @@
 							<br />
 
 
-							<p:inputText id="lastNameID"
-								value="#{customerBean.lastName}" required="true"
+							<p:inputText id="lastNameID" value="#{customerBean.lastName}"
+								required="true"
 								validatorMessage="Please use only letters(a-z,A-Z and space)"
 								requiredMessage="lastName required!" size="45">
 								<f:validateRegex pattern="[a-zA-Z\s]* [a-zA-Z\s]*" />
@@ -58,12 +58,11 @@
 							<br />
 							<br />
 
-							<p:inputText id="phoneNumberID" value="#{customerBean.phoneNumber}"
-								required="true"
+							<p:inputText id="phoneNumberID"
+								value="#{customerBean.phoneNumber}" required="true"
 								validatorMessage="Please enter a correct phoneNumber"
 								requiredMessage="phoneNumber required" size="45">
-								<f:validateRegex
-									pattern="[0-9]" />
+								<f:validateRegex pattern="[0-9]" />
 							</p:inputText>
 							<p:watermark for="phoneNumberID" value="phone Number*"></p:watermark>
 							<br />
@@ -93,7 +92,8 @@
 
 					<h:form>
 						<p:panel>
-							<p:dataTable id="cartTID" var="order" value="#{customerBean.cartOrders}"
+							<p:dataTable id="cartTID" var="order"
+								value="#{customerBean.cartOrders}"
 								style="width:100%;font:10px/30px helvetica, serif;text-align:center;">
 								<p:column width="15%" headerText="Departing ">
 									<h:outputText value="#{order.flightId.departureTimeDate}">
@@ -116,7 +116,8 @@
 								</p:column>
 
 								<p:column width="10%" headerText="Price($)">
-									<h:outputText value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+									<h:outputText
+										value="#{order.flightId.ticketsPrice * order.amountTickets}" />
 								</p:column>
 
 								<p:column width="3%">
@@ -155,11 +156,19 @@
 										<p:outputLabel value="В город"
 											style="margin-left:0px; font:15px/30px helvetica, serif;" />
 
-										<p:inputText id="orig" value="#{customerBean.arrivalCity}"
+<p:autoComplete id="dest" value="#{customerBean.departureCity}"
+											completeMethod="#{informationBean.completeCityNames}"
 											required="true" />
+										
+
+
+
 										<p:spacer width="10" height="10" />
-										<p:inputText id="dest" value="#{customerBean.departureCity}"
+										
+<p:autoComplete id="orig" value="#{customerBean.arrivalCity}"
+											completeMethod="#{informationBean.completeCityNames}"
 											required="true" />
+
 
 										<p:spacer width="0" height="0" />
 										<p:spacer width="0" height="0" />
@@ -256,7 +265,8 @@
 										<h:outputText value="&#9992;"
 											style="font:25px/30px helvetica, serif;" />
 
-										<h:outputText value="#{customerBean.selectedFlight.departureTimeDate}"
+										<h:outputText
+											value="#{customerBean.selectedFlight.departureTimeDate}"
 											style="padding-left:20px;">
 											<f:convertDateTime pattern="HH:mm dd/MMMM/yyyy " />
 										</h:outputText>
@@ -266,7 +276,8 @@
 			                                     #{customerBean.selectedFlight.arrivalCity}"
 											style="padding-left:20px;" />
 
-										<p:spinner value="#{customerBean.amountTickets}" min="1" size="6"
+										<p:spinner value="#{customerBean.amountTickets}" min="1"
+											size="6"
 											max="#{customerBean.selectedFlight.availableCount - customerBean.ticketsInCartOnFlight(customerBean.selectedFlight.id)}"
 											style="padding-left:30px; font:14px/30px helvetica, serif;" />
 										<h:outputText value="" style="padding-left:10px;" />

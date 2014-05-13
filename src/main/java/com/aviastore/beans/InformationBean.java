@@ -75,7 +75,8 @@ public class InformationBean implements Serializable {
 	public List<String> completeAirportNames(String query) {
 		List<String> suggestions = new ArrayList<String>();
 		for (String p : this.airportNames) {
-			if (p.toLowerCase().startsWith(query))
+			
+			if (p.toLowerCase().startsWith((query.toLowerCase())))
 				suggestions.add(p);
 		}
 		return suggestions;
@@ -83,7 +84,7 @@ public class InformationBean implements Serializable {
 	public List<String> completeCityNames(String query) {
 		List<String> suggestions = new ArrayList<String>();
 		for (String p : this.cityNames) {
-			if (p.toLowerCase().startsWith(query))
+			if (p.toLowerCase().startsWith((query.toLowerCase())))
 				suggestions.add(p);
 		}
 		return suggestions;
@@ -91,7 +92,7 @@ public class InformationBean implements Serializable {
 	public List<String> completeCountryNames(String query) {
 		List<String> suggestions = new ArrayList<String>();
 		for (String p : this.countryNames) {
-			if (p.toLowerCase().startsWith(query))
+			if (p.toLowerCase().startsWith((query.toLowerCase())))
 				suggestions.add(p);
 		}
 		return suggestions;

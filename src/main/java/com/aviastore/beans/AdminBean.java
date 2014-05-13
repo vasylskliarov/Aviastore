@@ -61,6 +61,12 @@ public class AdminBean implements Serializable {
 		showCanceledOrders = true;
 		return orders;
 	}
+	public void hideCanceledOrders(){
+		showCanceledOrders =false;
+		
+	}
+	
+	
 	public void addNewFlight(){
 		System.out.println("adding new flight");
 		Flights newFlight = new Flights(
@@ -79,8 +85,28 @@ public class AdminBean implements Serializable {
 				availableCount);
 
 		flightsServices.addFlight(newFlight);
+		
+		this.clearFields();
 		flightsTimeTable = null;
 	}
+	public void clearFields(){
+		flight=null; 
+		airCompany=null;
+		plainModel =null;
+		departureCountry=null;
+		departureCity=null;
+		departureAirport =null;
+		departureTime=null;
+		arrivalCountry=null;
+		arrivalCity=null;
+		arrivalAirport=null;
+		arrivalTime=null;
+		ticketsPrice=0.0;
+		availableCount=0;
+		
+	}
+	
+	
 	public void  updateTimetable() {
 		System.out.println("update Timetable");
 		if(startDate != null && endDate != null) {
