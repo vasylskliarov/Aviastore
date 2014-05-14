@@ -13,9 +13,7 @@
 <h:body>
 	<ui:composition template="WEB-INF/templates/layout.xhtml">
 		<ui:define name="content">
-
 			<p:layout>
-
 				<p:layoutUnit position="east" size="30%" header="Cart"
 					resizable="true" visible="#{customerBean.showCart}" effectSpeed="2">
 					<h:form id="cartFID">
@@ -26,51 +24,46 @@
 							<p:messages id="messages" autoUpdate="true" closable="true" />
 
 							<p:inputText id="firstNameID" value="#{customerBean.firstName}"
-								required="true"
-								validatorMessage="Please use only letters(a-z,A-Z and space)"
-								requiredMessage="firstName required!" size="30">
-								<f:validateRegex pattern="[a-zA-Z\s]* [a-zA-Z\s]*" />
-							</p:inputText>
-							<p:watermark for="firstNameID" value="firstName*"></p:watermark>
-							<br />
-							<br />
+								required="true" requiredMessage="Имя обязательна для заполнения"
+								size="30" placeholder="Имя*"/>
 
+							<br />
+							<br />
 
 							<p:inputText id="lastNameID" value="#{customerBean.lastName}"
 								required="true"
-								validatorMessage="Please use only letters(a-z,A-Z and space)"
-								requiredMessage="lastName required!" size="45">
-								<f:validateRegex pattern="[a-zA-Z\s]* [a-zA-Z\s]*" />
-							</p:inputText>
+								requiredMessage="Фамилия обязательна для заполнения" size="45" placeholder="Фамилия*" />
+							
 
-							<p:watermark for="lastNameID" value="lastName*"></p:watermark>
 							<br />
 							<br />
 
 							<p:inputText id="emailID" value="#{customerBean.email}"
 								required="true"
-								validatorMessage="Please enter a correct email adress"
-								requiredMessage="email*" size="45">
+								validatorMessage="Пожалуйста введите корректный e-mail адрес"
+								requiredMessage="Пожалуйста введите e-mail" size="45" placeholder="Email*">
 								<f:validateRegex
 									pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
 							</p:inputText>
-							<p:watermark for="emailID" value="Email*"></p:watermark>
+
 							<br />
 							<br />
 
-							<p:inputText id="phoneNumberID"
-								value="#{customerBean.phoneNumber}" required="true"
-								validatorMessage="Please enter a correct phoneNumber"
-								requiredMessage="phoneNumber required" size="45">
-								<f:validateRegex pattern="[0-9]" />
-							</p:inputText>
-							<p:watermark for="phoneNumberID" value="phone Number*"></p:watermark>
+							<p:inputMask id="phoneNumberID"
+								value="#{customerBean.phoneNumber}" mask="(999) 999-99-99"
+								required="true"
+								requiredMessage="Пожалуйста введите номер телефона}!"
+								placeholder="Телефонный номер*" />
+								
+						
+
 							<br />
 							<br />
-							<p:commandButton value="Submit order" process="@form"
+							<p:commandButton value="Поодвердить бронирование" process="@form"
 								update="@all firstNameID lastNameID emailID phoneNumberID"
 								actionListener="#{customerBean.saveCartToDB()}"
 								action="orderComplete.xhtml">
+								
 								<p:confirm header="Confirmation"
 									message="Пожалуйста подтвердите свое желание забронировать билеты"
 									icon="ui-icon-alert" />
@@ -78,10 +71,10 @@
 
 							<p:confirmDialog widgetVar="confirmDlg" global="true"
 								showEffect="fade" hideEffect="fade" appendTo="@(body)">
-								<p:commandButton value="Confirm" type="button"
+								<p:commandButton value="Подтвердить" type="button"
 									styleClass="ui-confirmdialog-yes" icon="ui-icon-check"
 									update="@all" />
-								<p:commandButton value="Continue booking" type="button"
+								<p:commandButton value="Продолжить бронирование" type="button"
 									styleClass="ui-confirmdialog-no" icon="ui-icon-close"
 									update="@all" />
 							</p:confirmDialog>
@@ -94,8 +87,8 @@
 						<p:panel>
 							<p:dataTable id="cartTID" var="order"
 								value="#{customerBean.cartOrders}"
-								style="width:100%;font:10px/30px helvetica, serif;text-align:center;">
-								<p:column width="15%" headerText="Departing ">
+								style="width:100%;font:10px/30px helvetica, serif; text-align:center;">
+								<p:column width="15%" headerText="Время отправления">
 									<h:outputText value="#{order.flightId.departureTimeDate}">
 										<f:convertDateTime pattern="HH:mm" />
 									</h:outputText>
@@ -105,17 +98,17 @@
 									</h:outputText>
 								</p:column>
 
-								<p:column width="20%" headerText="Departure">
+								<p:column width="20%" headerText="Направление">
 									<h:outputText
 										value="#{order.flightId.departureCity}  &#8594;  #{order.flightId.arrivalCity}" />
 								</p:column>
 
 
-								<p:column width="1%" headerText="QTY">
+								<p:column width="1%" headerText="Количество билетов">
 									<h:outputText value="#{order.amountTickets}" />
 								</p:column>
 
-								<p:column width="10%" headerText="Price($)">
+								<p:column width="10%" headerText="Стоимость в грн.">
 									<h:outputText
 										value="#{order.flightId.ticketsPrice * order.amountTickets}" />
 								</p:column>
@@ -124,14 +117,13 @@
 									<p:commandButton icon="ui-icon-closethick" style="margin:0"
 										update="cartTID" ajax="false"
 										actionListener="#{customerBean.removeOrderFromCart(order)}">
-
 									</p:commandButton>
 								</p:column>
 							</p:dataTable>
 
 							<div align="right">
 								<br />
-								<h:outputText value="TOTAL: #{customerBean.total}$"></h:outputText>
+								<h:outputText value="ИТОГО: #{customerBean.total}$"></h:outputText>
 							</div>
 
 						</p:panel>
@@ -156,16 +148,17 @@
 										<p:outputLabel value="В город"
 											style="margin-left:0px; font:15px/30px helvetica, serif;" />
 
-<p:autoComplete id="dest" value="#{customerBean.departureCity}"
+										<p:autoComplete id="dest"
+											value="#{customerBean.departureCity}"
 											completeMethod="#{informationBean.completeCityNames}"
 											required="true" />
-										
+
 
 
 
 										<p:spacer width="10" height="10" />
-										
-<p:autoComplete id="orig" value="#{customerBean.arrivalCity}"
+
+										<p:autoComplete id="orig" value="#{customerBean.arrivalCity}"
 											completeMethod="#{informationBean.completeCityNames}"
 											required="true" />
 
@@ -175,7 +168,7 @@
 										<p:spacer width="0" height="0" />
 
 
-										<p:outputLabel value="Departure date"
+										<p:outputLabel value="Дата вылета"
 											style="margin-left:0px; margin-bottom:10px; font:15px/30px helvetica, serif;" />
 										<p:spacer width="50" height="0" />
 										<p:spacer width="50" height="0" />
@@ -186,7 +179,7 @@
 											navigator="true" mindate="dWidget.today();"
 											style="font:18px/30px helvetica, serif;" />
 										<p:spacer width="10" height="40" />
-										<p:commandButton value="Find tickets &#9992;" id="search"
+										<p:commandButton value="Найти билеты &#9992;" id="search"
 											process="orig, date, dest" update="flights"
 											actionListener="#{customerBean.loadTimeTable()}" ajax="false"
 											style="width:187px;">
@@ -199,7 +192,7 @@
 										value="#{customerBean.timeTableList}"
 										style="width:100%; font:13px/30px helvetica, serif;text-align:center;"
 										rendered="#{customerBean.showTimeTable}">
-										<p:column width="15%" headerText="Departing ">
+										<p:column width="15%" headerText="Время вылета">
 											<h:outputText value="#{flight.departureTimeDate}">
 												<f:convertDateTime pattern="HH:mm" />
 											</h:outputText>
@@ -209,13 +202,13 @@
 											</h:outputText>
 										</p:column>
 
-										<p:column width="20%" headerText="Departure">
+										<p:column width="20%" headerText="Город вылета">
 											<h:outputText
 												value="#{flight.departureCity}  &#8594;  #{flight.arrivalCity}" />
 										</p:column>
 
 
-										<p:column width="10%" headerText="Free">
+										<p:column width="10%" headerText="Билетов в наличии">
 											<h:outputText
 												value="#{flight.availableCount - customerBean.ticketsInCartOnFlight(flight.id)}" />
 										</p:column>

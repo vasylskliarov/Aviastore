@@ -6,12 +6,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	 xmlns:p="http://primefaces.org/ui" > 
-	 
+<h:head>
+	<title>Login</title>
+	
+</h:head>	 
 
 <ui:composition template="WEB-INF/templates/layout.xhtml">
 <ui:define name="content">
-<div  style="height: 15%;" ></div>
-	 <h:outputStylesheet library="css" name="login.css" /> 
+<h:outputStylesheet library="css" name="login.css" />
+<div  style="height: 10%;" ></div>
+ 
 	<div align="center" > 
 	
 	<div  style="width: 500px;" >
@@ -20,18 +24,15 @@
 	
 <p:panel id="panel-signup" >
  
-	  <p:inputText id="username" required="true" label="username" size="40" value="#{loginBean.login}">
-	  </p:inputText>
-	  <p:watermark requiredMessage="Введите имя пользователя"  for="username" value="Логин:" />
+	  <p:inputText id="username" required="true" label="username" size="40" value="#{loginBean.login}"
+	  requiredMessage="Введите логин" placeholder="Логин:" />
 	  <p:message rendered="true" for="username" />
  
 	  <p:password id="password" required="true" label="password" size="40"
-		requiredMessage="Введите пароль" value="#{loginBean.password}" maxlength="20">
-	  </p:password>
-		<p:watermark for="password" value="Пароль:" />
+		requiredMessage="Введите пароль" value="#{loginBean.password}" maxlength="20"
+		placeholder="Пароль:"/>
 		<p:message rendered="true"  for="password" />
  
- 	
 	  <p:commandButton value="Войти" style="margin:15px" 
 		action="#{loginBean.getLink}" ajax="true"  update="panel-signup"/>
  

@@ -9,6 +9,6 @@ public interface UsersServices {
 	public boolean add(Users user);
 	public List<Users> getAllUsers();
 	public void update(Users user);
-	public int isValid(String login, String password);
+	public Users isValid(String login, String password);
 
 }

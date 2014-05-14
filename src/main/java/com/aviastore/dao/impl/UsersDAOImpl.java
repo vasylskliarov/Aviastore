@@ -51,16 +51,16 @@ public class UsersDAOImpl implements UsersDAO, Serializable{
 	}
 
 	@Override
-	public int isValid(String login, String password) {
+	public Users isValid(String login, String password) {
 		List <Users> users = null;
 		TypedQuery<Users> query = entityManager.createQuery("SELECT u FROM Users u WHERE u.login = :log AND u.password = :pas", Users.class);
 		query.setParameter("log", login);
 		query.setParameter("pas", password);
 		users = query.getResultList();
 		if (users.size()!=0){
-			return users.get(0).getPermission();
+			return users.get(0);
 		}else {
-			return -1;
+			return null;
 		}
 	}
 

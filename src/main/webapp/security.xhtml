@@ -13,7 +13,9 @@
 		<title>Security officer</title>
 	</h:head>
 	<ui:composition template="WEB-INF/templates/layout.xhtml">
+	
 		<ui:define name="content">
+		<h:outputStylesheet library="css" name="style.css" />
 			<f:event listener="#{securityBean.initUsers()}" type="preRenderView" />
 			<h:form id="list">
 				<div align="center">

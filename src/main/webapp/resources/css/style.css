@@ -1,4 +1,27 @@
 @CHARSET "UTF-8";
+
+.exitButton { 	
+	height: 65px; 	
+	}
+.cartButton { 	
+	height: 100px; 	
+	}
+
+.headerBl {
+	overflow:hidden; 
+	}
+	
+.rightBl {
+	float:right; 
+	text-align: left; 
+	}
+	
+.leftBl {
+	float:left; 
+	text-align: right; 
+	} 
+
+
 .p{
 	padding-top:25px;
 	padding-bottom:25px;
@@ -6,50 +29,85 @@
 	padding-left:50px;
 }
 
-/* .userTable{ 
+.depoTable{ 
 	border-collapse:collapse; 
-	border:1px solid #000000; 
+	border:0px solid #000000; 
 }
 
-.userTableHeader{ 
+ .depoTableHeader{ 
 	text-align:center; 
 	background:none repeat scroll 0 0 #B5B5B5; 
 	border-bottom:1px solid #000000; 
-	padding:16px; 
+	padding:0px; 
 }
 
-.userTableOddRow{ 
+.depoTableOddRow{ 
 	text-align:center; 
-	background:none repeat scroll 0 0 #FFFFFFF;
-	padding: 5px; 
+	background:none repeat scroll 0 0 #FFFFFFF; 
 }
 
-.userTableEvenRow{ 
+.depoTableEvenRow{ 
 	text-align:center; 
-	background:none repeat scroll 0 0 #D3D3D3;
-	padding: 5px;  
-} */
+	background:none repeat scroll 0 0 #D3D3D3; 
+}
 
-/* 
- input.text,input.password, input[type="text"], input[type="password"] {
+
+/*
+
+ .ui-layout-unit-content{
+ 	 background:  rgba(0,0,0,0);
+ }
+ 
+ .ui-layout-unit-content-north{
+ 	  background:  url(../resources/img/airplane_header.png);
+ 	  overflow-x:hidden !important; 
+ 	
+ }
+ 
+  .ui-layout-unit-content-center{
+ }
+ 
+  .ui-layout-unit-content-south{
+  	 overflow-x:hidden !important;
+ 	 background:rgba(231,129,65,0.9);  
+ }
+
+.ui-layout-south .ui-layout-unit-content {
+                overflow-x:hidden !important;
+                overflow-y:hidden !important;
+}
+ .ui-widget-header {
+ 	background:rgba(231,129,65,0.9); 
+ 	
+ 	
+ }
+
+
+ 
+CHECK CSS
+input.text,input.password, input[type="text"], input[type="password"] {
 	border: 1px solid #EAEAEA;
 	background: #EAEAEA;
 	margin: 10px 0;
-	font-size: 0.5em;
+	font-size: 1em;
 	color: #444;
 	padding: 15px;
-}  
+}
 
 ** override primefaces style **
 .ui-message-info,.ui-message-error,.ui-message-warn,.ui-message-fatal {
 	border: 0;
-	margin: 0 0 20px 0;
+	margin: 0 0 20px 40px;
 	padding: 0;
+	font-size:10px;
+	font-family: helvetica, serif;
+	text-align: left;
 }
 
 .ui-messages-error,.ui-message-error {
 	color: #A12A2A;
-	background-color: #fff;
+	background-color: #eeeeee;
+	font-size:10px;
 }
 
 .ui-message-error-icon {
@@ -86,7 +144,8 @@
 .ui-button{
 	padding:5px;
 	font-size: 14px;
-} */
+} 
+ */
 
 
 
@@ -96,35 +155,4 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-.depoTable{ 
-	border-collapse:collapse; 
-	border:0px solid #000000; 
-}
-
- .depoTableHeader{ 
-	text-align:center; 
-	background:none repeat scroll 0 0 #B5B5B5; 
-	border-bottom:1px solid #000000; 
-	padding:0px; 
-}
-
-.depoTableOddRow{ 
-	text-align:center; 
-	background:none repeat scroll 0 0 #FFFFFFF; 
-}
-
-.depoTableEvenRow{ 
-	text-align:center; 
-	background:none repeat scroll 0 0 #D3D3D3; 
-}
 

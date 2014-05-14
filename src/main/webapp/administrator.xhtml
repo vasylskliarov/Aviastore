@@ -13,6 +13,8 @@
 <h:body>
 	<ui:composition template="WEB-INF/templates/layout.xhtml">
 		<ui:define name="content">
+		
+  			
 			<h:outputStylesheet library="css" name="style.css" />
 			<!-- <h3 align ="left">Timetable management: </h3> -->
 			<h:form>
@@ -184,7 +186,7 @@
 
 
 									<p:autoComplete value="#{flightTab.arrivalCountry}"
-										completeMethod="#{informationBean.completeCityNames}" />
+										completeMethod="#{informationBean.completeCountryNames}" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>

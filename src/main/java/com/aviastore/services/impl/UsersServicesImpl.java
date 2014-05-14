@@ -34,7 +34,7 @@ public class UsersServicesImpl implements UsersServices, Serializable{
 	}
 	@Override
 	@Transactional
-	public int isValid(String login, String password){
+	public Users isValid(String login, String password){
 		return usersDAO.isValid(login, password);
 	}
 	public UsersDAO getUsersDAO() {

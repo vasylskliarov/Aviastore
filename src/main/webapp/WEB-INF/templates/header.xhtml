@@ -6,37 +6,32 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <body>
-	<ui:composition>
-		<p:layout fullPage="true">
-			<p:layoutUnit position="north" size="50">
-
-				<div style="width: 900;">
-					<div align="left" style="display: inline-block;">
-						<a href="BookingSystem.xhtml"><h:graphicImage
-								value="/resources/img/logo.png" height="100" /> </a>
+ 	<h:outputStylesheet library="css" name="style.css"  />
+	<ui:composition styleClass="ui-layout-unit-content-south">
+		<p:layout  fullPage="true" scrollable="false" >
+			<p:layoutUnit position="north"  >		
+				<div class="headerBl">
+					<div class="leftBl">
+						<a href="BookingSystem.xhtml">
+							<h:graphicImage	value="/resources/img/logo.png" height="100" />
+						</a>
+						
 					</div>
-					<div align="right" style="display: inline-block;">
-						<h:graphicImage value="/resources/img/shopping-bag.png"
-							height="100" />
-					</div>
-					<div align="right" style="display: inline-block;">
-						<h:graphicImage value="/resources/img/system-logout.png"
-							height="100" />
-					</div>
-					
+						  			
+		  			<div class="rightBl">
+			        	<div align="right" >
+			                <h:form>
+			                	<!-- Добавить проверку показа кнопки-->
+			               		<h:commandButton ajax="false" process = "@none"  image="/resources/img/shopping-bag.png" styleClass="cartButton"
+			                       immediate="true"  rendered="true"/>			                
+			                
+				                <h:commandButton ajax="false" process = "@none"  image="/resources/img/system-logout.png" styleClass="exitButton"
+			                       immediate="true" actionListener="#{loginBean.logOut()}" rendered="#{loginBean.loggedIn}"/>
+			            	</h:form> 
+			       		</div>
+			            
+		  			</div>
 				</div>
-
-
-				<h:form style=" position:absolute;bottom:0;right:0;">
-					<div align="right">
-						<p:commandLink style="color:#ffffff;" value="log out" ajax="false"
-							process="@none" immediate="true"
-							actionListener="#{loginBean.logOut}" rendered="#{loginMB.loggedIn}" />
-					</div>
-				</h:form>
-
-
-
 			</p:layoutUnit>
 		</p:layout>
 	</ui:composition>
