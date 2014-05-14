@@ -44,7 +44,7 @@ public class CustomerBean implements Serializable {
 	public CustomerBean() {}
 	public void loadTimeTable() {
 		timeTableList = flightsServices.getTimetableByPlaces(departureCity, arrivalCity, departureDate);
-		System.out.println(timeTableList.size());
+		System.out.println("НАЙДЕНО!!!! :"+timeTableList.size());
 		this.showTimeTable = true;
 	}
 	public void addOrderToCart(Flights flight, int amountTickets) {

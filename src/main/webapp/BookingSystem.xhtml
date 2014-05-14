@@ -32,7 +32,7 @@
 
 							<p:inputText id="lastNameID" value="#{customerBean.lastName}"
 								required="true"
-								requiredMessage="Фамилия обязательна для заполнения" size="45" placeholder="Фамилия*" />
+								requiredMessage="Пожалуйста введите фамилию" size="45" placeholder="Фамилия*" />
 							
 
 							<br />
@@ -43,14 +43,14 @@
 								validatorMessage="Пожалуйста введите корректный e-mail адрес"
 								requiredMessage="Пожалуйста введите e-mail" size="45" placeholder="Email*">
 								<f:validateRegex
-									pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+									pattern="^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$" />
 							</p:inputText>
 
 							<br />
 							<br />
 
 							<p:inputMask id="phoneNumberID"
-								value="#{customerBean.phoneNumber}" mask="(999) 999-99-99"
+								value="#{customerBean.phoneNumber}" mask="+9(999) 999-99-99"
 								required="true"
 								requiredMessage="Пожалуйста введите номер телефона}!"
 								placeholder="Телефонный номер*" />
@@ -171,7 +171,9 @@
 										<p:outputLabel value="Дата вылета"
 											style="margin-left:0px; margin-bottom:10px; font:15px/30px helvetica, serif;" />
 										<p:spacer width="50" height="0" />
-										<p:spacer width="50" height="0" />
+										<p:outputLabel value="сколько +/- дней к дате"
+											style="margin-left:0px; margin-bottom:10px; font:15px/30px helvetica, serif;" />
+										
 
 										<p:calendar id="date" value="#{customerBean.departureDate}"
 											widgetVar="dWidget" pattern="dd MMMM yyyy"

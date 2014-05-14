@@ -15,14 +15,16 @@
 		<ui:define name="content">
 			<h:outputStylesheet library="css" name="style.css" />
 			<h:form>
+		
 
 
 				<div align="center">
+					<div><h3>Создание отчетов</h3></div>
 					<p:panel>
 
 						<h:panelGrid id="components" columns="9"
 							style="font:16px/30px helvetica, serif;">
-							<p:outputLabel>From date:</p:outputLabel>
+							<p:outputLabel>Начальная дата:</p:outputLabel>
 
 
 							<p:calendar id="fromDate" value="#{analystBean.startDate}"
@@ -35,7 +37,7 @@
 
 							<p:spacer width="20" height="60" />
 
-							<p:outputLabel>To:</p:outputLabel>
+							<p:outputLabel>Конечная дата:</p:outputLabel>
 
 							<p:calendar id="toDate" value="#{analystBean.endDate}"
 								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
@@ -44,52 +46,34 @@
 								<p:ajax process="toDate" update="fromDate" partialSubmit="true"
 									event="dateSelect" />
 								</p:calendar>
-
-
-							<p:commandButton value="Generate reports" id="reports"
+							<p:commandButton value="Сгенерировать отчет" id="reports"
 								process="@this" update="@form"
 								actionListener="#{analystBean.generateReports()}" ajax="false"
 								onclick="reports.select(0);">
 							</p:commandButton>
-
 						</h:panelGrid>
-
 					</p:panel>
 				</div>
-
 				<p:accordionPanel id="reportsID" widgetVar="reports"
 					activeIndex="-1"
 					style="font:16px/30px helvetica, serif;text-align:left;"
 					rendered="#{analystBean.showByDate}">
-					<p:tab title="Report by date">
+					<p:tab title="Отчет по дням">
 						<h:panelGrid columns="1" cellspacing="20"
 							style="width:100%;height:500px">
-
-							<!--  <p:lineChart id="chartDateID" value="#{analystBean.repByDateList}" legendPosition="ne"  
-                            title="Date - Quantity chart"  style="height:450px;" orientation="horizontal" 
-                            zoom="true" animate="true"/>  -->
-
-
-							<p:panel header="Chart by Date" rendered="#{true}">
+							<p:panel  rendered="#{true}">
 								<p:lineChart id="linear" value="#{analystBean.chartModelByDate}"
-									legendPosition="e" fill="true" title="Chart by Date" minY="0"
+									legendPosition="e" fill="true" title="График прибыли по дням" minY="0"
 									style="height:300px" />
 							</p:panel>
-
-
-
-
-
-
-
 
 							<p:dataTable id="repByDateTable" var="report1" value="#{analystBean.repByDateList}"
 								scrollable="true" scrollHeight="240">
 								<p:columnGroup type="header">
 									<p:row>
-										<p:column headerText="Date"></p:column>
-										<p:column headerText="QTY"></p:column>
-										<p:column headerText="Price"></p:column>
+										<p:column headerText="Дата"></p:column>
+										<p:column headerText="Количество проданных билетов"></p:column>
+										<p:column headerText="Общая стоимость билетов (₴)"></p:column>
 									</p:row>
 								</p:columnGroup>
 
@@ -105,31 +89,24 @@
 									<h:outputText value="#{report1.total}" />
 								</p:column>
 							</p:dataTable>
-
 						</h:panelGrid>
-
-
 					</p:tab>
 
-					<p:tab title="Report by flights">
+					<p:tab title="Отчет по городам">
 						<h:panelGrid columns="1" cellpadding="10" style="width:100%;">
 							
 							
 							<p:pieChart id="pie" value="#{analystBean.chartModelByPlace}"
-								legendPosition="e" title="Chart by Place" style="height:300px" />
-								
-								
-							<!--  <p:barChart id="chartPlaceID" value="#{analystBean.repByPlaceList}" legendPosition="ne"  
-                            title="Flight - Quantity chart"  style="height:450px;" orientation="horizontal" 
-                            zoom="true" animate="true"/> -->
+								legendPosition="e" title="График прибыли по городам" style="height:300px" />
+							
 
 							<p:dataTable id="repByPlaceTable" var="report2" value="#{analystBean.repByPlaceList}">
 								<p:columnGroup type="header">
 									<p:row>
-										<p:column headerText="Origin"></p:column>
-										<p:column headerText="Destination"></p:column>
-										<p:column headerText="QTY"></p:column>
-										<p:column headerText="Price"></p:column>
+										<p:column headerText="Город отправления"></p:column>
+										<p:column headerText="Город прибытия"></p:column>
+										<p:column headerText="Количество проданных билетов"></p:column>
+										<p:column headerText="Общая стоимость билетов (₴)"></p:column>
 									</p:row>
 								</p:columnGroup>
 

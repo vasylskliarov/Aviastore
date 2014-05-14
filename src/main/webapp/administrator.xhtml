@@ -160,7 +160,7 @@
 								<f:facet name="input">
 
 
-									<!---Закончил здесь!!!!!!!!!!!!!!!!!-->
+								
 
 
 									<p:calendar id="fromDateTabl"
@@ -353,39 +353,39 @@
 			</p:dialog>
 
 			<p:dialog widgetVar="newFlight" width="800" height="300"
-				header="New flight" resizable="true" modal="true" appendTo="@(body)"
+				header="Добавление нового полета" resizable="true" modal="true" appendTo="@(body)"
 				showEffect="fade" hideEffect="fade" visible="false">
 				<h:form id="form">
 					<div align="center">
 						<h:panelGrid id="addnew" columns="4">
-							<p:outputLabel value="flight: " />
+							<p:outputLabel value="Номер рейса:" />
 							<p:inputText value="#{adminBean.flight}" required="true" />
 							<p:outputLabel />
 							<p:outputLabel />
+							<p:outputLabel value="" />
 							<p:outputLabel value=" " />
 							<p:outputLabel value=" " />
 							<p:outputLabel value=" " />
-							<p:outputLabel value=" " />
-							<p:outputLabel value="airCompany: " />
+							<p:outputLabel value="Авиакомпания:" />
 							<p:inputText value="#{adminBean.airCompany}" required="true" />
 
-							<p:outputLabel value="plainModel: " />
+							<p:outputLabel value="Модель самолета:" />
 							<p:inputText value="#{adminBean.plainModel}" required="true" />
 
-							<p:outputLabel value="departureCountry: " />
+							<p:outputLabel value="Страна вылета:" />
 
 							<p:autoComplete value="#{adminBean.departureCountry}"
 								completeMethod="#{informationBean.completeCountryNames}"
 								required="true" />
 
-							<p:outputLabel value="arrivalCountry: " />
+							<p:outputLabel value="Страна прилета:" />
 							<p:autoComplete value="#{adminBean.arrivalCountry}"
 								completeMethod="#{informationBean.completeCountryNames}"
 								required="true" />
 
 
 
-							<p:outputLabel value="departureCity: " />
+							<p:outputLabel value="Город вылета:" />
 
 
 							<p:autoComplete value="#{adminBean.departureCity}"
@@ -394,14 +394,14 @@
 
 
 
-							<p:outputLabel value="arrivalCity: " />
+							<p:outputLabel value="Город прилета:" />
 							<p:autoComplete value="#{adminBean.arrivalCity}"
 								completeMethod="#{informationBean.completeCityNames}"
 								required="true" />
 
 
 
-							<p:outputLabel value="departureAirport: " />
+							<p:outputLabel value="Аэропорт вылета:" />
 
 							<p:autoComplete value="#{adminBean.departureAirport}"
 								completeMethod="#{informationBean.completeAirportNames}"
@@ -409,14 +409,14 @@
 
 
 
-							<p:outputLabel value="arrivalAirport: " />
+							<p:outputLabel value="Аэропорт прилета:" />
 
 
 							<p:autoComplete value="#{adminBean.arrivalAirport}"
 								completeMethod="#{informationBean.completeAirportNames}"
 								required="true" />
 
-							<p:outputLabel  value="Date and time: " />
+							<p:outputLabel  value="Время вылета:" />
 							<p:calendar id="fromDateAddFl" value="#{adminBean.departureTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
@@ -425,7 +425,7 @@
 	event="dateSelect" />
 								
 							</p:calendar>
-							<p:outputLabel value="Date and time: " />
+							<p:outputLabel value="Время прилета:" />
 							<p:calendar id="toDateAddFl" value="#{adminBean.arrivalTime}"
 								pattern="dd MMMM yyyy HH:mm" pages="1" showButtonPanel="true"
 								locale="en" required="true" readonlyInput="true"
@@ -434,10 +434,10 @@
 	event="dateSelect" />
 							</p:calendar>
 
-							<p:outputLabel value="Price per one ticket" />
+							<p:outputLabel value="Цена за билет:" />
 							<p:spinner value="#{adminBean.ticketsPrice}" prefix="₴" min="0"
 								size="18" />
-							<p:outputLabel value="Number of tickets " />
+							<p:outputLabel value="Количество билетов:" />
 							<p:spinner value="#{adminBean.availableCount}" prefix="#" min="0"
 								size="18" />
 							<p:outputLabel value=" " />

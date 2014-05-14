@@ -30,14 +30,13 @@ public class OrdersDAOImpl implements OrdersDAO, Serializable {
 		Flights flight = null;
 		flight = entityManager.find(Flights.class, order.getFlightId().getId());
 		TypedQuery<Customers> query = entityManager.createQuery(
-				"SELECT c FROM Customers c "+
-				"WHERE (LOCATE(:fName,c.firstName)<>0 "+
-				"AND LOCATE(:lName,c.lastName)<>0)"+
-				"AND LOCATE(:email,c.email)<>0)"+
-				"AND LOCATE(:phone,c.phoneNumber)<>0)", Customers.class);
+				"SELECT c FROM Customers c WHERE (LOCATE(:fName, c.firstName)<>0 "+
+				"AND LOCATE(:lName, c.lastName)<>0 "+
+				"AND LOCATE(:email,c.email)<>0 "+
+				"AND LOCATE(:phone,c.phoneNumber)<>0) ", Customers.class);
 		query.setParameter("fName",  order.getCustomerId().getFirstName());
 		query.setParameter("lName",  order.getCustomerId().getLastName());
-		query.setParameter("email", order.getCustomerId().getEmail());
+		query.setParameter("email", order.getCustomerId().getLastName());
 		query.setParameter("phone",  order.getCustomerId().getPhoneNumber());
 		Customers cust = null;
 		try {

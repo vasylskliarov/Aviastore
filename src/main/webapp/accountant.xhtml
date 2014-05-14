@@ -66,10 +66,10 @@
 						<p:dataTable id="ordersID" var="order"
 							value="#{accountantBean.bookedOrders}"
 							style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
-							editable="true" scrollable="true" scrollHeight="300"  paginator="true" rows="20">
+							editable="true" scrollable="true" scrollHeight="300"  paginator="true" rows="10">
 							<!-- проверить -->
 							<p:ajax event="rowEdit"
-								update=":formID:tabViewID:ordersID, :formID:tabViewID:soldOrdersID"
+								update="@this"
 								listener="#{accountantBean.onEditBooked}" />
 
 
@@ -78,16 +78,16 @@
 
 
 								<p:row>
-									<p:column filterBy="#{order.customerId.firstName}" headerText="имя" />
-									<p:column filterBy="#{order.customerId.lastName}" headerText="фамилия" />
-									<p:column filterBy="#{order.customerId.email}"  headerText="e-mail" />
-									<p:column filterBy="#{order.customerId.phoneNumber}" headerText="телефонный номер" />
-									<p:column sortBy="#{order.flightId.departureTimeDate}" headerText="Дата отправления" width="10%" />
-									<p:column filterBy="#{order.flightId.departureCity}" headerText="Город отправления" />
-									<p:column filterBy="#{order.flightId.arrivalCity}" headerText="Город прибытия" />
-									<p:column sortBy="#{order.flightId.arrivalTimeDate}" headerText="Дата прибытия" width="10%" />
-									<p:column sortBy="#{order.dateD}" headerText="Дата бронирования" width="10%" />
-									<p:column sortBy="#{order.amountTickets}" headerText="Количество билетов" width="5%" />
+									<p:column headerText="имя" />
+									<p:column headerText="фамилия" />
+									<p:column headerText="e-mail" />
+									<p:column headerText="телефонный номер" />
+									<p:column headerText="Дата отправления" width="10%" />
+									<p:column headerText="Город отправления" />
+									<p:column headerText="Город прибытия" />
+									<p:column headerText="Дата прибытия" width="10%" />
+									<p:column headerText="Дата бронирования" width="10%" />
+									<p:column headerText="Количество билетов" width="5%" />
 									<p:column headerText="Стоимость билетов" width="6%" />
 									<p:column headerText="Статус заказа" width="6%" />
 									<p:column headerText="Редактировать" width="3%" />
@@ -95,7 +95,7 @@
 
 							</p:columnGroup>
 
-							<p:column>
+							<p:column filterBy="#{order.customerId.firstName}">
 								<p:cellEditor>
 									<f:facet name="output">
 										<h:outputText value="#{order.customerId.firstName}" />
@@ -260,9 +260,11 @@
 									</f:facet>
 									<f:facet name="input">
 										<p:selectOneMenu value="#{order.payStatus}" style="width:3cm;">
-											<f:selectItem itemLabel="BOOKED" itemValue="0" />
-											<f:selectItem itemLabel="SOLD" itemValue="1" />
+											<f:selectItem itemLabel="Забронирован" itemValue="0" />
+											<f:selectItem itemLabel="Продан" itemValue="1" />
 										</p:selectOneMenu>
+										
+								
 									</f:facet>
 								</p:cellEditor>
 							</p:column>
@@ -305,7 +307,7 @@
 											value="#{accountantBean.arrivalCitySold}"></p:inputText>
 										<p:watermark for="arID" value="Город прибытия"></p:watermark>
 
-										<p:commandButton value="поиск"
+										<p:commandButton value="Поиск"
 											actionListener="#{accountantBean.searchSoldDataTable()}"
 											update=":formID:tabViewID:soldOrdersID" />
 									</h:panelGrid>
@@ -316,7 +318,7 @@
 						<p:dataTable id="soldOrdersID" var="order"
 							value="#{accountantBean.soldOrders}"
 							style="width:100%;font:13px/30px helvetica, serif;text-align:center;"
-							editable="true" scrollable="true" scrollHeight="300"  paginator="true" rows="20">
+							editable="true" paginator="true" rows="10" >
 							<p:ajax event="rowEdit" update="@this"
 								listener="#{accountantBean.onEditSold}" />
 
@@ -326,18 +328,18 @@
 
 		
 								<p:row>
-									<p:column filterBy="#{order.customerId.firstName}" headerText="имя" />
-									<p:column filterBy="#{order.customerId.lastName}" headerText="фамилия" />
-									<p:column filterBy="#{order.customerId.email}" headerText="e-mail" />
-									<p:column filterBy="#{order.customerId.phoneNumber}" headerText="телефонный номер" />
+									<p:column headerText="имя" />
+									<p:column headerText="фамилия" />
+									<p:column headerText="e-mail" />
+									<p:column headerText="телефонный номер" />
 
-									<p:column sortBy="#{order.flightId.departureTimeDate}" headerText="Дата отправления" />
-									<p:column filterBy="#{order.flightId.departureCity}" headerText="Город отправления" />
-									<p:column filterBy="#{order.flightId.arrivalCity}" headerText="Город прибытия" />
-									<p:column sortBy="#{order.flightId.arrivalTimeDate}" headerText="Дата прибытия" />
+									<p:column headerText="Дата отправления" />
+									<p:column headerText="Город отправления" />
+									<p:column headerText="Город прибытия" />
+									<p:column headerText="Дата прибытия" />
 
-									<p:column sortBy="#{order.dateD}" headerText="Дата бронирования"  />
-									<p:column sortBy="#{order.amountTickets}" headerText="Количество билетов"  />
+									<p:column headerText="Дата бронирования"  />
+									<p:column headerText="Количество билетов"  />
 									<p:column headerText="Стоимость билетов" />
 									<p:column headerText="Статус заказа"  />
 									<p:column headerText="Редактировать"  />
@@ -503,12 +505,12 @@
 								<p:cellEditor>
 									<f:facet name="output">
 										<h:outputText
-											value="#{order.payStatus == 1?'SOLD':'CANCELED'}"></h:outputText>
+											value="#{order.payStatus == 1?'Продан':'Возврат'}"></h:outputText>
 									</f:facet>
 									<f:facet name="input">
 										<p:selectOneMenu value="#{order.payStatus}" style="width:3cm;">
-											<f:selectItem itemLabel="SOLD" itemValue="1" />
-											<f:selectItem itemLabel="CANCELED" itemValue="2" />
+											<f:selectItem itemLabel="Продан" itemValue="1" />
+											<f:selectItem itemLabel="Возврат" itemValue="2" />
 										</p:selectOneMenu>
 									</f:facet>
 								</p:cellEditor>
