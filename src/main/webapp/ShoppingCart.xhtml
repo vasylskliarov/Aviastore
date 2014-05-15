@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>AviaStor</title>
+</h:head>
+
+<h:body>
+	<ui:composition template="WEB-INF/templates/layout.xhtml">
+	 	<h:outputStylesheet library="css" name="style.css"  />
+		<ui:define name="content">
+				<h:form id="cartFID">
+				
+				<div align="center"><p:messages id="messages" autoUpdate="true" closable="true" />
+				<h:panelGrid id="cartPID" columns="4">
+					<!-- 	<p:panel id="cartPID" columns="4"
+							style=" text-align:center;"> -->
+
+
+							
+							<h:outputText value="Ваше имя: "/>
+							<p:inputText id="firstNameID" value="#{customerBean.firstName}"
+								required="true" requiredMessage="Имя обязательна для заполнения"
+								size="45" placeholder="Имя*"  />
+		<p:outputLabel /><p:outputLabel />
+							<h:outputText value="Ваша фамилия: " />
+							<p:inputText id="lastNameID" value="#{customerBean.lastName}"
+								required="true"
+								requiredMessage="Пожалуйста введите фамилию" size="45" placeholder="Фамилия*" />
+					<p:outputLabel /><p:outputLabel />
+							<h:outputText value="Пожалуйста введите e-mail: " />
+							<p:inputText id="emailID" value="#{customerBean.email}"
+								required="true"
+								validatorMessage="Пожалуйста введите корректный e-mail адрес"
+								requiredMessage="Пожалуйста введите e-mail" size="45" placeholder="Email*">
+								<f:validateRegex
+									pattern="^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$" />
+							</p:inputText>
+	<p:outputLabel /><p:outputLabel />
+		<p:outputLabel /><p:outputLabel />	<p:outputLabel /><p:outputLabel />
+							
+							<h:outputText value="Пожалуйста введите номер телефона:"/>
+							<p:inputMask id="phoneNumberID"
+								value="#{customerBean.phoneNumber}" mask="+9(999) 999-99-99"
+								required="true" size="45"
+								requiredMessage="Пожалуйста введите номер телефона}!"
+								placeholder="Телефонный номер*" />
+								<p:outputLabel /><p:outputLabel /><p:outputLabel />
+							<p:commandButton  value="Поодвердить бронирование" process="@form"
+								update="@all firstNameID lastNameID emailID phoneNumberID" ajax="false"
+								actionListener="#{customerBean.saveCartToDB()}"
+								action="orderComplete.xhtml">			
+							</p:commandButton>
+
+							<p:confirmDialog widgetVar="confirmDlg" global="true"
+								showEffect="fade" hideEffect="fade" appendTo="@(body)">
+								<p:commandButton value="Подтвердить" type="button"
+									 icon="ui-icon-check"
+									update="@all" />
+								<p:commandButton  value="Продолжить бронирование" type="button"
+								 update="@all" />
+							</p:confirmDialog>
+					<!-- 	</p:panel> -->
+						
+						</h:panelGrid>
+						
+						</div>
+						<br />
+
+					</h:form>
+
+					<h:form>
+						<p:panel>
+							<p:dataTable id="cartTID" var="order"
+								value="#{customerBean.cartOrders}"
+								style="width:100%; text-align:center;">
+								<p:column width="25%" headerText="Информация о рейсе:">
+									<h:outputText
+										value="Рейс: #{order.flightId.flight},  " />
+										<h:outputText
+										value=" Авиакомпания: #{order.flightId.airCompany},  " />
+										<h:outputText
+										value=" Самолет: #{order.flightId.plainModel}  " />
+										
+										  
+								</p:column>
+								
+								<p:column width="15%" headerText="Отправление из">
+									<h:outputText
+										value="#{order.flightId.departureCountry}, #{order.flightId.departureCity}, #{order.flightId.departureAirport}" />
+								</p:column>
+								<p:column width="15%" headerText="Время отправления">
+									<h:outputText value="#{order.flightId.departureTimeDate}">
+										<f:convertDateTime pattern="HH:mm" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{order.flightId.departureTimeDate}">
+										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+									</h:outputText>
+								</p:column>
+								<p:column width="20%" headerText="Прибытие в:">
+									<h:outputText
+										value="#{order.flightId.arrivalCountry}, #{order.flightId.arrivalCity}, #{order.flightId.arrivalAirport}" />
+								</p:column>
+								
+								<p:column width="15%" headerText="Время прибытия">
+									<h:outputText value="#{order.flightId.arrivalTimeDate}">
+										<f:convertDateTime pattern="HH:mm" />
+									</h:outputText>
+									<br />
+									<h:outputText value="#{order.flightId.arrivalTimeDate}">
+										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+									</h:outputText>
+								</p:column>
+
+								
+
+
+								<p:column width="1%" headerText="Кол-во">
+									<h:outputText value="#{order.amountTickets}" />
+								</p:column>
+
+								<p:column width="10%" headerText="Стоимость в грн.">
+									<h:outputText
+										value="#{order.flightId.ticketsPrice * order.amountTickets}" />
+								</p:column>
+								<p:column width="3%">
+									<p:commandButton icon="ui-icon-closethick" style="margin:0"
+										update="cartTID Itogo" ajax="false"
+										actionListener="#{customerBean.removeOrderFromCart(order)}">
+									</p:commandButton>
+								</p:column>
+							</p:dataTable>
+
+							<div align="right" style="padding-top:5px;padding-right: 40px;">
+								<br />
+								<h:outputText id="Itogo" rendered="#{customerBean.showCart}" value="ИТОГО: #{customerBean.total} ₴" ></h:outputText>
+							</div>
+
+						</p:panel>
+
+					</h:form>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

@@ -32,6 +32,24 @@ public class InformationBean implements Serializable {
 		this.airportNames = flightsServices.airportNames();
 		this.cityNames = flightsServices.cityNames();
 		this.countryNames = flightsServices.countryNames();
+		
+		int airportNamesCount = 0;
+		for(String s : this.airportNames){
+			airportNamesCount++;
+		}
+		int cityNamesCount = 0;
+		for(String s : this.cityNames){
+			cityNamesCount++;
+		}
+		int countryNamesCount = 0;
+		for(String s : this.countryNames){
+			countryNamesCount++;
+		}
+		System.out.println("airportNamesCount: "+airportNamesCount);
+		System.out.println("cityNamesCount: "+cityNamesCount);
+		System.out.println("countryNames: "+countryNamesCount);
+		
+		
 	}
 
 	public FlightsServices getFlightsServices() {

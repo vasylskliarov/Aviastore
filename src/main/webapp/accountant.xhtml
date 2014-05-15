@@ -82,20 +82,19 @@
 									<p:column headerText="фамилия" />
 									<p:column headerText="e-mail" />
 									<p:column headerText="телефонный номер" />
-									<p:column headerText="Дата отправления" width="10%" />
+									<p:column headerText="Дата отправления" />
 									<p:column headerText="Город отправления" />
 									<p:column headerText="Город прибытия" />
-									<p:column headerText="Дата прибытия" width="10%" />
-									<p:column headerText="Дата бронирования" width="10%" />
-									<p:column headerText="Количество билетов" width="5%" />
-									<p:column headerText="Стоимость билетов" width="6%" />
-									<p:column headerText="Статус заказа" width="6%" />
-									<p:column headerText="Редактировать" width="3%" />
+									<p:column headerText="Дата прибытия" />
+									<p:column headerText="Дата бронирования"  />
+									<p:column headerText="Количество билетов"  />
+									<p:column headerText="Стоимость билетов" />
+									<p:column headerText="Статус заказа"  />
+									<p:column headerText="Ред."  />
 								</p:row>
-
 							</p:columnGroup>
 
-							<p:column filterBy="#{order.customerId.firstName}">
+							<p:column>
 								<p:cellEditor>
 									<f:facet name="output">
 										<h:outputText value="#{order.customerId.firstName}" />
@@ -332,17 +331,15 @@
 									<p:column headerText="фамилия" />
 									<p:column headerText="e-mail" />
 									<p:column headerText="телефонный номер" />
-
 									<p:column headerText="Дата отправления" />
 									<p:column headerText="Город отправления" />
 									<p:column headerText="Город прибытия" />
 									<p:column headerText="Дата прибытия" />
-
 									<p:column headerText="Дата бронирования"  />
 									<p:column headerText="Количество билетов"  />
 									<p:column headerText="Стоимость билетов" />
 									<p:column headerText="Статус заказа"  />
-									<p:column headerText="Редактировать"  />
+									<p:column headerText="Ред."  />
 								</p:row>
 							</p:columnGroup>
 

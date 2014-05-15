@@ -15,11 +15,13 @@
 		<ui:define name="content">
 			<h:outputStylesheet library="css" name="style.css" />
 			<h:form>
-		
+
 
 
 				<div align="center">
-					<div><h3>Создание отчетов</h3></div>
+					<div>
+						<h3>Создание отчетов</h3>
+					</div>
 					<p:panel>
 
 						<h:panelGrid id="components" columns="9"
@@ -29,7 +31,8 @@
 
 							<p:calendar id="fromDate" value="#{analystBean.startDate}"
 								pattern="dd MMMM yyyy" locale="en" required="true"
-								readonlyInput="true" navigator="true" maxdate="#{analystBean.endDate}">
+								readonlyInput="true" navigator="true"
+								maxdate="#{analystBean.endDate}">
 								<p:ajax process="fromDate" update="toDate" partialSubmit="true"
 									event="dateSelect" />
 							</p:calendar>
@@ -42,10 +45,10 @@
 							<p:calendar id="toDate" value="#{analystBean.endDate}"
 								pattern="dd MMMM yyyy" readonlyInput="true" locale="en"
 								required="true" mindate="#{analystBean.startDate}"
-								navigator="true" >
+								navigator="true">
 								<p:ajax process="toDate" update="fromDate" partialSubmit="true"
 									event="dateSelect" />
-								</p:calendar>
+							</p:calendar>
 							<p:commandButton value="Сгенерировать отчет" id="reports"
 								process="@this" update="@form"
 								actionListener="#{analystBean.generateReports()}" ajax="false"
@@ -59,69 +62,169 @@
 					style="font:16px/30px helvetica, serif;text-align:left;"
 					rendered="#{analystBean.showByDate}">
 					<p:tab title="Отчет по дням">
+						<p:panel header="Экспорт отчета по дням">
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/excel.png" />
+								<p:dataExporter type="xls" target="repByDateTable"
+									fileName="report_By_Date" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/pdf.png" />
+								<p:dataExporter type="pdf" target="repByDateTable"
+									fileName="report_By_Date" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/csv.png" />
+								<p:dataExporter type="csv" target="repByDateTable"
+									fileName="report_By_Date" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/xml.png" />
+								<p:dataExporter type="xml" target="repByDateTable"
+									fileName="report_By_Date" />
+							</h:commandLink>
+						</p:panel>
+
+
 						<h:panelGrid columns="1" cellspacing="20"
 							style="width:100%;height:500px">
-							<p:panel  rendered="#{true}">
+							<p:panel rendered="#{true}">
 								<p:lineChart id="linear" value="#{analystBean.chartModelByDate}"
-									legendPosition="e" fill="true" title="График прибыли по дням" minY="0"
-									style="height:300px" />
+									legendPosition="e" fill="true" title="График прибыли по дням"
+									minY="0" style="height:300px" />
 							</p:panel>
 
-							<p:dataTable id="repByDateTable" var="report1" value="#{analystBean.repByDateList}"
-								scrollable="true" scrollHeight="240">
-								<p:columnGroup type="header">
-									<p:row>
-										<p:column headerText="Дата"></p:column>
-										<p:column headerText="Количество проданных билетов"></p:column>
-										<p:column headerText="Общая стоимость билетов (₴)"></p:column>
-									</p:row>
-								</p:columnGroup>
+							<p:dataTable id="repByDateTable" var="report1"
+								value="#{analystBean.repByDateList}" scrollable="true"
+								scrollHeight="240">
+			
 
-								<p:column>
+								<p:column headerText="Дата">
+									<f:facet name="header">
+										<h:outputText value="Дата" />
+									</f:facet>
 									<h:outputText value="#{report1.date}">
 										<f:convertDateTime pattern="dd MMMM yyyy" locale="en" />
+
 									</h:outputText>
+
 								</p:column>
-								<p:column>
+								<p:column headerText="Количество проданных билетов">
+									<f:facet name="header">
+										<h:outputText value="Количество проданных билетов" />
+									</f:facet>
 									<h:outputText value="#{report1.quantity}" />
+
 								</p:column>
-								<p:column>
+								<p:column headerText="Общая стоимость билетов (₴)">
+									<f:facet name="header">
+										<h:outputText value="Общая стоимость билетов (₴)" />
+									</f:facet>
 									<h:outputText value="#{report1.total}" />
+
 								</p:column>
 							</p:dataTable>
 						</h:panelGrid>
+
+
+
+
 					</p:tab>
 
 					<p:tab title="Отчет по городам">
+					
+					<p:panel header="Экспорт отчета по городам">
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/excel.png" />
+								<p:dataExporter type="xls" target="repByPlaceTable"
+									fileName="report_By_Place" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/pdf.png" />
+								<p:dataExporter type="pdf" target="repByPlaceTable"
+									fileName="report_By_Place" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/csv.png" />
+								<p:dataExporter type="csv" target="repByPlaceTable"
+									fileName="report_By_Place" />
+							</h:commandLink>
+
+							<h:commandLink>
+								<p:graphicImage value="/resources/img/xml.png" />
+								<p:dataExporter type="xml" target="repByPlaceTable"
+									fileName="report_By_Place" />
+							</h:commandLink>
+						</p:panel>
+					
+					
 						<h:panelGrid columns="1" cellpadding="10" style="width:100%;">
-							
-							
+
+
 							<p:pieChart id="pie" value="#{analystBean.chartModelByPlace}"
-								legendPosition="e" title="График прибыли по городам" style="height:300px" />
-							
+								legendPosition="e" title="График прибыли по городам"
+								style="height:300px" />
 
-							<p:dataTable id="repByPlaceTable" var="report2" value="#{analystBean.repByPlaceList}">
-								<p:columnGroup type="header">
-									<p:row>
-										<p:column headerText="Город отправления"></p:column>
-										<p:column headerText="Город прибытия"></p:column>
-										<p:column headerText="Количество проданных билетов"></p:column>
-										<p:column headerText="Общая стоимость билетов (₴)"></p:column>
-									</p:row>
-								</p:columnGroup>
 
-								<p:column>
+
+
+							<p:dataTable id="repByPlaceTable" var="report2"
+								value="#{analystBean.repByPlaceList}">
+			
+								
+								
+			
+								<p:column headerText="Город отправления">
+									<f:facet name="header">
+										<h:outputText value="Город отправления" />
+									</f:facet>
 									<h:outputText value="#{report2.origin}" />
+
 								</p:column>
-								<p:column>
+								
+								
+					
+								<p:column headerText="Город прибытия">
+									<f:facet name="header">
+										<h:outputText value="Город прибытия" />
+									</f:facet>
 									<h:outputText value="#{report2.destination}" />
+
 								</p:column>
-								<p:column>
+								
+								
+							
+								<p:column headerText="Количество проданных билетов">
+									<f:facet name="header">
+										<h:outputText value="Количество проданных билетов" />
+									</f:facet>
 									<h:outputText value="#{report2.quantity}" />
+
 								</p:column>
-								<p:column>
+								
+								
+								<p:column headerText="Общая стоимость билетов (₴)">
+									<f:facet name="header">
+										<h:outputText value="Общая стоимость билетов (₴)" />
+									</f:facet>
 									<h:outputText value="#{report2.total}" />
+
 								</p:column>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 							</p:dataTable>
 						</h:panelGrid>
 					</p:tab>

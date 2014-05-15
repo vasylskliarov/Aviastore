@@ -1,5 +1,6 @@
 package com.aviastore.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -7,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.*;
 import javax.inject.Named;
 
+import org.primefaces.event.SlideEndEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -38,17 +40,50 @@ public class CustomerBean implements Serializable {
 	private double total;
 	private boolean showCart = false;
 	
+	private int deysSpreading=0;
+	
 	private Flights selectedFlight;
 	private int amountTickets = 1;
 	
 	public CustomerBean() {}
 	public void loadTimeTable() {
 		timeTableList = flightsServices.getTimetableByPlaces(departureCity, arrivalCity, departureDate);
-		System.out.println("НАЙДЕНО!!!! :"+timeTableList.size());
 		this.showTimeTable = true;
 	}
+	
+	
+	public void cartLink() {
+		try {
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							FacesContext.getCurrentInstance()
+									.getExternalContext()
+									.getRequestContextPath()
+									+ "/ShoppingCart.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void searcingLink() {
+		try {
+			FacesContext
+					.getCurrentInstance()
+					.getExternalContext()
+					.redirect(
+							FacesContext.getCurrentInstance()
+									.getExternalContext()
+									.getRequestContextPath()
+									+ "/BookingSystem.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	public void addOrderToCart(Flights flight, int amountTickets) {
-		System.out.println("add to cart");
 		if(flight == null || amountTickets > flight.getAvailableCount()) {
 			return;
 		}
@@ -70,7 +105,6 @@ public class CustomerBean implements Serializable {
 		this.selectedFlight = null;	
 	}
 	public void  removeOrderFromCart(Orders order){
-		System.out.println("Remove order");
 		if(order == null){
 			return;
 		}
@@ -85,7 +119,6 @@ public class CustomerBean implements Serializable {
 		}
 	}
 	public void saveCartToDB() {
-		System.out.println("save from cart to database");
 		if (this.firstName == null || this.lastName == null || this.phoneNumber == null || this.email == null) {
 			return;
 		}
@@ -218,6 +251,13 @@ public class CustomerBean implements Serializable {
 	}
 	public void setAmountTickets(int amountTickets) {
 		this.amountTickets = amountTickets;
+	}
+	
+	public int getDeysSpreading() {
+		return deysSpreading;
+	}
+	public void setDeysSpreading(int deysSpreading) {
+		this.deysSpreading = deysSpreading;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;

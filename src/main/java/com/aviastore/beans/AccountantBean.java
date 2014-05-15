@@ -59,11 +59,12 @@ public class AccountantBean implements Serializable {
 	}
 	
 	public void searchSoldDataTable(){
+		System.out.println(startDate+ "- start date and end date is "+endDate );
 		soldOrders = ordersServices.getOrders(startDate, endDate, departureCitySold, arrivalCitySold, firstNameSold, lastNameSold, emailSold, phoneNumberSold, Orders.SOLD);
+		
 	}
 	
 	public void onEditBooked(RowEditEvent event) {  
-		System.out.println("Convert booked tickets to sold");
         Orders order = (Orders)event.getObject();
         if (order.getPayStatus() == Orders.BOOKED){
         	return;
@@ -73,7 +74,6 @@ public class AccountantBean implements Serializable {
         this.searchSoldDataTable();
     }
 	public void onEditSold(RowEditEvent event) {  
-		System.out.println("soldTocancell");
         Orders order = (Orders)event.getObject();
         if (order.getPayStatus() == Orders.SOLD){
         	return;

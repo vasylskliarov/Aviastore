@@ -21,10 +21,13 @@
 		  			<div class="rightBl">
 			        	<div align="right" >
 			                <h:form>
-			                	<!-- Добавить проверку показа кнопки-->
+			                	<!-- Добавить проверку показа кнопки ShoppingCart.xhtml?faces-redirect=true-->
+			               		
+			               		<!-- <h:link  rendered="#{customerBean.showCart}" outcome="login.xhtml"  image="/resources/img/shopping-bag.png" styleClass="cartButton" value="Login" />
+			               		 -->
 			               		<h:commandButton ajax="false" process = "@none"  image="/resources/img/shopping-bag.png" styleClass="cartButton"
-			                       immediate="true"  rendered="true"/>			                
-			                
+			                       immediate="true" actionListener="#{customerBean.cartLink()}" rendered="#{customerBean.showCart}"/>			                
+			               
 				                <h:commandButton ajax="false" process = "@none"  image="/resources/img/system-logout.png" styleClass="exitButton"
 			                       immediate="true" actionListener="#{loginBean.logOut()}" rendered="#{loginBean.loggedIn}"/>
 			            	</h:form> 

@@ -46,7 +46,7 @@
 								action="#{adminBean.updateTimetable()}" ajax="false">
 							</p:commandButton>
 							<p:commandButton icon="ui-icon-plusthick" id="addNewFlightBtn"
-								style="margin:0" title="add new flight to timetabler"
+								style="margin:0" title="Добавть полет"
 								ajax="true" onclick="newFlight.show();">
 							</p:commandButton>
 							<p:spacer width="20" height="60" />
@@ -444,7 +444,7 @@
 							<p:outputLabel value=" " />
 							<div align="center">
 								<p>
-									<p:commandButton icon="ui-icon-plusthick" value="add flight"
+									<p:commandButton icon="ui-icon-plusthick" value="Добавить полет"
 										process="@all" update="flights" actionListener="#{adminBean.addNewFlight()}"
 										oncomplete="newFlight.hide()"
 										
